@@ -11,9 +11,10 @@ import org.wso2.carbon.utils.CarbonUtils;
 import org.apache.log4j.Logger;
 import org.wso2.cep.email.esb.util.SecurityConstants;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 
 public class ProxyAdminClient {
@@ -46,7 +47,7 @@ public class ProxyAdminClient {
 
         CarbonUtils.setBasicAccessSecurityHeaders(userName, password, stub._getServiceClient());
 
-        String proxyName = "gmail_passwordAuthentication_proxy";
+        String proxyName = "gmail_passwordAuthentication_proxy111";
 
         //Set proxy configuration data
         String[] transport = {"http", "https"};
@@ -54,13 +55,25 @@ public class ProxyAdminClient {
         data.setName(proxyName);
         data.setStartOnLoad(true);
         data.setTransports(transport);
-        String content = null;
+        String content = "";
 
+        /*
+        Need to read a config file bundled in the jar file
+        to get the configuration needed to create the proxy service
+        Source - http://www.coderanch.com/t/329156/java/java/Read-File-jar-file
+         */
+        InputStream is = null;
+        BufferedReader br = null;
+        String line;
+
+        is = ProxyAdminClient.class.getResourceAsStream("/config/insequence.xml");
+        br = new BufferedReader(new InputStreamReader(is));
         try {
-            String path = new File("").getAbsolutePath();
-            content = FileUtils.readFileToString(new File(path + "/email-monitor-backend/src/main/resources/config/insequence.xml"));
+            while (null != (line = br.readLine())) {
+                content = content + line;
+            }
         } catch (IOException e) {
-            logger.error(e.getMessage());
+            e.printStackTrace();
         }
 
         data.setInSeqXML(content);

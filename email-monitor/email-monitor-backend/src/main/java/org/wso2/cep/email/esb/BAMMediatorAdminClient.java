@@ -8,6 +8,10 @@ import org.wso2.carbon.mediator.bam.config.xsd.BamServerConfig;
 import org.wso2.carbon.utils.CarbonUtils;
 import org.wso2.cep.email.esb.util.SecurityConstants;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.rmi.RemoteException;
 
 
@@ -42,8 +46,28 @@ public class BAMMediatorAdminClient {
 
         CarbonUtils.setBasicAccessSecurityHeaders(userName, password, stub._getServiceClient());
 
+        String content = "";
 
+        /*
+        Need to read a config file bundled in the jar file
+        to get the configuration needed to create the BAM mediator
+        Source - http://www.coderanch.com/t/329156/java/java/Read-File-jar-file
+         */
+        InputStream is = null;
+        BufferedReader br = null;
+        String line;
 
+        is = ProxyAdminClient.class.getResourceAsStream("/config/bamMediator.xml");
+        br = new BufferedReader(new InputStreamReader(is));
+        try {
+            while (null != (line = br.readLine())) {
+                content = content + line;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //TODO add content variable instead of String added to the stub call and check the functionality before proceeding to next stage
 
         try {
                       stub.saveResourceString("<serverProfile xmlns=\"http://ws.apache.org/ns/synapse\"><connection loadbalancer=\"false\" secure=\"true\" urlSet=\"\" ip=\"10.100.5.89\" authPort=\"7612\" receiverPort=\"\"></connection><credential userName=\"admin\" password=\"kuv2MubUUveMyv6GeHrXr9il59ajJIqUI4eoYHcgGKf/BBFOWn96NTjJQI+wYbWjKW6r79S7L7ZzgYeWx7DlGbff5X3pBN2Gh9yV0BHP1E93QtFqR7uTWi141Tr7V7ZwScwNqJbiNoV+vyLbsqKJE7T3nP8Ih9Y6omygbcLcHzg=\"></credential><streams><stream name=\"dfsdf\" version=\"1.0.1\" nickName=\"fdsf\" description=\"fsd\"><payload></payload><properties></properties></stream></streams></serverProfile>\n","bamServerProfiles/sachinij");
