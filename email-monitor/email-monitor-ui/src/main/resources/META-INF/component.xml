@@ -1,0 +1,16 @@
+<component xmlns="http://products.wso2.org/carbon">
+    <menus>
+        <menu>
+            <id>emailmonitor_menu</id>
+            <i18n-key>emailmonitor.menu</i18n-key>
+            <i18n-bundle>org.wso2.cep.email.monitor.ui.i18n.Resources</i18n-bundle>
+            <parent-menu>manage_menu</parent-menu>
+            <link>../emailmonitor/index.jsp</link>
+            <region>region1</region>
+            <order>50</order>
+            <style-class>manage</style-class>
+             <icon>../emailmonitor/images/order.gif</icon>
+            <require-permission>/permission/protected/manage</require-permission>
+        </menu>
+    </menus>
+</component>
