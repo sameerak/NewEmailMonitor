@@ -23,7 +23,7 @@ public class BAMMediatorAdminClient {
 
 
         // Set client trust store
-        System.setProperty(SecurityConstants.TRUSTSTORE, "/home/sachini/Documents/wso2esb-4.8.1/repository/resources/security/client-truststore.jks"/*SecurityConstants.CLIENT_TRUST_STORE_PATH*/);
+        System.setProperty(SecurityConstants.TRUSTSTORE, SecurityConstants.CLIENT_TRUST_STORE_PATH);
         System.setProperty(SecurityConstants.TRUSTSTORE_PASSWORD, SecurityConstants.KEY_STORE_PASSWORD);
         System.setProperty(SecurityConstants.TRUSTSTORE_TYPE, SecurityConstants.KEY_STORE_TYPE);
 
@@ -44,23 +44,11 @@ public class BAMMediatorAdminClient {
 
 
 
-        BamServerConfig bamConfig = new BamServerConfig();
-        //bamConfig.set
-        bamConfig.setUsername("admin");
-        bamConfig.setPassword("admin");
-//        bamConfig.setLoadbalanced(false);
-//        bamConfig.setSecurity(true);
-        bamConfig.setIp("localhost");
-        bamConfig.setPort("7611");
 
-
-
-
-//        stub.saveBamServerConfig(config);
         try {
                       stub.saveResourceString("<serverProfile xmlns=\"http://ws.apache.org/ns/synapse\"><connection loadbalancer=\"false\" secure=\"true\" urlSet=\"\" ip=\"10.100.5.89\" authPort=\"7612\" receiverPort=\"\"></connection><credential userName=\"admin\" password=\"kuv2MubUUveMyv6GeHrXr9il59ajJIqUI4eoYHcgGKf/BBFOWn96NTjJQI+wYbWjKW6r79S7L7ZzgYeWx7DlGbff5X3pBN2Gh9yV0BHP1E93QtFqR7uTWi141Tr7V7ZwScwNqJbiNoV+vyLbsqKJE7T3nP8Ih9Y6omygbcLcHzg=\"></credential><streams><stream name=\"dfsdf\" version=\"1.0.1\" nickName=\"fdsf\" description=\"fsd\"><payload></payload><properties></properties></stream></streams></serverProfile>\n","bamServerProfiles/sachinij");
         } catch (RemoteException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+           logger.error(e.getMessage());
         }
 
 

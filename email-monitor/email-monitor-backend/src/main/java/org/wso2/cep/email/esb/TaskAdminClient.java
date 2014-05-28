@@ -1,22 +1,13 @@
 package org.wso2.cep.email.esb;
 
 
-import org.apache.axiom.om.OMAbstractFactory;
+
 import org.apache.axiom.om.OMElement;
-import org.apache.axiom.om.OMNamespace;
 import org.apache.axiom.om.util.AXIOMUtil;
 import org.apache.axis2.AxisFault;
-import org.apache.axis2.client.Options;
-import org.apache.axis2.client.ServiceClient;
-import org.apache.axis2.context.ServiceContext;
-import org.apache.axis2.transport.http.HTTPConstants;
 import org.apache.log4j.Logger;
-import org.apache.synapse.task.TaskDescription;
-import org.apache.synapse.task.TaskDescriptionSerializer;
-import org.wso2.carbon.authenticator.stub.AuthenticationAdminStub;
 import org.wso2.carbon.task.stub.TaskAdminStub;
 import org.wso2.carbon.task.stub.TaskManagementException;
-import org.wso2.carbon.task.stub.types.axis2.AddTaskDescription;
 import org.wso2.carbon.utils.CarbonUtils;
 import org.wso2.cep.email.esb.util.SecurityConstants;
 
@@ -34,7 +25,7 @@ public class TaskAdminClient {
         String endPoint = "https://" + ip + ":" + port + "/services/" + TASK_ADMIN_SERVICE;
 
         // Set client trust store
-        System.setProperty(SecurityConstants.TRUSTSTORE, "/home/sachini/Documents/wso2esb-4.8.1/repository/resources/security/client-truststore.jks"/*SecurityConstants.CLIENT_TRUST_STORE_PATH*/);
+        System.setProperty(SecurityConstants.TRUSTSTORE, SecurityConstants.CLIENT_TRUST_STORE_PATH);
         System.setProperty(SecurityConstants.TRUSTSTORE_PASSWORD, SecurityConstants.KEY_STORE_PASSWORD);
         System.setProperty(SecurityConstants.TRUSTSTORE_TYPE, SecurityConstants.KEY_STORE_TYPE);
 
