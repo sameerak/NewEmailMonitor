@@ -1,0 +1,41 @@
+<inSequence xmlns="http://ws.apache.org/ns/synapse">
+    <property xmlns:ns="urn:wso2.connector.gmail.passwordauthentication"
+              name="username"
+              expression="//ns:username/text()"/>
+    <property xmlns:ns="urn:wso2.connector.gmail.passwordauthentication"
+              name="password"
+              expression="//ns:password/text()"/>
+    <gmail.passwordLogin>
+        <username>{$ctx:username}</username>
+        <password>{$ctx:password}</password>
+    </gmail.passwordLogin>
+    <gmail.listAllMails>
+        <batchNumber>2</batchNumber>
+    </gmail.listAllMails>
+    <log level="custom">
+        <property xmlns:ns="http://org.wso2.esbconnectors.gmail"
+                  name="Stock Quote on"
+                  expression="//ns:messageID[1]/child::text()"/>
+    </log>
+    <iterate xmlns:ns="http://org.wso2.esbconnectors.gmail"
+             id="iter1"
+             expression="//ns:messages/ns:message">
+        <target>
+            <sequence>
+                <property name="P_Id" expression="//ns:messageID/text()"/>
+                <gmail.readMailMessage>
+                    <messageID>{$ctx:P_Id}</messageID>
+                </gmail.readMailMessage>
+                <log level="custom">
+                    <property name="content" expression="//ns:content/text()"/>
+                </log>
+                <bam>
+                    <serverProfile name="test">
+                        <streamConfig name="inbox" version="1.0.0"/>
+                    </serverProfile>
+                </bam>
+            </sequence>
+        </target>
+    </iterate>
+</inSequence>
+
