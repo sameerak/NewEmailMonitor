@@ -13,9 +13,17 @@
     <div id="workArea">
 
         <form method="POST">
-            ESB IP: <input type="text" name="esbIP"><br>
-            ESB Port: <input type="text" name="esbPort"><br>
-            <input type="submit" value="Submit">
+        <table>
+        <tr>
+            <td>ESB IP:</td> <td><input type="text" name="esbIP"></td>
+        </tr>
+        <tr>
+            <td>ESB Port:</td> <td><input type="text" name="esbPort"></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Submit"></td>
+        </tr>
+        </table>
         </form>
 
             <%
@@ -26,6 +34,9 @@
             <%if(ip !=null || port != null){%>
 
             <h2> <%=Backend.test(ip, port)%> </h2>
+            <script>
+                CARBON.showInfoDialog("ESB server configurations stored successfully");
+            </script>
             <% } %>
     </div>
 </div>
