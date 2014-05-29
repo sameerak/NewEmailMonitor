@@ -6,7 +6,7 @@ import org.apache.axiom.soap.SOAPBody;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.mediators.AbstractMediator;
 import org.wso2.carbon.gmail.mediator.util.MediatorConstants;
-import sun.nio.cs.StandardCharsets;
+
 
 
 import java.io.*;
@@ -36,7 +36,10 @@ public class MessageContentInjector extends AbstractMediator {
                 while ((line = br.readLine()) != null) {
                     if (line.startsWith(">")) {
 
-                    } else {
+                    }else if (line.startsWith("On") && line.endsWith("wrote:")){
+
+                    }
+                    else {
                         sb.append(line);
                         sb.append("\n");
                     }
@@ -50,7 +53,7 @@ public class MessageContentInjector extends AbstractMediator {
                     log.error(e.getMessage());
                 }
             }
-            omElement.setText(sb.toString());
+            omElement1.setText(sb.toString());
         }
         return omElement;
     }
