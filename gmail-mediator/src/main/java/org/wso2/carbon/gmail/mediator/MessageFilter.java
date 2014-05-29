@@ -49,7 +49,6 @@ public class MessageFilter extends AbstractMediator {
 
                     if (MailSessionInfoStore.getPreviouseMessageTS() != MediatorConstants.DEFAULT_VALUE_ZERO && MailSessionInfoStore.getPreviouseMessageTS() < timeS) {
                         MailSessionInfoStore.setPreviouseBundleFirstMailTS(MailSessionInfoStore.getNextBundleFirstMailTs());
-
                     }
                 }
                 if (messageCount == MediatorConstants.MESSAGE_COUNT_STARTING_VALUE) {
