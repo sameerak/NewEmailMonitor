@@ -44,17 +44,20 @@
             <version>4.0-beta1</version>
         </dependency>
 
+
+
         <dependency>
-            <groupId>org.apache.synapse</groupId>
-            <artifactId>synapse-tasks</artifactId>
-            <version>2.1.0</version>
+            <groupId>org.wso2.carbon</groupId>
+            <artifactId>org.wso2.carbon.mediator.bam.config.stub</artifactId>
+            <version>4.2.0</version>
         </dependency>
 
         <dependency>
             <groupId>org.wso2.carbon</groupId>
-            <artifactId> org.wso2.carbon.mediator.bam.config.stub</artifactId>
-            <version>4.0.0</version>
+            <artifactId>org.wso2.carbon.event.stream.manager.stub</artifactId>
+            <version>1.0.1</version>
         </dependency>
+
 
         <dependency>
             <groupId>javax.activation</groupId>
