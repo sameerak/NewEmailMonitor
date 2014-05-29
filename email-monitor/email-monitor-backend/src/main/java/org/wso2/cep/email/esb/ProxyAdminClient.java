@@ -3,7 +3,6 @@ package org.wso2.cep.email.esb;
 
 import org.apache.axis2.AxisFault;
 
-import org.apache.commons.io.FileUtils;
 import org.wso2.carbon.proxyadmin.stub.ProxyServiceAdminProxyAdminException;
 import org.wso2.carbon.proxyadmin.stub.ProxyServiceAdminStub;
 import org.wso2.carbon.proxyadmin.stub.types.carbon.ProxyData;
@@ -13,8 +12,6 @@ import org.wso2.cep.email.esb.util.SecurityConstants;
 
 import java.io.*;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.Iterator;
 
 
 public class ProxyAdminClient {
