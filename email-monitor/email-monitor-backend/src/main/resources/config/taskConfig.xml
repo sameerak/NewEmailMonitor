@@ -11,7 +11,7 @@
             <urn:password>mailpassword1</urn:password>
         </root>
     </task:property>
-    <task:property name="proxyName" value="gmail_passwordAuthentication">
+    <task:property name="proxyName" value="gmail_passwordAuthentication_proxy">
 
     </task:property>
     <task:property name="injectTo" value="proxy">

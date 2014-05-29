@@ -9,26 +9,20 @@ import org.wso2.carbon.proxyadmin.stub.types.carbon.ProxyData;
 import org.wso2.carbon.utils.CarbonUtils;
 import org.apache.log4j.Logger;
 import org.wso2.cep.email.esb.util.SecurityConstants;
+import org.wso2.cep.util.EmailMonitorConstants;
 
 import java.io.*;
 import java.rmi.RemoteException;
 
 
 public class ProxyAdminClient {
-    private static final String PROXY_ADMIN_SERVICE = "ProxyServiceAdmin";
+
     private static Logger logger = Logger.getLogger(ProxyAdminClient.class);
     private ProxyServiceAdminStub stub;
 
 
     public ProxyAdminClient(String ip, String port) {
-        String endPoint = "https://" + ip + ":" + port + "/services/" + PROXY_ADMIN_SERVICE;
-
-
-        // Set client trust store
-        System.setProperty(SecurityConstants.TRUSTSTORE, SecurityConstants.CLIENT_TRUST_STORE_PATH);
-        System.setProperty(SecurityConstants.TRUSTSTORE_PASSWORD, SecurityConstants.KEY_STORE_PASSWORD);
-        System.setProperty(SecurityConstants.TRUSTSTORE_TYPE, SecurityConstants.KEY_STORE_TYPE);
-
+        String endPoint = EmailMonitorConstants.PROTOCOL + ip + ":" + port + EmailMonitorConstants.SERVICES + EmailMonitorConstants.PROXY_ADMIN_SERVICE;
 
         try {
             stub = new ProxyServiceAdminStub(endPoint);
@@ -44,7 +38,7 @@ public class ProxyAdminClient {
 
         CarbonUtils.setBasicAccessSecurityHeaders(userName, password, stub._getServiceClient());
 
-        String proxyName = "gmail_passwordAuthentication_proxy111";
+        String proxyName = EmailMonitorConstants.PROXY_NAME;
 
         //Set proxy configuration data
         String[] transport = {"http", "https"};
@@ -54,16 +48,11 @@ public class ProxyAdminClient {
         data.setTransports(transport);
         String content = "";
 
-        /*
-        Need to read a config file bundled in the jar file
-        to get the configuration needed to create the proxy service
-        Source - http://www.coderanch.com/t/329156/java/java/Read-File-jar-file
-         */
         InputStream is = null;
         BufferedReader br = null;
         String line;
 
-        is = ProxyAdminClient.class.getResourceAsStream("/config/insequence.xml");
+        is = ProxyAdminClient.class.getResourceAsStream(EmailMonitorConstants.PROXY_PATH);
         br = new BufferedReader(new InputStreamReader(is));
         try {
             while (null != (line = br.readLine())) {
@@ -86,11 +75,6 @@ public class ProxyAdminClient {
 
     }
 
-
-    public static void main(String[] args) throws RemoteException, ProxyServiceAdminProxyAdminException {
-
-        new ProxyAdminClient("10.100.5.89", "9443").addMailProxy("admin", "admin");
-    }
 
 }
 

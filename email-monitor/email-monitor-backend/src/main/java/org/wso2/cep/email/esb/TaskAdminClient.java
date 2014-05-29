@@ -10,6 +10,7 @@ import org.wso2.carbon.task.stub.TaskAdminStub;
 import org.wso2.carbon.task.stub.TaskManagementException;
 import org.wso2.carbon.utils.CarbonUtils;
 import org.wso2.cep.email.esb.util.SecurityConstants;
+import org.wso2.cep.util.EmailMonitorConstants;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.BufferedReader;
@@ -20,21 +21,14 @@ import java.rmi.RemoteException;
 
 public class TaskAdminClient {
 
-    private static final String TASK_ADMIN_SERVICE = "TaskAdmin";
     private static Logger logger = Logger.getLogger(TaskAdminClient.class);
     private TaskAdminStub stub;
 
 
     public TaskAdminClient(String ip, String port) {
-        String endPoint = "https://" + ip + ":" + port + "/services/" + TASK_ADMIN_SERVICE;
+        String endPoint = EmailMonitorConstants.PROTOCOL + ip + ":" + port + EmailMonitorConstants.SERVICES + EmailMonitorConstants.TASK_ADMIN_SERVICE;
 
-        // Set client trust store
-        System.setProperty(SecurityConstants.TRUSTSTORE, SecurityConstants.CLIENT_TRUST_STORE_PATH);
-        System.setProperty(SecurityConstants.TRUSTSTORE_PASSWORD, SecurityConstants.KEY_STORE_PASSWORD);
-        System.setProperty(SecurityConstants.TRUSTSTORE_TYPE, SecurityConstants.KEY_STORE_TYPE);
-
-
-        try {
+         try {
             stub = new TaskAdminStub(endPoint);
         } catch (AxisFault axisFault) {
             logger.error(axisFault.getMessage());
@@ -43,21 +37,16 @@ public class TaskAdminClient {
 
     }
 
-    public void addScheduledTask(String userName, String password) throws XMLStreamException, TaskManagementException, RemoteException {
+    public void addScheduledTask(String userName, String password)  {
         CarbonUtils.setBasicAccessSecurityHeaders(userName, password, stub._getServiceClient());
 
         String content = "";
 
-        /*
-        Need to read a config file bundled in the jar file
-        to get the configuration needed to create the ESB task configuration
-        Source - http://www.coderanch.com/t/329156/java/java/Read-File-jar-file
-         */
-        InputStream is = null;
+       InputStream is = null;
         BufferedReader br = null;
         String line;
 
-        is = ProxyAdminClient.class.getResourceAsStream("/config/taskConfig.xml");
+        is = ProxyAdminClient.class.getResourceAsStream(EmailMonitorConstants.TASK_CONFIGURATION_FILE_PATH);
         br = new BufferedReader(new InputStreamReader(is));
         try {
             while (null != (line = br.readLine())) {
@@ -67,9 +56,20 @@ public class TaskAdminClient {
             e.printStackTrace();
         }
 
-        OMElement omElementTask = AXIOMUtil.stringToOM(content);
+        OMElement omElementTask = null;
+        try {
+            omElementTask = AXIOMUtil.stringToOM(content);
+        } catch (XMLStreamException e) {
+           logger.error(e.getMessage());
+        }
 
-        stub.addTaskDescription(omElementTask);
+        try {
+            stub.addTaskDescription(omElementTask);
+        } catch (RemoteException e) {
+            logger.error(e.getMessage());
+        } catch (TaskManagementException e) {
+           logger.error(e.getMessage());
+        }
 
     }
 }
