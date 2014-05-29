@@ -1,13 +1,14 @@
 <serverProfile xmlns="http://ws.apache.org/ns/synapse">
-    <connection loadbalancer="false" secure="true" urlSet="" ip="10.100.5.89" authPort="7612" receiverPort="">
+    <connection loadbalancer="false" secure="true" urlSet="" ip="10.100.5.89" authPort="7712" receiverPort="">
     </connection>
     <credential userName="admin" password="kuv2MubUUveMyv6GeHrXr9il59ajJIqUI4eoYHcgGKf/BBFOWn96NTjJQI+wYbWjKW6r79S7L7ZzgYeWx7DlGbff5X3pBN2Gh9yV0BHP1E93QtFqR7uTWi141Tr7V7ZwScwNqJbiNoV+vyLbsqKJE7T3nP8Ih9Y6omygbcLcHzg=">
     </credential>
     <streams>
-        <stream name="sachini" version="1.0.1" nickName="fdsf" description="fsd">
-            <payload>
+        <stream name="inbox" version="1.0.0" nickName="kh" description="wqe">
+            <payload><entry name="SOAPHeader" value="$SOAPHeader" type="STRING"></entry>
+                <entry name="SOAPBody" value="$SOAPBody" type="STRING"></entry>
             </payload>
-            <properties>
+            <properties><property name="messagerID" value="get-property('P_Id')" type="LONG" isExpression="true"></property>
             </properties>
         </stream>
     </streams>

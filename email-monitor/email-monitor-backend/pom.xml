@@ -44,8 +44,6 @@
             <version>4.0-beta1</version>
         </dependency>
 
-
-
         <dependency>
             <groupId>org.wso2.carbon</groupId>
             <artifactId>org.wso2.carbon.mediator.bam.config.stub</artifactId>
@@ -91,7 +89,6 @@
         </repository>
     </repositories>
 
-
     <build>
     <plugins>
     <plugin>
@@ -105,7 +102,7 @@
                 <Bundle-Name>${pom.name}</Bundle-Name>
                 <Bundle-Version>${pom.version}</Bundle-Version>
                 <Embed-Dependency>*;scope=compile</Embed-Dependency>
-                <Export-Package>org.wso2.cep.email.esb.*</Export-Package>
+                <Export-Package>org.wso2.cep.email.esb.*,org.wso2.carbon.task.*; version="4.2.0"</Export-Package>
                 <Carbon-Component>UIBundle</Carbon-Component>
             </instructions>
         </configuration>
