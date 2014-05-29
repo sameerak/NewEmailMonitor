@@ -67,10 +67,8 @@ public class BAMMediatorAdminClient {
             e.printStackTrace();
         }
 
-        //TODO add content variable instead of String added to the stub call and check the functionality before proceeding to next stage
-
         try {
-                      stub.saveResourceString("<serverProfile xmlns=\"http://ws.apache.org/ns/synapse\"><connection loadbalancer=\"false\" secure=\"true\" urlSet=\"\" ip=\"10.100.5.89\" authPort=\"7612\" receiverPort=\"\"></connection><credential userName=\"admin\" password=\"kuv2MubUUveMyv6GeHrXr9il59ajJIqUI4eoYHcgGKf/BBFOWn96NTjJQI+wYbWjKW6r79S7L7ZzgYeWx7DlGbff5X3pBN2Gh9yV0BHP1E93QtFqR7uTWi141Tr7V7ZwScwNqJbiNoV+vyLbsqKJE7T3nP8Ih9Y6omygbcLcHzg=\"></credential><streams><stream name=\"dfsdf\" version=\"1.0.1\" nickName=\"fdsf\" description=\"fsd\"><payload></payload><properties></properties></stream></streams></serverProfile>\n","bamServerProfiles/sachinij");
+            stub.saveResourceString(content,"bamServerProfiles/test");
         } catch (RemoteException e) {
            logger.error(e.getMessage());
         }
