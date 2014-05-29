@@ -67,21 +67,9 @@ public class TaskAdminClient {
             e.printStackTrace();
         }
 
-        //TODO add content variable instead of String added to the stub call and check the functionality before proceeding to next stage
-
-        OMElement omElementTask = AXIOMUtil.stringToOM("<task:task xmlns:task=\"http://www.wso2.org/products/wso2commons/tasks\" name=\"testset\" class=\"org.apache.synapse.startup.tasks.MessageInjector\" group=\"synapse.simple.quartz\"><task:trigger count=\"1\"></task:trigger><task:property name=\"soapAction\" value=\"root\"></task:property><task:property name=\"message\"><root xmlns=\"http://ws.apache.org/ns/synapse\" xmlns:urn=\"urn:wso2.connector.gmail.passwordauthentication\">\n" +
-                "         <urn:username>synapse.demo.1@gmail.com</urn:username>\n" +
-                "         <urn:password>mailpassword1</urn:password>\n" +
-                "      </root></task:property><task:property name=\"proxyName\" value=\"gmail_passwordAuthentication\"></task:property><task:property name=\"injectTo\" value=\"proxy\"></task:property></task:task>");
-
+        OMElement omElementTask = AXIOMUtil.stringToOM(content);
 
         stub.addTaskDescription(omElementTask);
 
-    }
-
-
-    public static void main(String[] args) throws RemoteException, TaskManagementException, XMLStreamException {
-
-        new TaskAdminClient("10.100.5.89", "9443").addScheduledTask("admin", "admin");
     }
 }
