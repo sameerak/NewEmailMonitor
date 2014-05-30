@@ -1,23 +1,49 @@
 package org.wso2.cep.config;
 
 
+import org.apache.axis2.AxisFault;
+import org.apache.axis2.client.Options;
+import org.apache.axis2.client.ServiceClient;
+import org.apache.axis2.context.ConfigurationContext;
 import org.apache.log4j.Logger;
 import org.wso2.carbon.event.stream.manager.stub.EventStreamAdminServiceStub;
 import org.wso2.carbon.event.stream.manager.stub.types.EventStreamAttributeDto;
+import org.wso2.carbon.mediator.bam.config.stub.BAMMediatorConfigAdminStub;
+import org.wso2.carbon.utils.CarbonUtils;
+import org.wso2.cep.email.esb.util.SecurityConstants;
+import org.wso2.cep.util.EmailMonitorConstants;
 
 import java.rmi.RemoteException;
 
 public class StreamAdminClient {
 
     private static Logger logger = Logger.getLogger(StreamAdminClient.class);
-    private EventStreamAdminServiceStub stub;
+    private EventStreamAdminServiceStub eventStreamAdminServiceStub;
+
+    public StreamAdminClient(String cookie, String backendServerURL,
+                             ConfigurationContext configCtx){
+
+       String endPoint = backendServerURL + "EventStreamAdminService";
+
+
+        try {
+            eventStreamAdminServiceStub = new EventStreamAdminServiceStub(configCtx, endPoint);
+        } catch (AxisFault axisFault) {
+            logger.error(axisFault.getMessage());
+        }
+        ServiceClient client = eventStreamAdminServiceStub._getServiceClient();
+        Options option = client.getOptions();
+        option.setManageSession(true);
+        option.setProperty(org.apache.axis2.transport.http.HTTPConstants.COOKIE_STRING, cookie);
+
+    }
 
 
     public void createMailInputStream(){
 
-        EventStreamAttributeDto metaEventStreamAttributeHttpMethod = new EventStreamAttributeDto();
-        metaEventStreamAttributeHttpMethod.setAttributeName("tenant_id");
-        metaEventStreamAttributeHttpMethod.setAttributeType("int");
+        EventStreamAttributeDto metaTenantID = new EventStreamAttributeDto();
+        metaTenantID.setAttributeName("tenant_id");
+        metaTenantID.setAttributeType("int");
 
         EventStreamAttributeDto metaHttpMethod = new EventStreamAttributeDto();
         metaHttpMethod.setAttributeName("http_method");
@@ -51,7 +77,7 @@ public class StreamAdminClient {
         metaHost.setAttributeName("host");
         metaHost.setAttributeType("string");
 
-        EventStreamAttributeDto[] metaAttributes = new EventStreamAttributeDto[]{metaHttpMethod, metaHttpMethod,metaCharacterSet,metaRemoteAddress,metaTransportIn,metaMessageType,metaRemoteHost,metaServicePrefix};
+        EventStreamAttributeDto[] metaAttributes = new EventStreamAttributeDto[]{metaTenantID,metaHttpMethod,metaCharacterSet,metaRemoteAddress,metaTransportIn,metaMessageType,metaRemoteHost,metaServicePrefix,metaHost};
 
         EventStreamAttributeDto correlationActivityID = new EventStreamAttributeDto();
         correlationActivityID.setAttributeName("activity_id");
@@ -71,80 +97,42 @@ public class StreamAdminClient {
         payloadOperationName.setAttributeName("operation_name");
         payloadOperationName.setAttributeType("string");
 
-//        EventStreamAttributeDto[] payloadEventStreamAttributeDtos = new EventStreamAttributeDto[]{payloadEventStreamAttributeDto1, payloadEventStreamAttributeDto2};
+        EventStreamAttributeDto payloadMessageID = new EventStreamAttributeDto();
+        payloadMessageID.setAttributeName("message_id");
+        payloadMessageID.setAttributeType("string");
 
-//        try {
-//            stub.addEventStreamInfo("gmailInputStream", "1.0.0", metaAttributes, null, payloadEventStreamAttributeDtos, "email information stream", "gmail");
-//        } catch (RemoteException e) {
-//            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-//        }
+        EventStreamAttributeDto payloadTimestamp = new EventStreamAttributeDto();
+        payloadTimestamp.setAttributeName("timestamp");
+        payloadTimestamp.setAttributeType("long");
+
+        EventStreamAttributeDto payloadEmailMessageID = new EventStreamAttributeDto();
+        payloadEmailMessageID.setAttributeName("messagerID");
+        payloadEmailMessageID.setAttributeType("long");
+
+        EventStreamAttributeDto payloadSoapHeader = new EventStreamAttributeDto();
+        payloadSoapHeader.setAttributeName("soap_header");
+        payloadSoapHeader.setAttributeType("string");
+
+        EventStreamAttributeDto payloadSoapBody = new EventStreamAttributeDto();
+        payloadSoapBody.setAttributeName("soap_body");
+        payloadSoapBody.setAttributeType("string");
+
+
+        EventStreamAttributeDto[] payloadAttributes = new EventStreamAttributeDto[]{payloadMessageDirection, payloadServiceName,payloadOperationName,payloadMessageID,payloadTimestamp,payloadEmailMessageID,payloadSoapHeader,payloadSoapBody};
+
+        try {
+            eventStreamAdminServiceStub.addEventStreamInfo("gmailInputStream", "1.0.0", metaAttributes, correlationAttributes, payloadAttributes, "email information stream", "gmail");
+
+        } catch (RemoteException e) {
+            logger.error(e.getMessage());
+        }
+
+
 
     }
 
 
 
-}
-//        {
-//        "name": "message_id",
-//        "type": "STRING"
-//        },
-//        {
-//        "name": "timestamp",
-//        "type": "LONG"
-//        },
-//        {
-//        "name": "messagerID",
-//        "type": "LONG"
-//        },
-//        {
-//        "name": "soap_header",
-//        "type": "STRING"
-//        },
-//        {
-//        "name": "soap_body",
-//        "type": "STRING"
-//        }
-//        ]
-//        }
 
-//        "correlationData": [
-//        {
-//        "name": "activity_id",
-//        "type": "STRING"
-//        }
-//        ],
-//        "payloadData": [
-//        {
-//        "name": "message_direction",
-//        "type": "STRING"
-//        },
-//        {
-//        "name": "service_name",
-//        "type": "STRING"
-//        },
-//        {
-//        "name": "operation_name",
-//        "type": "STRING"
-//        },
-//        {
-//        "name": "message_id",
-//        "type": "STRING"
-//        },
-//        {
-//        "name": "timestamp",
-//        "type": "LONG"
-//        },
-//        {
-//        "name": "messagerID",
-//        "type": "LONG"
-//        },
-//        {
-//        "name": "soap_header",
-//        "type": "STRING"
-//        },
-//        {
-//        "name": "soap_body",
-//        "type": "STRING"
-//        }
-//        ]
-//        }
+
+}
