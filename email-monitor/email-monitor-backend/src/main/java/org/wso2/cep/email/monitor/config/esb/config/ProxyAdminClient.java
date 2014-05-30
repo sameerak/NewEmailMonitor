@@ -1,4 +1,4 @@
-package org.wso2.cep.email.esb;
+package org.wso2.cep.email.monitor.config.esb.config;
 
 
 import org.apache.axis2.AxisFault;
@@ -8,8 +8,7 @@ import org.wso2.carbon.proxyadmin.stub.ProxyServiceAdminStub;
 import org.wso2.carbon.proxyadmin.stub.types.carbon.ProxyData;
 import org.wso2.carbon.utils.CarbonUtils;
 import org.apache.log4j.Logger;
-import org.wso2.cep.email.esb.util.SecurityConstants;
-import org.wso2.cep.util.EmailMonitorConstants;
+import org.wso2.cep.email.monitor.util.EmailMonitorConstants;
 
 import java.io.*;
 import java.rmi.RemoteException;

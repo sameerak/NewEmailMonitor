@@ -1,8 +1,8 @@
-package org.wso2.cep.email.esb;
+package org.wso2.cep.email.monitor.config.esb.config;
 
 
 import org.apache.log4j.Logger;
-import org.wso2.cep.email.esb.util.SecurityConstants;
+import org.wso2.cep.email.monitor.config.esb.config.util.SecurityConstants;
 
 public class ESBConfigurationHelper {
     private static Logger logger = Logger.getLogger(TaskAdminClient.class);
