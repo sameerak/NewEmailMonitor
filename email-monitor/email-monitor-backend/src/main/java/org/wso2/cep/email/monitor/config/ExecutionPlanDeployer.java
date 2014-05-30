@@ -13,12 +13,12 @@ import org.wso2.cep.email.monitor.util.EmailMonitorConstants;
 
 import java.rmi.RemoteException;
 
-public class EventProcessorAdminClient {
+public class ExecutionPlanDeployer {
 
-    private static Logger logger = Logger.getLogger(EventProcessorAdminClient.class);
+    private static Logger logger = Logger.getLogger(ExecutionPlanDeployer.class);
     private EventProcessorAdminServiceStub eventProcessorAdminServiceStub;
 
-    public EventProcessorAdminClient(String cookie, String backendServerURL,ConfigurationContext configCtx){
+    public ExecutionPlanDeployer(String cookie, String backendServerURL, ConfigurationContext configCtx){
 
         String endPoint = backendServerURL + "EventProcessorAdminService";
 
@@ -37,7 +37,7 @@ public class EventProcessorAdminClient {
     }
 
 
-    public EventProcessorAdminClient(String ip, String port){
+    public ExecutionPlanDeployer(String ip, String port){
 
 
         System.setProperty(SecurityConstants.TRUSTSTORE, "/home/sachini/Documents/wso2esb-4.8.1/repository/resources/security/client-truststore.jks");
