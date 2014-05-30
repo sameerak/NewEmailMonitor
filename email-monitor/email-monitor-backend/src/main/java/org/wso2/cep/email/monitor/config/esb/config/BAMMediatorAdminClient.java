@@ -33,7 +33,7 @@ public class BAMMediatorAdminClient {
 
     }
 
-    public void addMailProxy(String userName, String password){
+    public void addBAMServerProfile(String userName, String password, String CEPServerUserName, String CEPServerPassword){
 
         CarbonUtils.setBasicAccessSecurityHeaders(userName, password, stub._getServiceClient());
 
@@ -52,6 +52,9 @@ public class BAMMediatorAdminClient {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        content.replace("CEPServerUserName",CEPServerUserName);
+        content.replace("CEPServerPassword",CEPServerPassword);
 
         try {
             stub.saveResourceString(content,EmailMonitorConstants.BAM_SERVER_PROFILE_NAME);
