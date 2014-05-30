@@ -1,4 +1,4 @@
-<inSequence xmlns="http://ws.apache.org/ns/synapse">
+<inSequence>
     <property xmlns:ns="urn:wso2.connector.gmail.passwordauthentication"
               name="username"
               expression="//ns:username/text()"/>
@@ -10,25 +10,29 @@
         <password>{$ctx:password}</password>
     </gmail.passwordLogin>
     <gmail.listAllMails>
-        <batchNumber>2</batchNumber>
+        <label>inbox</label>
     </gmail.listAllMails>
-    <log level="custom">
-        <property xmlns:ns="http://org.wso2.esbconnectors.gmail"
-                  name="Stock Quote on"
-                  expression="//ns:messageID[1]/child::text()"/>
-    </log>
+    <class name="org.wso2.carbon.gmail.mediator.MessageFilter"/>
     <iterate xmlns:ns="http://org.wso2.esbconnectors.gmail"
              id="iter1"
-             expression="//ns:messages/ns:message">
+             expression="//ns:messages/ns:message"
+             sequential="true">
         <target>
             <sequence>
                 <property name="P_Id" expression="//ns:messageID/text()"/>
                 <gmail.readMailMessage>
                     <messageID>{$ctx:P_Id}</messageID>
                 </gmail.readMailMessage>
-                <log level="custom">
-                    <property name="content" expression="//ns:content/text()"/>
-                </log>
+                <class name="org.wso2.carbon.gmail.mediator.MessageContentInjector"/>
+                <property name="M_ID" expression="//ns:messageID/text()"/>
+                <property name="msg" expression="//ns:subject/text()"/>
+                <property name="from" expression="//ns:from/text()"/>
+                <property name="to" expression="//ns:to/text()"/>
+                <property name="sentDate" expression="//ns:sentDate/text()"/>
+                <property name="T_ID" expression="//ns:threadID/text()"/>
+                <property name="status" expression="//ns:Status/text()"/>
+                <property name="content" expression="//ns:content/text()"/>
+                <property name="labels" expression="//ns:labels/ns:label"/>
                 <bam>
                     <serverProfile name="test">
                         <streamConfig name="inbox" version="1.0.0"/>
@@ -38,4 +42,5 @@
         </target>
     </iterate>
 </inSequence>
+
 
