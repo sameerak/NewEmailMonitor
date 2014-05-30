@@ -1,4 +1,4 @@
-package org.wso2.cep.config;
+package org.wso2.cep.email.monitor.config;
 
 
 import org.apache.axis2.AxisFault;
@@ -8,10 +8,6 @@ import org.apache.axis2.context.ConfigurationContext;
 import org.apache.log4j.Logger;
 import org.wso2.carbon.event.stream.manager.stub.EventStreamAdminServiceStub;
 import org.wso2.carbon.event.stream.manager.stub.types.EventStreamAttributeDto;
-import org.wso2.carbon.mediator.bam.config.stub.BAMMediatorConfigAdminStub;
-import org.wso2.carbon.utils.CarbonUtils;
-import org.wso2.cep.email.esb.util.SecurityConstants;
-import org.wso2.cep.util.EmailMonitorConstants;
 
 import java.rmi.RemoteException;
 

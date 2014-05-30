@@ -1,13 +1,10 @@
-package org.wso2.cep.email.esb;
+package org.wso2.cep.email.monitor.config.esb.config;
 
 import org.apache.axis2.AxisFault;
 import org.apache.log4j.Logger;
 import org.wso2.carbon.mediator.bam.config.stub.BAMMediatorConfigAdminStub;
-import org.wso2.carbon.mediator.bam.config.stub.axis2.types.SaveBamServerConfig;
-import org.wso2.carbon.mediator.bam.config.xsd.BamServerConfig;
 import org.wso2.carbon.utils.CarbonUtils;
-import org.wso2.cep.email.esb.util.SecurityConstants;
-import org.wso2.cep.util.EmailMonitorConstants;
+import org.wso2.cep.email.monitor.util.EmailMonitorConstants;
 
 import java.io.BufferedReader;
 import java.io.IOException;

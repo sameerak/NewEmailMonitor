@@ -108,7 +108,7 @@
                 <Bundle-Name>${pom.name}</Bundle-Name>
                 <Bundle-Version>${pom.version}</Bundle-Version>
                 <Embed-Dependency>*;scope=compile</Embed-Dependency>
-                <Export-Package>org.wso2.cep.email.esb.*,org.wso2.carbon.task.*; version="4.2.0"</Export-Package>
+                <Export-Package>org.wso2.cep.email.monitor.config.esb.*,org.wso2.carbon.task.*; version="4.2.0"</Export-Package>
                 <Carbon-Component>UIBundle</Carbon-Component>
             </instructions>
         </configuration>

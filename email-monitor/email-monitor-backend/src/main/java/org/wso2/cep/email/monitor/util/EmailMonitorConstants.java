@@ -1,4 +1,4 @@
-package org.wso2.cep.util;
+package org.wso2.cep.email.monitor.util;
 
 
 public class EmailMonitorConstants {

@@ -1,4 +1,4 @@
-package org.wso2.cep.email.esb;
+package org.wso2.cep.email.monitor.config.esb.config;
 
 
 
@@ -9,8 +9,7 @@ import org.apache.log4j.Logger;
 import org.wso2.carbon.task.stub.TaskAdminStub;
 import org.wso2.carbon.task.stub.TaskManagementException;
 import org.wso2.carbon.utils.CarbonUtils;
-import org.wso2.cep.email.esb.util.SecurityConstants;
-import org.wso2.cep.util.EmailMonitorConstants;
+import org.wso2.cep.email.monitor.util.EmailMonitorConstants;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.BufferedReader;
