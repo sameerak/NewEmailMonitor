@@ -97,6 +97,10 @@
 
     <build>
     <plugins>
+        <plugin>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>maven-scr-plugin</artifactId>
+        </plugin>
     <plugin>
         <groupId>org.apache.felix</groupId>
         <artifactId>maven-bundle-plugin</artifactId>
@@ -108,8 +112,16 @@
                 <Bundle-Name>${pom.name}</Bundle-Name>
                 <Bundle-Version>${pom.version}</Bundle-Version>
                 <Embed-Dependency>*;scope=compile</Embed-Dependency>
-                <Export-Package>org.wso2.cep.email.monitor.config.esb.*,org.wso2.carbon.task.*; version="4.2.0"</Export-Package>
-                <Carbon-Component>UIBundle</Carbon-Component>
+                <Private-Package>
+                    org.wso2.cep.email.monitor.internal,
+                    org.wso2.cep.email.monitor.internal.*
+                </Private-Package>
+                <Export-Package>
+                    !org.wso2.cep.email.monitor.internal,
+                    !org.wso2.cep.email.monitor.internal.*
+                    org.wso2.cep.email.monitor.*,
+                    org.wso2.carbon.task.*; version="4.2.0"
+                </Export-Package>
             </instructions>
         </configuration>
     </plugin>

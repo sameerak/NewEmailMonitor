@@ -1,4 +1,4 @@
-package org.wso2.cep.email.monitor.config;
+package org.wso2.cep.email.monitor.internal.config;
 
 
 import org.apache.axis2.AxisFault;
@@ -8,6 +8,7 @@ import org.apache.axis2.context.ConfigurationContext;
 import org.apache.log4j.Logger;
 import org.wso2.carbon.event.stream.manager.stub.EventStreamAdminServiceStub;
 import org.wso2.carbon.event.stream.manager.stub.types.EventStreamAttributeDto;
+import org.wso2.cep.email.monitor.exception.EmailMonitorServiceException;
 
 import java.rmi.RemoteException;
 
@@ -17,15 +18,16 @@ public class StreamDeployer {
     private EventStreamAdminServiceStub eventStreamAdminServiceStub;
 
     public StreamDeployer(String cookie, String backendServerURL,
-                          ConfigurationContext configCtx){
+                          ConfigurationContext configCtx) throws EmailMonitorServiceException {
 
-       String endPoint = backendServerURL + "EventStreamAdminService";
+        String endPoint = backendServerURL + "EventStreamAdminService";
 
 
         try {
             eventStreamAdminServiceStub = new EventStreamAdminServiceStub(configCtx, endPoint);
         } catch (AxisFault axisFault) {
             logger.error(axisFault.getMessage());
+            throw new EmailMonitorServiceException("Error When creating StreamDeployer", axisFault);
         }
         ServiceClient client = eventStreamAdminServiceStub._getServiceClient();
         Options option = client.getOptions();
@@ -35,7 +37,7 @@ public class StreamDeployer {
     }
 
 
-    public void createMailInputStream(){
+    public void createMailInputStream() throws EmailMonitorServiceException {
 
         EventStreamAttributeDto metaTenantID = new EventStreamAttributeDto();
         metaTenantID.setAttributeName("tenant_id");
@@ -73,13 +75,13 @@ public class StreamDeployer {
         metaHost.setAttributeName("host");
         metaHost.setAttributeType("string");
 
-        EventStreamAttributeDto[] metaAttributes = new EventStreamAttributeDto[]{metaTenantID,metaHttpMethod,metaCharacterSet,metaRemoteAddress,metaTransportIn,metaMessageType,metaRemoteHost,metaServicePrefix,metaHost};
+        EventStreamAttributeDto[] metaAttributes = new EventStreamAttributeDto[]{metaTenantID, metaHttpMethod, metaCharacterSet, metaRemoteAddress, metaTransportIn, metaMessageType, metaRemoteHost, metaServicePrefix, metaHost};
 
         EventStreamAttributeDto correlationActivityID = new EventStreamAttributeDto();
         correlationActivityID.setAttributeName("activity_id");
         correlationActivityID.setAttributeType("string");
 
-        EventStreamAttributeDto[] correlationAttributes = new EventStreamAttributeDto[] {correlationActivityID};
+        EventStreamAttributeDto[] correlationAttributes = new EventStreamAttributeDto[]{correlationActivityID};
 
         EventStreamAttributeDto payloadMessageDirection = new EventStreamAttributeDto();
         payloadMessageDirection.setAttributeName("message_direction");
@@ -114,21 +116,18 @@ public class StreamDeployer {
         payloadSoapBody.setAttributeType("string");
 
 
-        EventStreamAttributeDto[] payloadAttributes = new EventStreamAttributeDto[]{payloadMessageDirection, payloadServiceName,payloadOperationName,payloadMessageID,payloadTimestamp,payloadEmailMessageID,payloadSoapHeader,payloadSoapBody};
+        EventStreamAttributeDto[] payloadAttributes = new EventStreamAttributeDto[]{payloadMessageDirection, payloadServiceName, payloadOperationName, payloadMessageID, payloadTimestamp, payloadEmailMessageID, payloadSoapHeader, payloadSoapBody};
 
         try {
             eventStreamAdminServiceStub.addEventStreamInfo("gmailInputStream", "1.0.0", metaAttributes, correlationAttributes, payloadAttributes, "email information stream", "gmail");
 
         } catch (RemoteException e) {
             logger.error(e.getMessage());
+            throw new EmailMonitorServiceException("Error when creating mailInputStream", e);
         }
 
 
-
     }
-
-
-
 
 
 }

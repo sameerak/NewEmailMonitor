@@ -1,4 +1,4 @@
-package org.wso2.cep.email.monitor.config;
+package org.wso2.cep.email.monitor.internal.config;
 
 
 import org.apache.axis2.AxisFault;
@@ -8,8 +8,9 @@ import org.apache.axis2.context.ConfigurationContext;
 import org.apache.log4j.Logger;
 import org.wso2.carbon.event.processor.stub.EventProcessorAdminServiceStub;
 import org.wso2.carbon.utils.CarbonUtils;
-import org.wso2.cep.email.monitor.config.esb.config.util.SecurityConstants;
-import org.wso2.cep.email.monitor.util.EmailMonitorConstants;
+import org.wso2.cep.email.monitor.exception.EmailMonitorServiceException;
+import org.wso2.cep.email.monitor.internal.config.esb.config.util.SecurityConstants;
+import org.wso2.cep.email.monitor.internal.util.EmailMonitorConstants;
 
 import java.rmi.RemoteException;
 
@@ -18,7 +19,7 @@ public class ExecutionPlanDeployer {
     private static Logger logger = Logger.getLogger(ExecutionPlanDeployer.class);
     private EventProcessorAdminServiceStub eventProcessorAdminServiceStub;
 
-    public ExecutionPlanDeployer(String cookie, String backendServerURL, ConfigurationContext configCtx){
+    public ExecutionPlanDeployer(String cookie, String backendServerURL, ConfigurationContext configCtx) throws EmailMonitorServiceException {
 
         String endPoint = backendServerURL + "EventProcessorAdminService";
 
@@ -27,6 +28,7 @@ public class ExecutionPlanDeployer {
             eventProcessorAdminServiceStub = new EventProcessorAdminServiceStub(configCtx, endPoint);
         } catch (AxisFault axisFault) {
             logger.error(axisFault.getMessage());
+            throw new EmailMonitorServiceException("Error when creating ExecutionPlanDeployer", axisFault);
         }
 
         ServiceClient client = eventProcessorAdminServiceStub._getServiceClient();
@@ -37,7 +39,7 @@ public class ExecutionPlanDeployer {
     }
 
 
-    public ExecutionPlanDeployer(String ip, String port){
+    public ExecutionPlanDeployer(String ip, String port) throws EmailMonitorServiceException {
 
 
         System.setProperty(SecurityConstants.TRUSTSTORE, "/home/sachini/Documents/wso2esb-4.8.1/repository/resources/security/client-truststore.jks");
@@ -50,6 +52,7 @@ public class ExecutionPlanDeployer {
             eventProcessorAdminServiceStub = new EventProcessorAdminServiceStub(endPoint);
         } catch (AxisFault axisFault) {
             logger.error(axisFault.getMessage());
+            throw new EmailMonitorServiceException("Error when creating stub", axisFault);
         }
 
         CarbonUtils.setBasicAccessSecurityHeaders("admin", "admin", eventProcessorAdminServiceStub._getServiceClient());
@@ -57,17 +60,16 @@ public class ExecutionPlanDeployer {
     }
 
 
-    public void createExecutionPlan(String executionPlanXmlConfiguration){
+    public void createExecutionPlan(String executionPlanXmlConfiguration) throws EmailMonitorServiceException {
 
         try {
             eventProcessorAdminServiceStub.deployExecutionPlanConfigurationFromConfigXml(executionPlanXmlConfiguration);
         } catch (RemoteException e) {
-           logger.error(e.getMessage());
+            logger.error(e.getMessage());
+            throw new EmailMonitorServiceException("Error when creating AdminServiceStub", e);
         }
 
     }
-
-
 
 
 }
