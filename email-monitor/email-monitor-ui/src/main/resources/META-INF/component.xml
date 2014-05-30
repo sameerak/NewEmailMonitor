@@ -9,7 +9,7 @@
             <region>region1</region>
             <order>50</order>
             <style-class>manage</style-class>
-             <icon>../emailmonitor/images/order.gif</icon>
+             <icon>../emailmonitor/images/email.gif</icon>
             <require-permission>/permission/protected/manage</require-permission>
         </menu>
     </menus>
