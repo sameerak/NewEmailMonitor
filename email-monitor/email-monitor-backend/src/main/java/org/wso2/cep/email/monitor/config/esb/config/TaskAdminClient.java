@@ -36,7 +36,7 @@ public class TaskAdminClient {
 
     }
 
-    public void addScheduledTask(String userName, String password)  {
+    public void addScheduledTask(String userName, String password,String mailUserName, String mailPassword)  {
         CarbonUtils.setBasicAccessSecurityHeaders(userName, password, stub._getServiceClient());
 
         String content = "";
@@ -54,6 +54,10 @@ public class TaskAdminClient {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        content.replace("mailUserName",mailUserName);
+        content.replace("mailPassword",mailPassword);
+
 
         OMElement omElementTask = null;
         try {
