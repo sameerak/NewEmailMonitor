@@ -13,14 +13,14 @@ import java.io.InputStreamReader;
 import java.rmi.RemoteException;
 
 
-public class BAMMediatorAdminClient {
+public class BAMMediatorDeployer {
 
 
-    private static Logger logger = Logger.getLogger(BAMMediatorAdminClient.class);
+    private static Logger logger = Logger.getLogger(BAMMediatorDeployer.class);
     private BAMMediatorConfigAdminStub stub;
 
 
-    public BAMMediatorAdminClient(String ip, String port) {
+    public BAMMediatorDeployer(String ip, String port) {
         String endPoint = EmailMonitorConstants.PROTOCOL + ip + ":" + port + EmailMonitorConstants.SERVICES + EmailMonitorConstants.BAM_MEDIATOR_ADMIN_SERVICE;
 
        try {
@@ -33,7 +33,7 @@ public class BAMMediatorAdminClient {
 
     }
 
-    public void addBAMServerProfile(String userName, String password, String CEPServerUserName, String CEPServerPassword){
+    public void addBAMServerProfile(String userName, String password, String CEPServerUserName, String CEPServerPassword, String CEPServerIP ,String CEPServerPort){
 
         CarbonUtils.setBasicAccessSecurityHeaders(userName, password, stub._getServiceClient());
 
@@ -43,7 +43,7 @@ public class BAMMediatorAdminClient {
         BufferedReader br = null;
         String line;
 
-        is = ProxyAdminClient.class.getResourceAsStream(EmailMonitorConstants.BAM_SERVER_PROFILE_CONFIGURATION_PATH);
+        is = ProxyDeployer.class.getResourceAsStream(EmailMonitorConstants.BAM_SERVER_PROFILE_CONFIGURATION_PATH);
         br = new BufferedReader(new InputStreamReader(is));
         try {
             while (null != (line = br.readLine())) {
@@ -54,6 +54,9 @@ public class BAMMediatorAdminClient {
         }
 
         content.replace("CEPServerUserName",CEPServerUserName);
+        content.replace("CEPServerIP",CEPServerIP);
+        content.replace("CEPServerPort",CEPServerPort);
+
         content.replace("CEPServerPassword",CEPServerPassword);
 
         try {

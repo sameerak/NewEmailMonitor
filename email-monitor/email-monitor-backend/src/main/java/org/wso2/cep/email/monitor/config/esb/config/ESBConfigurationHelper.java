@@ -5,10 +5,10 @@ import org.apache.log4j.Logger;
 import org.wso2.cep.email.monitor.config.esb.config.util.SecurityConstants;
 
 public class ESBConfigurationHelper {
-    private static Logger logger = Logger.getLogger(TaskAdminClient.class);
-    private ProxyAdminClient proxyAdminClient;
-    private BAMMediatorAdminClient bamMediatorAdminClient;
-    private TaskAdminClient taskAdminClient;
+    private static Logger logger = Logger.getLogger(TaskDeployer.class);
+    private ProxyDeployer proxyDeployer;
+    private BAMMediatorDeployer bamMediatorDeployer;
+    private TaskDeployer taskDeployer;
 
     public ESBConfigurationHelper(String ip, String port) {
 
@@ -17,9 +17,9 @@ public class ESBConfigurationHelper {
         System.setProperty(SecurityConstants.TRUSTSTORE_PASSWORD, SecurityConstants.KEY_STORE_PASSWORD);
         System.setProperty(SecurityConstants.TRUSTSTORE_TYPE, SecurityConstants.KEY_STORE_TYPE);
 
-        proxyAdminClient = new ProxyAdminClient(ip, port);
-        bamMediatorAdminClient = new BAMMediatorAdminClient(ip, port);
-        taskAdminClient = new TaskAdminClient(ip, port);
+        proxyDeployer = new ProxyDeployer(ip, port);
+        bamMediatorDeployer = new BAMMediatorDeployer(ip, port);
+        taskDeployer = new TaskDeployer(ip, port);
 
 
     }
@@ -28,9 +28,9 @@ public class ESBConfigurationHelper {
     public void addConfigurations(String userName, String password, String CEPServerUserName, String CEPServerPassword, String mailUserNAme, String mailPassword) {
         logger.info("Stared adding ESB configurations");
 
-        bamMediatorAdminClient.addBAMServerProfile(userName, password, CEPServerUserName, CEPServerPassword);
-        proxyAdminClient.addMailProxy(userName, password);
-        taskAdminClient.addScheduledTask(userName, password, mailUserNAme, mailPassword);
+        bamMediatorDeployer.addBAMServerProfile(userName, password, CEPServerUserName, CEPServerPassword);
+        proxyDeployer.addMailProxy(userName, password);
+        taskDeployer.addScheduledTask(userName, password, mailUserNAme, mailPassword);
 
 
     }

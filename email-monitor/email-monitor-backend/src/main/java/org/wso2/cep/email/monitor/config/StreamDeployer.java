@@ -11,13 +11,13 @@ import org.wso2.carbon.event.stream.manager.stub.types.EventStreamAttributeDto;
 
 import java.rmi.RemoteException;
 
-public class StreamAdminClient {
+public class StreamDeployer {
 
-    private static Logger logger = Logger.getLogger(StreamAdminClient.class);
+    private static Logger logger = Logger.getLogger(StreamDeployer.class);
     private EventStreamAdminServiceStub eventStreamAdminServiceStub;
 
-    public StreamAdminClient(String cookie, String backendServerURL,
-                             ConfigurationContext configCtx){
+    public StreamDeployer(String cookie, String backendServerURL,
+                          ConfigurationContext configCtx){
 
        String endPoint = backendServerURL + "EventStreamAdminService";
 

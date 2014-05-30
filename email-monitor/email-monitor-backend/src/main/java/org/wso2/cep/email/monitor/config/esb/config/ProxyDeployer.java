@@ -14,13 +14,13 @@ import java.io.*;
 import java.rmi.RemoteException;
 
 
-public class ProxyAdminClient {
+public class ProxyDeployer {
 
-    private static Logger logger = Logger.getLogger(ProxyAdminClient.class);
+    private static Logger logger = Logger.getLogger(ProxyDeployer.class);
     private ProxyServiceAdminStub stub;
 
 
-    public ProxyAdminClient(String ip, String port) {
+    public ProxyDeployer(String ip, String port) {
         String endPoint = EmailMonitorConstants.PROTOCOL + ip + ":" + port + EmailMonitorConstants.SERVICES + EmailMonitorConstants.PROXY_ADMIN_SERVICE;
 
         try {
@@ -51,7 +51,7 @@ public class ProxyAdminClient {
         BufferedReader br = null;
         String line;
 
-        is = ProxyAdminClient.class.getResourceAsStream(EmailMonitorConstants.PROXY_PATH);
+        is = ProxyDeployer.class.getResourceAsStream(EmailMonitorConstants.PROXY_PATH);
         br = new BufferedReader(new InputStreamReader(is));
         try {
             while (null != (line = br.readLine())) {
