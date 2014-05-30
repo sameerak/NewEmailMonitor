@@ -65,8 +65,14 @@ public class BAMMediatorAdminClient {
 
     }
 
-
-
+    public String encryptAndBase64Encode(String plainText) throws RemoteException {
+        try {
+            return stub.encryptAndBase64Encode(plainText);
+        } catch (RemoteException e) {
+            logger.error(e.getMessage());
+            throw new RemoteException(e.getMessage(), e);
+        }
+    }
 }
 
 
