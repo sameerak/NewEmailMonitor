@@ -58,11 +58,11 @@ public class TaskDeployer {
         }
 
 
-        content.replace("mailUserName", mailUserName);
-        content.replace("mailPassword", mailPassword);
 
-        content = content.replace(EmailMonitorConstants.GMAIL_USERNAME, mailUserName);
-        content = content.replace(EmailMonitorConstants.GMAIL_PASSWORD, mailPassword);
+        content = content.replace(EmailMonitorConstants.GMAIL_USERNAME,mailUserName);
+
+        CryptographyManager cryptographyManager = new CryptographyManager();
+        content = content.replace(EmailMonitorConstants.GMAIL_PASSWORD,cryptographyManager.encryptAndBase64Encode(mailPassword));
 
 
         OMElement omElementTask = null;

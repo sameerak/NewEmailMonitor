@@ -194,24 +194,6 @@ public class StreamDeployer {
 
     }
 
-//    public static void main(String args[]) {
-//        System.setProperty(SecurityConstants.TRUSTSTORE, "/home/sachini/Documents/wso2esb-4.8.1/repository/resources/security/client-truststore.jks"/*SecurityConstants.CLIENT_TRUST_STORE_PATH*/);
-//        System.setProperty(SecurityConstants.TRUSTSTORE_PASSWORD, SecurityConstants.KEY_STORE_PASSWORD);
-//        System.setProperty(SecurityConstants.TRUSTSTORE_TYPE, SecurityConstants.KEY_STORE_TYPE);
-//        String endPoint = EmailMonitorConstants.PROTOCOL + "10.225.78.245" + ":" + "9444" + EmailMonitorConstants.SERVICES + "EventStreamAdminService";
-//
-//        try {
-//            eventStreamAdminServiceStub = new EventStreamAdminServiceStub(endPoint);
-//        } catch (AxisFault axisFault) {
-//            logger.error(axisFault.getMessage());
-//        }
-//
-//
-//        CarbonUtils.setBasicAccessSecurityHeaders("admin", "admin", eventStreamAdminServiceStub._getServiceClient());
-//
-//        new StreamDeployer().createMailInputStream();
-//    }
-
 
 }
 

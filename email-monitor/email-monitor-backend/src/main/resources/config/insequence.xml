@@ -1,4 +1,5 @@
 <inSequence xmlns="http://ws.apache.org/ns/synapse">
+    <class name="org.wso2.carbon.gmail.mediator.util.PasswordDecryptor"/>
     <property xmlns:ns="urn:wso2.connector.gmail.passwordauthentication"
               name="username"
               expression="//ns:username/text()"/>

@@ -62,20 +62,6 @@ public class EmailMonitorService implements EmailMonitorServiceInterface {
     }
 
     @Override
-    public boolean createExecutionPlan(String ip, String port, String executionPlanXmlConfiguration) throws EmailMonitorServiceException {
-
-        try {
-            ExecutionPlanDeployer executionPlanDeployer = new ExecutionPlanDeployer(ip, port);
-            executionPlanDeployer.createExecutionPlan(executionPlanXmlConfiguration);
-            return true;
-        } catch (EmailMonitorServiceException e) {
-            logger.error(e.getMessage());
-            throw new EmailMonitorServiceException(e);
-
-        }
-    }
-
-    @Override
     public boolean createExecutionPlan(String cookie, String backendServerURL, ConfigurationContext configCtx, String executionPlanXmlConfiguration) throws EmailMonitorServiceException {
 
         try {
