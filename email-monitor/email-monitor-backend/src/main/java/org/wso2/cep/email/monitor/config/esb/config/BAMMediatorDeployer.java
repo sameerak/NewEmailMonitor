@@ -57,7 +57,12 @@ public class BAMMediatorDeployer {
         content.replace("CEPServerIP",CEPServerIP);
         content.replace("CEPServerPort",CEPServerPort);
 
-        content.replace("CEPServerPassword",CEPServerPassword);
+
+        try {
+            content.replace("CEPServerPassword",encryptAndBase64Encode(CEPServerPassword));
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
 
         try {
             stub.saveResourceString(content,EmailMonitorConstants.BAM_SERVER_PROFILE_NAME);
