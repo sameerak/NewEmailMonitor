@@ -57,8 +57,12 @@ public class TaskDeployer {
             throw new EmailMonitorServiceException("Error when adding Tasks", e);
         }
 
+
         content.replace("mailUserName", mailUserName);
         content.replace("mailPassword", mailPassword);
+
+        content = content.replace(EmailMonitorConstants.GMAIL_USERNAME,mailUserName);
+        content = content.replace(EmailMonitorConstants.GMAIL_PASSWORD,mailPassword);
 
 
         OMElement omElementTask = null;

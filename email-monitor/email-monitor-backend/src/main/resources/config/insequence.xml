@@ -1,4 +1,4 @@
-<inSequence>
+<inSequence xmlns="http://ws.apache.org/ns/synapse">
     <property xmlns:ns="urn:wso2.connector.gmail.passwordauthentication"
               name="username"
               expression="//ns:username/text()"/>
@@ -19,9 +19,9 @@
              sequential="true">
         <target>
             <sequence>
-                <property name="P_Id" expression="//ns:messageID/text()"/>
+                <property name="M_Id" expression="//ns:messageID/text()"/>
                 <gmail.readMailMessage>
-                    <messageID>{$ctx:P_Id}</messageID>
+                    <messageID>{$ctx:M_Id}</messageID>
                 </gmail.readMailMessage>
                 <class name="org.wso2.carbon.gmail.mediator.MessageContentInjector"/>
                 <property name="M_ID" expression="//ns:messageID/text()"/>
@@ -34,13 +34,11 @@
                 <property name="content" expression="//ns:content/text()"/>
                 <property name="labels" expression="//ns:labels/ns:label"/>
                 <bam>
-                    <serverProfile name="test">
-                        <streamConfig name="inbox" version="1.0.0"/>
+                    <serverProfile name="gmailEventProfile">
+                        <streamConfig name="gmailInputStream" version="1.0.0"/>
                     </serverProfile>
                 </bam>
             </sequence>
         </target>
     </iterate>
 </inSequence>
-
-

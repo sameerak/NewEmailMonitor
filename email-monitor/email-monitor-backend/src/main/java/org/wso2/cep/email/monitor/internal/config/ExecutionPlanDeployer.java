@@ -39,6 +39,7 @@ public class ExecutionPlanDeployer {
     }
 
 
+
     public ExecutionPlanDeployer(String ip, String port) throws EmailMonitorServiceException {
 
 
@@ -58,6 +59,25 @@ public class ExecutionPlanDeployer {
         CarbonUtils.setBasicAccessSecurityHeaders("admin", "admin", eventProcessorAdminServiceStub._getServiceClient());
 
     }
+
+//    public ExecutionPlanDeployer(String ip, String port){
+//
+//
+//        System.setProperty(SecurityConstants.TRUSTSTORE, "/home/sachini/Documents/wso2esb-4.8.1/repository/resources/security/client-truststore.jks");
+//        System.setProperty(SecurityConstants.TRUSTSTORE_PASSWORD, SecurityConstants.KEY_STORE_PASSWORD);
+//        System.setProperty(SecurityConstants.TRUSTSTORE_TYPE, SecurityConstants.KEY_STORE_TYPE);
+//
+//        String endPoint = EmailMonitorConstants.PROTOCOL + ip + ":" + port + EmailMonitorConstants.SERVICES + "EventProcessorAdminService";
+//
+//        try {
+//            eventProcessorAdminServiceStub = new EventProcessorAdminServiceStub(endPoint);
+//        } catch (AxisFault axisFault) {
+//            logger.error(axisFault.getMessage());
+//        }
+//
+//        CarbonUtils.setBasicAccessSecurityHeaders("admin", "admin", eventProcessorAdminServiceStub._getServiceClient());
+//
+//    }
 
 
     public void createExecutionPlan(String executionPlanXmlConfiguration) throws EmailMonitorServiceException {
