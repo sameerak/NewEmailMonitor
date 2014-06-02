@@ -68,8 +68,8 @@ public class BAMMediatorDeployer {
 
         try {
             content.replace(EmailMonitorConstants.CEP_SERVER_ENCRYPTED_PASSWORD, encryptAndBase64Encode(CEPServerPassword));
-        } catch (Exception e) {
-          logger.info(e.getMessage());
+        }  catch (EmailMonitorServiceException e) {
+          logger.error(e.getMessage());
             throw new EmailMonitorServiceException(e);
         }
 
@@ -83,7 +83,6 @@ public class BAMMediatorDeployer {
 
 
     }
-
 
 
 
