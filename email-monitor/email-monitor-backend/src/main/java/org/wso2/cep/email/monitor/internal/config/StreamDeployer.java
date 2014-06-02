@@ -44,7 +44,6 @@ public class StreamDeployer {
     }
 
 
-
     public void createMailInputStream() throws EmailMonitorServiceException {
 
 
@@ -158,9 +157,6 @@ public class StreamDeployer {
         payloadSoapBody.setAttributeType("string");
 
 
-
-
-
         EventStreamAttributeDto[] payloadAttributes = new EventStreamAttributeDto[]{payloadMessageDirection, payloadServiceName, payloadOperationName,
                 payloadMessageID, payloadTimestamp, payloadEmailMessageID, payloadSubject, payloadFrom, payloadTo, payloadSentDate, payloadThreadID, payloadStatus, payloadContent, payloadLabels, payloadSoapHeader, payloadSoapBody};
 
@@ -174,8 +170,6 @@ public class StreamDeployer {
 
 
     }
-
-
 
 
     public void createMailOutputStream() {
@@ -198,8 +192,8 @@ public class StreamDeployer {
         }
 
 
-
     }
+
 
 }
 

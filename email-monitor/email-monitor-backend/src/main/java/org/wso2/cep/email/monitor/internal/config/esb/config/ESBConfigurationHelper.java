@@ -29,7 +29,9 @@ public class ESBConfigurationHelper {
     }
 
 
+
     public void addConfigurations(String ESBUserName, String ESBPassword, String CEPServerUserName, String CEPServerPassword, String mailUserNAme, String mailPassword,String CEPServerIP ,String CEPServerPort ) throws EmailMonitorServiceException{
+
         logger.info("Stared adding ESB configurations");
 
         bamMediatorDeployer.addBAMServerProfile(ESBUserName, ESBPassword, CEPServerUserName, CEPServerPassword , CEPServerIP ,CEPServerPort);
@@ -38,9 +40,5 @@ public class ESBConfigurationHelper {
 
 
     }
-
-
-
-
 
 }

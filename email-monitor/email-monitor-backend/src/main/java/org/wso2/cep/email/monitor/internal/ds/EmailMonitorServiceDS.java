@@ -36,8 +36,9 @@ public class EmailMonitorServiceDS {
     }
 
     protected void deactivate(ComponentContext context) {
-      // context.getBundleContext().ungetService();
+        // context.getBundleContext().ungetService();
     }
+
     protected void setConfigurationContextService(
             ConfigurationContextService configurationContextService) {
         EmailMonitorValueHolder.getInstance().registerConfigurationContextService(configurationContextService);
