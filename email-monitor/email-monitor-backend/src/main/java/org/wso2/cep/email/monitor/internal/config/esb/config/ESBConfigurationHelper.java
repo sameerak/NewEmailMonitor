@@ -1,8 +1,12 @@
-package org.wso2.cep.email.monitor.config.esb.config;
+package org.wso2.cep.email.monitor.internal.config.esb.config;
 
 
 import org.apache.log4j.Logger;
-import org.wso2.cep.email.monitor.config.esb.config.util.SecurityConstants;
+import org.wso2.cep.email.monitor.exception.EmailMonitorServiceException;
+import org.wso2.cep.email.monitor.internal.config.esb.config.*;
+import org.wso2.cep.email.monitor.internal.config.esb.config.BAMMediatorDeployer;
+import org.wso2.cep.email.monitor.internal.config.esb.config.TaskDeployer;
+import org.wso2.cep.email.monitor.internal.config.esb.config.util.SecurityConstants;
 
 public class ESBConfigurationHelper {
     private static Logger logger = Logger.getLogger(TaskDeployer.class);
@@ -10,7 +14,7 @@ public class ESBConfigurationHelper {
     private BAMMediatorDeployer bamMediatorDeployer;
     private TaskDeployer taskDeployer;
 
-    public ESBConfigurationHelper(String ip, String port) {
+    public ESBConfigurationHelper(String ip, String port) throws EmailMonitorServiceException {
 
 
         System.setProperty(SecurityConstants.TRUSTSTORE, SecurityConstants.CLIENT_TRUST_STORE_PATH);
@@ -25,18 +29,21 @@ public class ESBConfigurationHelper {
     }
 
 
-    public void addConfigurations(String userName, String password, String CEPServerUserName, String CEPServerPassword, String mailUserNAme, String mailPassword,String CEPServerIP ,String CEPServerPort ) {
+
+
+
+    public void addConfigurations(String userName, String password, String CEPServerUserName, String CEPServerPassword, String mailUserNAme, String mailPassword,String CEPServerIP ,String CEPServerPort ) throws EmailMonitorServiceException {
         logger.info("Stared adding ESB configurations");
 
-        bamMediatorDeployer.addBAMServerProfile(userName, password, CEPServerUserName, CEPServerPassword , CEPServerIP ,CEPServerPort);
+        bamMediatorDeployer.addBAMServerProfile(userName, password, CEPServerUserName, CEPServerPassword, CEPServerIP, CEPServerPort);
+
         proxyDeployer.addMailProxy(userName, password);
         taskDeployer.addScheduledTask(userName, password, mailUserNAme, mailPassword);
 
 
     }
 
-    public static void main(String args[]){
-                     new ESBConfigurationHelper("10.225.78.245", "9443").addConfigurations("admin","admin","admin","admin","synapse.demo.1@gmail.com","mailpassword1","10.225.78.245", "7712");
-    }
+
+
 
 }

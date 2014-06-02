@@ -1,4 +1,4 @@
-package org.wso2.cep.email.monitor.config.esb.config;
+package org.wso2.cep.email.monitor.internal.config.esb.config;
 
 
 import org.apache.axis2.AxisFault;
@@ -8,7 +8,8 @@ import org.wso2.carbon.proxyadmin.stub.ProxyServiceAdminStub;
 import org.wso2.carbon.proxyadmin.stub.types.carbon.ProxyData;
 import org.wso2.carbon.utils.CarbonUtils;
 import org.apache.log4j.Logger;
-import org.wso2.cep.email.monitor.util.EmailMonitorConstants;
+import org.wso2.cep.email.monitor.exception.EmailMonitorServiceException;
+import org.wso2.cep.email.monitor.internal.util.EmailMonitorConstants;
 
 import java.io.*;
 import java.rmi.RemoteException;
@@ -20,20 +21,20 @@ public class ProxyDeployer {
     private ProxyServiceAdminStub stub;
 
 
-    public ProxyDeployer(String ip, String port) {
+    public ProxyDeployer(String ip, String port) throws EmailMonitorServiceException {
         String endPoint = EmailMonitorConstants.PROTOCOL + ip + ":" + port + EmailMonitorConstants.SERVICES + EmailMonitorConstants.PROXY_ADMIN_SERVICE;
 
         try {
             stub = new ProxyServiceAdminStub(endPoint);
         } catch (AxisFault axisFault) {
             logger.error(axisFault.getMessage());
+            throw new EmailMonitorServiceException("Error when creating ProxyDeployer", axisFault);
         }
-
 
 
     }
 
-    public void addMailProxy(String userName, String password){
+    public void addMailProxy(String userName, String password) throws EmailMonitorServiceException {
 
         CarbonUtils.setBasicAccessSecurityHeaders(userName, password, stub._getServiceClient());
 
@@ -58,7 +59,8 @@ public class ProxyDeployer {
                 content = content + line;
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
+            throw new EmailMonitorServiceException("Error when adding Mail Proxy", e);
         }
 
         data.setInSeqXML(content);
@@ -68,8 +70,10 @@ public class ProxyDeployer {
             stub.addProxy(data);
         } catch (RemoteException e) {
             logger.error(e.getMessage());
+            throw new EmailMonitorServiceException("Error when adding proxy to Stub", e);
         } catch (ProxyServiceAdminProxyAdminException e) {
             logger.error(e.getMessage());
+            throw new EmailMonitorServiceException("Error when adding proxy to stub", e);
         }
 
     }
