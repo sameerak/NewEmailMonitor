@@ -45,6 +45,12 @@
             <artifactId>synapse-core</artifactId>
             <version>1.4.0-wso2v1</version>
         </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon</groupId>
+            <artifactId>org.wso2.carbon.core</artifactId>
+            <version>4.2.0</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
 </project>
