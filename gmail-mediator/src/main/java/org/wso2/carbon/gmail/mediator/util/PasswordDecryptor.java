@@ -15,14 +15,14 @@ public class PasswordDecryptor extends AbstractMediator {
 
     public boolean mediate(MessageContext messageContext) {
 
-        String encryptedPassword= messageContext.getEnvelope().getBody().getFirstElement().getFirstElement().
-                getFirstChildWithName(new QName(MediatorConstants.TASK_MESSAGE_NAMESPACE,MediatorConstants.PASSWORD)).getText();
-
+        String encryptedPassword= messageContext.getEnvelope().getBody().getFirstElement().
+                getFirstChildWithName(new QName(MediatorConstants.TASK_MESSAGE_NAMESPACE, MediatorConstants.PASSWORD)).getText();
         cryptoUtil = CryptoUtil.getDefaultCryptoUtil();
         String decryptedPassword = base64DecodeAndDecrypt(encryptedPassword);
 
-        messageContext.getEnvelope().getBody().getFirstElement().getFirstElement().getFirstChildWithName
+        messageContext.getEnvelope().getBody().getFirstElement().getFirstChildWithName
                 (new QName(MediatorConstants.TASK_MESSAGE_NAMESPACE,MediatorConstants.PASSWORD)).setText(decryptedPassword);
+
         return true;
     }
 
@@ -31,7 +31,7 @@ public class PasswordDecryptor extends AbstractMediator {
             return new String(cryptoUtil.base64DecodeAndDecrypt(cipherText), Charset.forName("UTF-8"));
         } catch (CryptoException e) {
             String errorMsg = "Base64 decoding and decryption error. " + e.getMessage();
-            log.error(errorMsg, e);
+            log.error(errorMsg);
         }
         return null;
     }
