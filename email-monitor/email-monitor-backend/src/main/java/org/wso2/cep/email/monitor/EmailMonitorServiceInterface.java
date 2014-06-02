@@ -52,19 +52,6 @@ public interface EmailMonitorServiceInterface {
     /**
      * Create Execution Plan for deploy in CEP for the run CEP queries among mails
      *
-<<<<<<< HEAD
-     * @param ip
-     * @param port
-     * @param executionPlanXmlConfiguration
-     * @return
-     */
-    public boolean createExecutionPlan(String ip, String port, String executionPlanXmlConfiguration) throws EmailMonitorServiceException;
-
-    /**
-     * Create Execution Plan for deploy in CEP for the run CEP queries among mails
-     *
-=======
->>>>>>> 668952916777c3bb0fcd3d12c11d12abc21305b7
      * @param cookie
      * @param backendServerURL
      * @param configCtx
