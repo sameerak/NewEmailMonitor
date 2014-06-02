@@ -11,6 +11,8 @@ public class MediatorConstants {
     public static final String DATE_FORMAT = "EEE MMM dd kk:mm:ss z yyyy";
     public static final String MESSAGES = "messages";
     public static final String CONTENT = "content";
+    public static final String TASK_MESSAGE_NAMESPACE = "urn:wso2.connector.gmail.passwordauthentication";
+    public static final String PASSWORD = "password";
 
 
 }
