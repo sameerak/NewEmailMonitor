@@ -1,4 +1,4 @@
-package org.wso2.cep.email.monitor.config.esb.config;
+package org.wso2.cep.email.monitor.internal.config.esb.config;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
