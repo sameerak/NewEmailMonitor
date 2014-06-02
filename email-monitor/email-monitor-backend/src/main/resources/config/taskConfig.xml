@@ -7,8 +7,8 @@
     </task:property>
     <task:property name="message">
         <root xmlns="http://ws.apache.org/ns/synapse" xmlns:urn="urn:wso2.connector.gmail.passwordauthentication">
-            <urn:username>GMAILUSERNAME</urn:username>
-            <urn:password>GMAILPASSWORD</urn:password>
+            <urn:username> "GMAILUSERNAME" </urn:username>
+            <urn:password>"GMAILPASSWORD"</urn:password>
         </root>
     </task:property>
     <task:property name="proxyName" value="gmail_passwordAuthentication">

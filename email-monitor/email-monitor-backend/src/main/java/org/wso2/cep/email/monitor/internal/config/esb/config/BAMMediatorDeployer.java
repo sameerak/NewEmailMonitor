@@ -66,11 +66,15 @@ public class BAMMediatorDeployer {
         content = content.replace(EmailMonitorConstants.CEP_SERVER_IP,CEPServerIP);
         content = content.replace(EmailMonitorConstants.CEP_SERVER_PORT,CEPServerPort);
 
+        String encryptedPassword = "";
 
-        CryptographyManager cryptographyManager = new CryptographyManager();
-        content = content.replace(EmailMonitorConstants.CEP_SERVER_ENCRYPTED_PASSWORD, cryptographyManager.encryptAndBase64Encode(CEPServerPassword));
-
-
+        try {
+             encryptedPassword = stub.encryptAndBase64Encode(CEPServerPassword);
+        } catch (RemoteException e) {
+            logger.error(e.getMessage());
+            throw new EmailMonitorServiceException(e);
+        }
+        content = content.replace(EmailMonitorConstants.CEP_SERVER_ENCRYPTED_PASSWORD, encryptedPassword);
 
         try {
             stub.saveResourceString(content, EmailMonitorConstants.BAM_SERVER_PROFILE_NAME);
@@ -85,5 +89,7 @@ public class BAMMediatorDeployer {
 
 
 }
+
+
 
 
