@@ -1,5 +1,5 @@
-<task:task xmlns:task="http://www.wso2.org/products/wso2commons/tasks" name="testset" class="org.apache.synapse.startup.tasks.MessageInjector" group="synapse.simple.quartz">
-    <task:trigger count="1">
+<task:task xmlns:task="http://www.wso2.org/products/wso2commons/tasks" name="getMail" class="org.apache.synapse.startup.tasks.MessageInjector" group="synapse.simple.quartz">
+    <task:trigger interval="30">
 
     </task:trigger>
     <task:property name="soapAction" value="root">
@@ -11,9 +11,12 @@
             <urn:password>mailpassword1</urn:password>
         </root>
     </task:property>
-    <task:property name="proxyName" value="gmail_passwordAuthentication_proxy">
+    <task:property name="proxyName" value="gmail_passwordAuthentication">
 
     </task:property>
     <task:property name="injectTo" value="proxy">
     </task:property>
 </task:task>
+
+
+

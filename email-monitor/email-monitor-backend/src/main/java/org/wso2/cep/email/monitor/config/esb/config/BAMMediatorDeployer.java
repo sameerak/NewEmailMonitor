@@ -53,13 +53,12 @@ public class BAMMediatorDeployer {
             e.printStackTrace();
         }
 
-        content.replace("CEPServerUserName",CEPServerUserName);
-        content.replace("CEPServerIP",CEPServerIP);
-        content.replace("CEPServerPort",CEPServerPort);
-
+        content = content.replace(EmailMonitorConstants.CEP_SERVER_USER_NAME,CEPServerUserName);
+        content = content.replace(EmailMonitorConstants.CEP_SERVER_IP,CEPServerIP);
+        content = content.replace(EmailMonitorConstants.CEP_SERVER_PORT,CEPServerPort);
 
         try {
-            content.replace("CEPServerPassword",encryptAndBase64Encode(CEPServerPassword));
+            content.replace(EmailMonitorConstants.CEP_SERVER_ENCRYPTED_PASSWORD, encryptAndBase64Encode(CEPServerPassword));
         } catch (RemoteException e) {
             e.printStackTrace();
         }
