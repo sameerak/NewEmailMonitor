@@ -39,7 +39,6 @@ public class ExecutionPlanDeployer {
     }
 
 
-
     public ExecutionPlanDeployer(String ip, String port) throws EmailMonitorServiceException {
 
 
