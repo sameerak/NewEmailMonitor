@@ -29,19 +29,16 @@ public class ESBConfigurationHelper {
     }
 
 
-
-
-
-    public void addConfigurations(String userName, String password, String CEPServerUserName, String CEPServerPassword, String mailUserNAme, String mailPassword,String CEPServerIP ,String CEPServerPort ) throws EmailMonitorServiceException {
+    public void addConfigurations(String ESBUserName, String ESBPassword, String CEPServerUserName, String CEPServerPassword, String mailUserNAme, String mailPassword,String CEPServerIP ,String CEPServerPort ) throws EmailMonitorServiceException{
         logger.info("Stared adding ESB configurations");
 
-        bamMediatorDeployer.addBAMServerProfile(userName, password, CEPServerUserName, CEPServerPassword, CEPServerIP, CEPServerPort);
-
-        proxyDeployer.addMailProxy(userName, password);
-        taskDeployer.addScheduledTask(userName, password, mailUserNAme, mailPassword);
+        bamMediatorDeployer.addBAMServerProfile(ESBUserName, ESBPassword, CEPServerUserName, CEPServerPassword , CEPServerIP ,CEPServerPort);
+        proxyDeployer.addMailProxy(ESBUserName, ESBPassword);
+       taskDeployer.addScheduledTask(ESBUserName, ESBPassword, mailUserNAme, mailPassword);
 
 
     }
+
 
 
 
