@@ -76,8 +76,6 @@ public class BAMMediatorDeployer {
         }
         content = content.replace(EmailMonitorConstants.CEP_SERVER_ENCRYPTED_PASSWORD, encryptedPassword);
 
-
-
         try {
             stub.saveResourceString(content, EmailMonitorConstants.BAM_SERVER_PROFILE_NAME);
         } catch (RemoteException e) {
@@ -87,6 +85,9 @@ public class BAMMediatorDeployer {
 
 
     }
+
+
+
 }
 
 

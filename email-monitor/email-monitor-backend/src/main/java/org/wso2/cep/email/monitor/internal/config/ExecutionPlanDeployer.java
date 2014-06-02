@@ -38,10 +38,6 @@ public class ExecutionPlanDeployer {
 
     }
 
-
-
-
-
     public void createExecutionPlan(String executionPlanXmlConfiguration) throws EmailMonitorServiceException {
 
         try {
