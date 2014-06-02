@@ -14,15 +14,24 @@
 
         <form method="POST">
         <table>
-        <tr>
-            <td>ESB IP:</td> <td><input type="text" name="esbIP"></td>
-        </tr>
-        <tr>
-            <td>ESB Port:</td> <td><input type="text" name="esbPort"></td>
-        </tr>
-        <tr>
-            <td><input type="submit" value="Submit"></td>
-        </tr>
+            <tr>
+                <td>email address:</td> <td><input type="text" name="email"></td>
+            </tr>
+            <tr>
+                <td>password Port:</td> <td><input type="password" name="password"></td>
+            </tr>
+            <tr>
+                <td>ESB IP:</td> <td><input type="text" name="esbIP"></td>
+            </tr>
+            <tr>
+                <td>ESB Port:</td> <td><input type="text" name="esbPort"></td>
+            </tr>
+            <tr>
+                <td>CEP Queries:</td> <td><textarea name="cepQueries" rows="4" cols="50" style="margin: 2px; width: 415px; height: 115px;"></textarea></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Submit"></td>
+            </tr>
         </table>
         </form>
 
@@ -33,6 +42,10 @@
 
             <%if(ip !=null || port != null){%>
 
+            <%
+
+
+            %>
             <h2> <%=Backend.test(ip, port)%> </h2>
             <script>
                 CARBON.showInfoDialog("ESB server configurations stored successfully");
