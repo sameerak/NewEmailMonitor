@@ -35,6 +35,8 @@ public class ESBConfigurationHelper {
 
     }
 
-
+    public static void main(String args[]){
+                     new ESBConfigurationHelper("10.225.78.245", "9443").addConfigurations("admin","admin","admin","admin","synapse.demo.1@gmail.com","mailpassword1","10.225.78.245", "7712");
+    }
 
 }

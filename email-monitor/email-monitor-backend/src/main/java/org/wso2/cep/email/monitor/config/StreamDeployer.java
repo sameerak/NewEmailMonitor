@@ -8,18 +8,22 @@ import org.apache.axis2.context.ConfigurationContext;
 import org.apache.log4j.Logger;
 import org.wso2.carbon.event.stream.manager.stub.EventStreamAdminServiceStub;
 import org.wso2.carbon.event.stream.manager.stub.types.EventStreamAttributeDto;
+import org.wso2.carbon.proxyadmin.stub.ProxyServiceAdminStub;
+import org.wso2.carbon.utils.CarbonUtils;
+import org.wso2.cep.email.monitor.config.esb.config.util.SecurityConstants;
+import org.wso2.cep.email.monitor.util.EmailMonitorConstants;
 
 import java.rmi.RemoteException;
 
 public class StreamDeployer {
 
     private static Logger logger = Logger.getLogger(StreamDeployer.class);
-    private EventStreamAdminServiceStub eventStreamAdminServiceStub;
+    private static EventStreamAdminServiceStub eventStreamAdminServiceStub;
 
     public StreamDeployer(String cookie, String backendServerURL,
-                          ConfigurationContext configCtx){
+                          ConfigurationContext configCtx) {
 
-       String endPoint = backendServerURL + "EventStreamAdminService";
+        String endPoint = backendServerURL + EmailMonitorConstants.EVENT_STREAM_ADMIN_SERVICE;
 
 
         try {
@@ -35,7 +39,7 @@ public class StreamDeployer {
     }
 
 
-    public void createMailInputStream(){
+    public void createMailInputStream() {
 
         EventStreamAttributeDto metaTenantID = new EventStreamAttributeDto();
         metaTenantID.setAttributeName("tenant_id");
@@ -73,13 +77,13 @@ public class StreamDeployer {
         metaHost.setAttributeName("host");
         metaHost.setAttributeType("string");
 
-        EventStreamAttributeDto[] metaAttributes = new EventStreamAttributeDto[]{metaTenantID,metaHttpMethod,metaCharacterSet,metaRemoteAddress,metaTransportIn,metaMessageType,metaRemoteHost,metaServicePrefix,metaHost};
+        EventStreamAttributeDto[] metaAttributes = new EventStreamAttributeDto[]{metaTenantID, metaHttpMethod, metaCharacterSet, metaRemoteAddress, metaTransportIn, metaMessageType, metaRemoteHost, metaServicePrefix, metaHost};
 
         EventStreamAttributeDto correlationActivityID = new EventStreamAttributeDto();
         correlationActivityID.setAttributeName("activity_id");
         correlationActivityID.setAttributeType("string");
 
-        EventStreamAttributeDto[] correlationAttributes = new EventStreamAttributeDto[] {correlationActivityID};
+        EventStreamAttributeDto[] correlationAttributes = new EventStreamAttributeDto[]{correlationActivityID};
 
         EventStreamAttributeDto payloadMessageDirection = new EventStreamAttributeDto();
         payloadMessageDirection.setAttributeName("message_direction");
@@ -102,8 +106,41 @@ public class StreamDeployer {
         payloadTimestamp.setAttributeType("long");
 
         EventStreamAttributeDto payloadEmailMessageID = new EventStreamAttributeDto();
-        payloadEmailMessageID.setAttributeName("messagerID");
+        payloadEmailMessageID.setAttributeName("messageID");
         payloadEmailMessageID.setAttributeType("long");
+
+        EventStreamAttributeDto payloadSubject = new EventStreamAttributeDto();
+        payloadSubject.setAttributeName("subject");
+        payloadSubject.setAttributeType("string");
+
+        EventStreamAttributeDto payloadFrom = new EventStreamAttributeDto();
+        payloadFrom.setAttributeName("from");
+        payloadFrom.setAttributeType("string");
+
+        EventStreamAttributeDto payloadTo = new EventStreamAttributeDto();
+        payloadTo.setAttributeName("to");
+        payloadTo.setAttributeType("string");
+
+        EventStreamAttributeDto payloadSentDate = new EventStreamAttributeDto();
+        payloadSentDate.setAttributeName("sentDate");
+        payloadSentDate.setAttributeType("string");
+
+        EventStreamAttributeDto payloadThreadID = new EventStreamAttributeDto();
+        payloadThreadID.setAttributeName("threadID");
+        payloadThreadID.setAttributeType("long");
+
+        EventStreamAttributeDto payloadStatus = new EventStreamAttributeDto();
+        payloadStatus.setAttributeName("status");
+        payloadStatus.setAttributeType("string");
+
+        EventStreamAttributeDto payloadContent = new EventStreamAttributeDto();
+        payloadContent.setAttributeName("content");
+        payloadContent.setAttributeType("string");
+
+
+        EventStreamAttributeDto payloadLabels = new EventStreamAttributeDto();
+        payloadLabels.setAttributeName("labels");
+        payloadLabels.setAttributeType("string");
 
         EventStreamAttributeDto payloadSoapHeader = new EventStreamAttributeDto();
         payloadSoapHeader.setAttributeName("soap_header");
@@ -114,7 +151,8 @@ public class StreamDeployer {
         payloadSoapBody.setAttributeType("string");
 
 
-        EventStreamAttributeDto[] payloadAttributes = new EventStreamAttributeDto[]{payloadMessageDirection, payloadServiceName,payloadOperationName,payloadMessageID,payloadTimestamp,payloadEmailMessageID,payloadSoapHeader,payloadSoapBody};
+        EventStreamAttributeDto[] payloadAttributes = new EventStreamAttributeDto[]{payloadMessageDirection, payloadServiceName, payloadOperationName,
+                payloadMessageID, payloadTimestamp, payloadEmailMessageID, payloadSubject, payloadFrom, payloadTo, payloadSentDate, payloadThreadID, payloadStatus, payloadContent, payloadLabels, payloadSoapHeader, payloadSoapBody};
 
         try {
             eventStreamAdminServiceStub.addEventStreamInfo("gmailInputStream", "1.0.0", metaAttributes, correlationAttributes, payloadAttributes, "email information stream", "gmail");
@@ -124,11 +162,49 @@ public class StreamDeployer {
         }
 
 
-
     }
 
 
+    public void createMailOutputStream() {
+        EventStreamAttributeDto payloadThreadID = new EventStreamAttributeDto();
+        payloadThreadID.setAttributeName("threadID");
+        payloadThreadID.setAttributeType("long");
+
+        EventStreamAttributeDto payloadLabel = new EventStreamAttributeDto();
+        payloadLabel.setAttributeName("label");
+        payloadLabel.setAttributeType("string");
+
+
+        EventStreamAttributeDto[] payloadAttributes = new EventStreamAttributeDto[]{payloadThreadID, payloadLabel};
+
+        try {
+            eventStreamAdminServiceStub.addEventStreamInfo("gmailOutputStream", "1.0.0", null, null, payloadAttributes, "analyzed email stream", "gmail_output");
+
+        } catch (RemoteException e) {
+            logger.error(e.getMessage());
+        }
 
 
 
-}
+    }
+
+//    public static void main(String args[]) {
+//        System.setProperty(SecurityConstants.TRUSTSTORE, "/home/sachini/Documents/wso2esb-4.8.1/repository/resources/security/client-truststore.jks"/*SecurityConstants.CLIENT_TRUST_STORE_PATH*/);
+//        System.setProperty(SecurityConstants.TRUSTSTORE_PASSWORD, SecurityConstants.KEY_STORE_PASSWORD);
+//        System.setProperty(SecurityConstants.TRUSTSTORE_TYPE, SecurityConstants.KEY_STORE_TYPE);
+//        String endPoint = EmailMonitorConstants.PROTOCOL + "10.225.78.245" + ":" + "9444" + EmailMonitorConstants.SERVICES + "EventStreamAdminService";
+//
+//        try {
+//            eventStreamAdminServiceStub = new EventStreamAdminServiceStub(endPoint);
+//        } catch (AxisFault axisFault) {
+//            logger.error(axisFault.getMessage());
+//        }
+//
+//
+//        CarbonUtils.setBasicAccessSecurityHeaders("admin", "admin", eventStreamAdminServiceStub._getServiceClient());
+//
+//        new StreamDeployer().createMailInputStream();
+//    }
+
+
+    }
