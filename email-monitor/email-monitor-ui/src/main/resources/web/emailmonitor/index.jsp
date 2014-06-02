@@ -19,7 +19,7 @@
                 <td>email address:</td> <td><input type="text" name="emailAddress"></td>
             </tr>
             <tr>
-                <td>password Port:</td> <td><input type="password" name="emailPassword"></td>
+                <td>email password:</td> <td><input type="password" name="emailPassword"></td>
             </tr>
             <tr>
                 <td>ESB IP:</td> <td><input type="text" name="esbIP"></td>
@@ -67,16 +67,15 @@
             String cepPassword = request.getParameter("cepPassword");
 
             ConfigUtils configUtils = new ConfigUtils();
-            %>
 
-            <%if(configUtils.isNotNullOrEmpty(emailAddress) && configUtils.isNotNullOrEmpty(emailPassword) &&
+            if(configUtils.isNotNullOrEmpty(emailAddress) && configUtils.isNotNullOrEmpty(emailPassword) &&
                  configUtils.isNotNullOrEmpty(esbIP) && configUtils.isNotNullOrEmpty(esbPort) &&
                  configUtils.isNotNullOrEmpty(esbUserName) && configUtils.isNotNullOrEmpty(esbPassword) &&
                  configUtils.isNotNullOrEmpty(cepIP) && configUtils.isNotNullOrEmpty(cepPort) &&
                  configUtils.isNotNullOrEmpty(cepUserName) && configUtils.isNotNullOrEmpty(cepPassword)){
 
                 ESBConfigUtils esbConfigUtils = new ESBConfigUtils(esbIP, esbPort, esbUserName, esbPassword);
-
+                esbConfigUtils.AddConfigurations(cepUserName, cepPassword, emailAddress, emailPassword, cepIP, cepPort);
             %>
             <script>
                 CARBON.showInfoDialog("ESB server configurations stored successfully");
