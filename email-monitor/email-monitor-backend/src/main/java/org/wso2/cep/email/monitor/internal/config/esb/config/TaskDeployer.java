@@ -1,5 +1,4 @@
-package org.wso2.cep.email.monitor.config.esb.config;
-
+package org.wso2.cep.email.monitor.internal.config.esb.config;
 
 
 import org.apache.axiom.om.OMElement;
@@ -9,7 +8,8 @@ import org.apache.log4j.Logger;
 import org.wso2.carbon.task.stub.TaskAdminStub;
 import org.wso2.carbon.task.stub.TaskManagementException;
 import org.wso2.carbon.utils.CarbonUtils;
-import org.wso2.cep.email.monitor.util.EmailMonitorConstants;
+import org.wso2.cep.email.monitor.exception.EmailMonitorServiceException;
+import org.wso2.cep.email.monitor.internal.util.EmailMonitorConstants;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.BufferedReader;
@@ -24,24 +24,25 @@ public class TaskDeployer {
     private TaskAdminStub stub;
 
 
-    public TaskDeployer(String ip, String port) {
+    public TaskDeployer(String ip, String port) throws EmailMonitorServiceException {
         String endPoint = EmailMonitorConstants.PROTOCOL + ip + ":" + port + EmailMonitorConstants.SERVICES + EmailMonitorConstants.TASK_ADMIN_SERVICE;
 
-         try {
+        try {
             stub = new TaskAdminStub(endPoint);
         } catch (AxisFault axisFault) {
             logger.error(axisFault.getMessage());
+            throw new EmailMonitorServiceException("Error when creating Task Deployer", axisFault);
         }
 
 
     }
 
-    public void addScheduledTask(String userName, String password,String mailUserName, String mailPassword)  {
+    public void addScheduledTask(String userName, String password, String mailUserName, String mailPassword) throws EmailMonitorServiceException {
         CarbonUtils.setBasicAccessSecurityHeaders(userName, password, stub._getServiceClient());
 
         String content = "";
 
-       InputStream is = null;
+        InputStream is = null;
         BufferedReader br = null;
         String line;
 
@@ -52,26 +53,33 @@ public class TaskDeployer {
                 content = content + line;
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
+            throw new EmailMonitorServiceException("Error when adding Tasks", e);
         }
 
+
         content = content.replace(EmailMonitorConstants.GMAIL_USERNAME,mailUserName);
-        content = content.replace(EmailMonitorConstants.GMAIL_PASSWORD,mailPassword);
+
+        CryptographyManager cryptographyManager = new CryptographyManager();
+        content = content.replace(EmailMonitorConstants.GMAIL_PASSWORD,cryptographyManager.encryptAndBase64Encode(mailPassword));
 
 
         OMElement omElementTask = null;
         try {
             omElementTask = AXIOMUtil.stringToOM(content);
         } catch (XMLStreamException e) {
-           logger.error(e.getMessage());
+            logger.error(e.getMessage());
+            throw new EmailMonitorServiceException("Error when creating OMElement in Task", e);
         }
 
         try {
             stub.addTaskDescription(omElementTask);
         } catch (RemoteException e) {
             logger.error(e.getMessage());
+            throw new EmailMonitorServiceException("Error when adding Tasks to Stub", e);
         } catch (TaskManagementException e) {
-           logger.error(e.getMessage());
+            logger.error(e.getMessage());
+            throw new EmailMonitorServiceException("Error when adding Tasks to Stub", e);
         }
 
     }

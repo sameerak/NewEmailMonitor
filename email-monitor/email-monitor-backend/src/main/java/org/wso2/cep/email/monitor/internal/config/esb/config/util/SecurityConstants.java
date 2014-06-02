@@ -1,4 +1,4 @@
-package org.wso2.cep.email.monitor.config.esb.config.util;
+package org.wso2.cep.email.monitor.internal.config.esb.config.util;
 
 
 import org.wso2.carbon.utils.ServerConstants;
