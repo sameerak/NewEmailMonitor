@@ -53,11 +53,11 @@ public class BAMMediatorDeployer {
             e.printStackTrace();
         }
 
-        content.replace("CEPServerUserName",CEPServerUserName);
-        content.replace("CEPServerIP",CEPServerIP);
-        content.replace("CEPServerPort",CEPServerPort);
+        content = content.replace(EmailMonitorConstants.CEP_SERVER_USER_NAME,CEPServerUserName);
+        content = content.replace(EmailMonitorConstants.CEP_SERVER_IP,CEPServerIP);
+        content = content.replace(EmailMonitorConstants.CEP_SERVER_PORT,CEPServerPort);
 
-        content.replace("CEPServerPassword",CEPServerPassword);
+//        content.replace(EmailMonitorConstants.CEP_SERVER_ENCRYPTED_PASSWORD,CEPServerPassword);
 
         try {
             stub.saveResourceString(content,EmailMonitorConstants.BAM_SERVER_PROFILE_NAME);
