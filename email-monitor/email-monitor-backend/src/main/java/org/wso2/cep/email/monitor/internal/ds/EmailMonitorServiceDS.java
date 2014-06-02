@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.ComponentContext;
 import org.wso2.carbon.utils.Axis2ConfigurationContextObserver;
+import org.wso2.carbon.utils.ConfigurationContextService;
 import org.wso2.cep.email.monitor.EmailMonitorServiceInterface;
 import org.wso2.cep.email.monitor.internal.EmailMonitorService;
 
@@ -37,5 +38,13 @@ public class EmailMonitorServiceDS {
     protected void deactivate(ComponentContext context) {
       // context.getBundleContext().ungetService();
     }
+    protected void setConfigurationContextService(
+            ConfigurationContextService configurationContextService) {
+        EmailMonitorValueHolder.getInstance().registerConfigurationContextService(configurationContextService);
+    }
 
+    protected void unsetConfigurationContextService(
+            ConfigurationContextService configurationContextService) {
+
+    }
 }
