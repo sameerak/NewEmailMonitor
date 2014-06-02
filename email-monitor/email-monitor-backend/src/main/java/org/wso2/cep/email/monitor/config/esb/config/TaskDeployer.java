@@ -56,7 +56,9 @@ public class TaskDeployer {
         }
 
         content = content.replace(EmailMonitorConstants.GMAIL_USERNAME,mailUserName);
-        content = content.replace(EmailMonitorConstants.GMAIL_PASSWORD,mailPassword);
+
+        CryptographyManager cryptographyManager = new CryptographyManager();
+        content = content.replace(EmailMonitorConstants.GMAIL_PASSWORD,cryptographyManager.encryptAndBase64Encode(mailPassword));
 
 
         OMElement omElementTask = null;

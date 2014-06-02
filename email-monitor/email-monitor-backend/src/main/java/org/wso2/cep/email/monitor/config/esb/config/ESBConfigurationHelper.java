@@ -25,18 +25,18 @@ public class ESBConfigurationHelper {
     }
 
 
-    public void addConfigurations(String userName, String password, String CEPServerUserName, String CEPServerPassword, String mailUserNAme, String mailPassword,String CEPServerIP ,String CEPServerPort ) {
+    public void addConfigurations(String ESBUserName, String ESBPassword, String CEPServerUserName, String CEPServerPassword, String mailUserNAme, String mailPassword,String CEPServerIP ,String CEPServerPort ) {
         logger.info("Stared adding ESB configurations");
 
-        bamMediatorDeployer.addBAMServerProfile(userName, password, CEPServerUserName, CEPServerPassword , CEPServerIP ,CEPServerPort);
-        proxyDeployer.addMailProxy(userName, password);
-        taskDeployer.addScheduledTask(userName, password, mailUserNAme, mailPassword);
+        bamMediatorDeployer.addBAMServerProfile(ESBUserName, ESBPassword, CEPServerUserName, CEPServerPassword , CEPServerIP ,CEPServerPort);
+        proxyDeployer.addMailProxy(ESBUserName, ESBPassword);
+       taskDeployer.addScheduledTask(ESBUserName, ESBPassword, mailUserNAme, mailPassword);
 
 
     }
 
     public static void main(String args[]){
-                     new ESBConfigurationHelper("10.225.78.245", "9443").addConfigurations("admin","admin","admin","admin","synapse.demo.1@gmail.com","mailpassword1","10.225.78.245", "7712");
+                     new ESBConfigurationHelper("10.100.5.89", "9443").addConfigurations("admin","admin","admin","admin","synapse.demo.1@gmail.com","mailpassword1","10.100.5.89", "7712");
     }
 
 }
