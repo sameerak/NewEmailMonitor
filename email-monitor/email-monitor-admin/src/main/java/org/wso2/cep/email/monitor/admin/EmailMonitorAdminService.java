@@ -50,15 +50,7 @@ private static final Logger log = Logger.getLogger(EmailMonitorAdminService.clas
     }
 
 
-    public boolean createExecutionPlan(String ip, String port, String executionPlanXmlConfiguration) throws EmailMonitorAdminException {
-        EmailMonitorServiceInterface emailMonitorServiceInterface = EmailMonitorAdminValueHolder.getInstance().getEmailMonitorService();
-        try {
-            return  emailMonitorServiceInterface.createExecutionPlan(ip,  port, executionPlanXmlConfiguration);
-        } catch (EmailMonitorServiceException e) {
-            log.error(e.getMessage());
-            throw new EmailMonitorAdminException(e);
-        }
-    }
+   
 
 
     public boolean createExecutionPlan(String cookie, String backendServerURL, ConfigurationContext configCtx, String executionPlanXmlConfiguration) throws EmailMonitorAdminException {
