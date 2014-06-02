@@ -11,7 +11,7 @@
 
     <artifactId>email-monitor-stub</artifactId>
     <packaging>bundle</packaging>
-    <name>WSO2 Carbon -Email Monitor Service Stub</name>
+    <name>email-monitor-stub</name>
     <url>http://wso2.org</url>
     <build>
         <plugins>
