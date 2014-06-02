@@ -5,6 +5,7 @@
 <%@ page import="org.wso2.carbon.ui.CarbonUIMessage" %>
 <%@ page import="org.wso2.cep.email.ui.ConfigUtils" %>
 <%@ page import="org.wso2.cep.email.ui.ESBConfigUtils" %>
+<%@ page import="org.wso2.cep.email.ui.CEPConfigUtils" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://wso2.org/projects/carbon/taglibs/carbontags.jar" prefix="carbon" %>
  
@@ -73,6 +74,13 @@
                  configUtils.isNotNullOrEmpty(esbUserName) && configUtils.isNotNullOrEmpty(esbPassword) &&
                  configUtils.isNotNullOrEmpty(cepIP) && configUtils.isNotNullOrEmpty(cepPort) &&
                  configUtils.isNotNullOrEmpty(cepUserName) && configUtils.isNotNullOrEmpty(cepPassword)){
+
+                String backendServerURL = CarbonUIUtil.getServerURL(config.getServletContext(), session);
+                String cookie = (String) session.getAttribute(ServerConstants.ADMIN_SERVICE_COOKIE);
+                ConfigurationContext configContext =
+                    (ConfigurationContext) config.getServletContext().getAttribute(CarbonConstants.CONFIGURATION_CONTEXT);
+
+                CEPConfigUtils cepConfigUtils = new CEPConfigUtils(cookie, backendServerURL, configContext);
 
                 ESBConfigUtils esbConfigUtils = new ESBConfigUtils(esbIP, esbPort, esbUserName, esbPassword);
                 esbConfigUtils.AddConfigurations(cepUserName, cepPassword, emailAddress, emailPassword, cepIP, cepPort);
