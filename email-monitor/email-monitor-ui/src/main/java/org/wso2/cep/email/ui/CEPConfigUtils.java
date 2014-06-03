@@ -6,7 +6,10 @@ import org.wso2.cep.email.monitor.exception.EmailMonitorServiceException;
 import org.wso2.cep.email.monitor.internal.config.StreamDeployer;
 
 import org.wso2.cep.email.monitor.internal.util.EmailMonitorConstants;
+import org.wso2.cep.email.monitor.stub.admin.EmailMonitorAdminServiceEmailMonitorAdminException;
 import org.wso2.cep.email.monitor.stub.admin.EmailMonitorAdminServiceStub;
+
+import java.rmi.RemoteException;
 
 public class CEPConfigUtils {
 
@@ -14,14 +17,18 @@ public class CEPConfigUtils {
     EmailMonitorAdminServiceStub emailMonitorAdminServiceStub;
 
     public CEPConfigUtils(String cookie, String backendServerURL, ConfigurationContext configCtx){
-//        String endPoint = backendServerURL + "EmailMonitorAdminService";
+        String endPoint = backendServerURL + "EmailMonitorAdminService";
 //        try {
 //            emailMonitorAdminServiceStub = new EmailMonitorAdminServiceStub(configCtx, endPoint);
-//            org.apache.axis2.context.xsd.ConfigurationContext configurationContext = new org.apache.axis2.context.xsd.ConfigurationContext();
-////            configurationContext.setRootContext();
-//            emailMonitorAdminServiceStub.createMailInputStream(cookie, backendServerURL, (org.apache.axis2.context.xsd.ConfigurationContext) configCtx);
+//
+//            emailMonitorAdminServiceStub.createMailInputStream(cookie, backendServerURL, configCtx);
+//
 //        } catch (AxisFault axisFault) {
 //            axisFault.printStackTrace();
+//        }catch (RemoteException e) {
+//            e.printStackTrace();
+//        } catch (EmailMonitorAdminServiceEmailMonitorAdminException e) {
+//            e.printStackTrace();
 //        }
         try {
             streamDeployer = new StreamDeployer(cookie, backendServerURL, configCtx);
