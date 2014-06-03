@@ -6,7 +6,6 @@ import org.wso2.cep.email.monitor.EmailMonitorServiceInterface;
 import org.wso2.cep.email.monitor.admin.exception.EmailMonitorAdminException;
 import org.wso2.cep.email.monitor.admin.internal.EmailMonitorAdminValueHolder;
 import org.wso2.cep.email.monitor.exception.EmailMonitorServiceException;
-import org.wso2.cep.email.monitor.internal.EmailMonitorService;
 
 
 
@@ -53,7 +52,7 @@ private static final Logger log = Logger.getLogger(EmailMonitorAdminService.clas
    
 
 
-    public boolean createExecutionPlan(String cookie, String backendServerURL, ConfigurationContext configCtx, String executionPlanXmlConfiguration) throws EmailMonitorAdminException {
+    public boolean createExecutionPlan(String cookie, String backendServerURL, Object configCtx, String executionPlanXmlConfiguration) throws EmailMonitorAdminException {
         EmailMonitorServiceInterface emailMonitorServiceInterface = EmailMonitorAdminValueHolder.getInstance().getEmailMonitorService();
         try {
             return  emailMonitorServiceInterface.createExecutionPlan(cookie,backendServerURL,configCtx,  executionPlanXmlConfiguration);
@@ -63,7 +62,7 @@ private static final Logger log = Logger.getLogger(EmailMonitorAdminService.clas
         }
     }
 
-    public boolean createMailInputStream(String cookie, String backendServerURL, ConfigurationContext configCtx) throws EmailMonitorAdminException {
+    public boolean createMailInputStream(String cookie, String backendServerURL, Object configCtx) throws EmailMonitorAdminException {
         EmailMonitorServiceInterface emailMonitorServiceInterface = EmailMonitorAdminValueHolder.getInstance().getEmailMonitorService();
         try {
             return  emailMonitorServiceInterface.createMailInputStream(cookie,  backendServerURL,  configCtx);
