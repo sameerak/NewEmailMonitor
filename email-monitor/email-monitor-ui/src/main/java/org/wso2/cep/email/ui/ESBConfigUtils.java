@@ -3,6 +3,7 @@ package org.wso2.cep.email.ui;
 import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 import org.wso2.cep.email.monitor.exception.EmailMonitorServiceException;
 import org.wso2.cep.email.monitor.internal.config.esb.config.ESBConfigurationHelper;
+import org.wso2.carbon.ui.CarbonUIUtil;
 
 public class ESBConfigUtils {
 
