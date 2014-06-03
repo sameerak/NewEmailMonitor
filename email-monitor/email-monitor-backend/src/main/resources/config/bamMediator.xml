@@ -10,7 +10,7 @@
             </payload>
             <properties><property name="messageID" value="get-property('M_Id')" type="LONG" isExpression="true"></property>
                         <property name="subject" value="get-property('msg')" type="STRING" isExpression="true"></property>
-                        <property name="from" value="get-property('from')" type="STRING" isExpression="true"></property>
+                        <property name="sender" value="get-property('from')" type="STRING" isExpression="true"></property>
                         <property name="to" value="get-property('to')" type="STRING" isExpression="true"></property>
                         <property name="sentDate" value="get-property('sentDate')" type="STRING" isExpression="true"></property>
                         <property name="threadID" value="get-property('T_ID')" type="LONG" isExpression="true"></property>

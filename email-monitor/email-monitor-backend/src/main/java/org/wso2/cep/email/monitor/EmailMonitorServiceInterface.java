@@ -59,7 +59,7 @@ public interface EmailMonitorServiceInterface {
      * @param executionPlanXmlConfiguration
      * @return
      */
-    public boolean createExecutionPlan(String cookie, String backendServerURL, ConfigurationContext configCtx, String executionPlanXmlConfiguration) throws EmailMonitorServiceException;
+    public boolean createExecutionPlan(String cookie, String backendServerURL, Object configCtx, String executionPlanXmlConfiguration) throws EmailMonitorServiceException;
 
     /**
      * Create MailInputStream and stores it in the CEP
@@ -69,7 +69,7 @@ public interface EmailMonitorServiceInterface {
      * @param configCtx
      * @return
      */
-    public boolean createMailInputStream(String cookie, String backendServerURL, ConfigurationContext configCtx) throws EmailMonitorServiceException;
+    public boolean createMailInputStream(String cookie, String backendServerURL, Object configCtx) throws EmailMonitorServiceException;
 
     /**
      * Add bam proxy and tasks configurations to esb
