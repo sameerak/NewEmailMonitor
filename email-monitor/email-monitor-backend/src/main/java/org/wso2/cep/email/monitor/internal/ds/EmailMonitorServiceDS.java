@@ -4,6 +4,8 @@ package org.wso2.cep.email.monitor.internal.ds;
 import org.apache.log4j.Logger;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.ComponentContext;
+import org.wso2.carbon.event.processor.core.EventProcessorService;
+import org.wso2.carbon.event.stream.manager.core.EventStreamService;
 import org.wso2.carbon.utils.Axis2ConfigurationContextObserver;
 import org.wso2.carbon.utils.ConfigurationContextService;
 import org.wso2.cep.email.monitor.EmailMonitorServiceInterface;
@@ -14,6 +16,12 @@ import org.wso2.cep.email.monitor.internal.EmailMonitorService;
  * @scr.reference name="configurationcontext.service"
  * interface="org.wso2.carbon.utils.ConfigurationContextService" cardinality="1..1"
  * policy="dynamic" bind="setConfigurationContextService" unbind="unsetConfigurationContextService"
+ * @scr.reference name="eventstream.service"
+ * interface="org.wso2.carbon.event.stream.manager.core.EventStreamService" cardinality="1..1"
+ * policy="dynamic" bind="setEventStreamService" unbind="unsetEventStreamService"
+ * @scr.reference name="eventprocessor.service"
+ * interface="org.wso2.carbon.event.processor.core.EventProcessorService" cardinality="1..1"
+ * policy="dynamic" bind="setEventProcessorService" unbind="unsetEventProcessorService"
  */
 public class EmailMonitorServiceDS {
     private static final Logger log = Logger.getLogger(EmailMonitorServiceDS.class);
@@ -48,4 +56,19 @@ public class EmailMonitorServiceDS {
             ConfigurationContextService configurationContextService) {
 
     }
+    protected void setEventStreamService(EventStreamService eventStreamService){
+        EmailMonitorValueHolder.getInstance().setEventStreamService(eventStreamService);
+    }
+
+    protected void unsetEventStreamService(EventStreamService eventStreamService){
+       EmailMonitorValueHolder.getInstance().unsetEventStreamService();
+    }
+    protected void setEventProcessorService(EventProcessorService eventProcessorService){
+        EmailMonitorValueHolder.getInstance().setEventProcessorService(eventProcessorService);
+    }
+
+    protected void unsetEventProcessorService(EventProcessorService eventStreamService){
+        EmailMonitorValueHolder.getInstance().unsetEventProcessorService();
+    }
+
 }
