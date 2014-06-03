@@ -27,7 +27,7 @@
                 <class name="org.wso2.carbon.gmail.mediator.MessageContentInjector"/>
                 <property name="M_ID" expression="//ns:messageID/text()"/>
                 <property name="msg" expression="//ns:subject/text()"/>
-                <property name="from" expression="//ns:from/text()"/>
+                <property name="sender" expression="//ns:from/text()"/>
                 <property name="to" expression="//ns:to/text()"/>
                 <property name="sentDate" expression="//ns:sentDate/text()"/>
                 <property name="T_ID" expression="//ns:threadID/text()"/>

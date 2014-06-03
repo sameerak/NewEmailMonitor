@@ -120,7 +120,7 @@ public class StreamDeployer {
         payloadSubject.setAttributeType("string");
 
         EventStreamAttributeDto payloadFrom = new EventStreamAttributeDto();
-        payloadFrom.setAttributeName("from");
+        payloadFrom.setAttributeName("sender");
         payloadFrom.setAttributeType("string");
 
         EventStreamAttributeDto payloadTo = new EventStreamAttributeDto();
