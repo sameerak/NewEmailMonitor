@@ -42,4 +42,5 @@
             </sequence>
         </target>
     </iterate>
+    <gmail.endSession/>
 </inSequence>
