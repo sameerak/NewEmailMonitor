@@ -49,6 +49,7 @@ public interface EmailMonitorServiceInterface {
      */
     public boolean addScheduledTask(String ip, String port, String userName, String password, String mailUserName, String mailPassword) throws EmailMonitorServiceException;
 
+
     /**
      * Create Execution Plan for deploy in CEP for the run CEP queries among mails
      *
