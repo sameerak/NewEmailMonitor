@@ -101,6 +101,13 @@
             <version>3.1.0</version>
         </dependency>
 
+        <dependency>
+        <artifactId>org.wso2.carbon.event.stream.manager.core</artifactId><version>1.0.0</version>
+        <groupId>org.wso2.carbon</groupId>
+        <scope>provided</scope>
+        </dependency>
+
+
     </dependencies>
     <repositories>
         <repository>
