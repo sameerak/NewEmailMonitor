@@ -52,20 +52,20 @@ private static final Logger log = Logger.getLogger(EmailMonitorAdminService.clas
    
 
 
-    public boolean createExecutionPlan(String cookie, String backendServerURL, Object configCtx, String executionPlanXmlConfiguration) throws EmailMonitorAdminException {
+    public boolean createExecutionPlan(String executionPlanXmlConfiguration) throws EmailMonitorAdminException {
         EmailMonitorServiceInterface emailMonitorServiceInterface = EmailMonitorAdminValueHolder.getInstance().getEmailMonitorService();
         try {
-            return  emailMonitorServiceInterface.createExecutionPlan(cookie,backendServerURL,configCtx,  executionPlanXmlConfiguration);
+            return  emailMonitorServiceInterface.createExecutionPlan( executionPlanXmlConfiguration,getAxisConfig());
         } catch (EmailMonitorServiceException e) {
             log.error(e.getMessage());
             throw new EmailMonitorAdminException(e);
         }
     }
 
-    public boolean createMailInputStream(String cookie, String backendServerURL, Object configCtx) throws EmailMonitorAdminException {
+    public boolean createMailInputStream() throws EmailMonitorAdminException {
         EmailMonitorServiceInterface emailMonitorServiceInterface = EmailMonitorAdminValueHolder.getInstance().getEmailMonitorService();
         try {
-            return  emailMonitorServiceInterface.createMailInputStream(cookie,  backendServerURL,  configCtx);
+            return  emailMonitorServiceInterface.createMailInputStream();
         } catch (EmailMonitorServiceException e) {
             log.error(e.getMessage());
             throw new EmailMonitorAdminException(e);
