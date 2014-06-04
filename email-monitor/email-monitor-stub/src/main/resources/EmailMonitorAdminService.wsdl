@@ -17,11 +17,7 @@
             </xs:element>
             <xs:element name="createMailInputStream">
                 <xs:complexType>
-                    <xs:sequence>
-                        <xs:element minOccurs="0" name="cookie" nillable="true" type="xs:string"></xs:element>
-                        <xs:element minOccurs="0" name="backendServerURL" nillable="true" type="xs:string"></xs:element>
-                        <xs:element minOccurs="0" name="configCtx" nillable="true" type="xs:anyType"></xs:element>
-                    </xs:sequence>
+                    <xs:sequence></xs:sequence>
                 </xs:complexType>
             </xs:element>
             <xs:element name="createMailInputStreamResponse">
@@ -34,9 +30,6 @@
             <xs:element name="createExecutionPlan">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element minOccurs="0" name="cookie" nillable="true" type="xs:string"></xs:element>
-                        <xs:element minOccurs="0" name="backendServerURL" nillable="true" type="xs:string"></xs:element>
-                        <xs:element minOccurs="0" name="configCtx" nillable="true" type="xs:anyType"></xs:element>
                         <xs:element minOccurs="0" name="executionPlanXmlConfiguration" nillable="true" type="xs:string"></xs:element>
                     </xs:sequence>
                 </xs:complexType>

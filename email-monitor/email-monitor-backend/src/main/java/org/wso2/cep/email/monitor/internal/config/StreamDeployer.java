@@ -1,45 +1,34 @@
 package org.wso2.cep.email.monitor.internal.config;
 
 
-import org.apache.axis2.AxisFault;
-import org.apache.axis2.client.Options;
-import org.apache.axis2.client.ServiceClient;
-import org.apache.axis2.context.ConfigurationContext;
+
 import org.apache.log4j.Logger;
-import org.wso2.carbon.event.stream.manager.stub.EventStreamAdminServiceStub;
-import org.wso2.carbon.event.stream.manager.stub.types.EventStreamAttributeDto;
+import org.wso2.carbon.databridge.commons.Attribute;
+import org.wso2.carbon.databridge.commons.AttributeType;
+import org.wso2.carbon.databridge.commons.StreamDefinition;
+import org.wso2.carbon.databridge.commons.exception.MalformedStreamDefinitionException;
+import org.wso2.carbon.event.stream.manager.core.exception.EventStreamConfigurationException;
+
+import org.wso2.carbon.event.stream.manager.core.EventStreamService;
 
 import org.wso2.cep.email.monitor.exception.EmailMonitorServiceException;
 
-import org.wso2.carbon.proxyadmin.stub.ProxyServiceAdminStub;
-import org.wso2.carbon.utils.CarbonUtils;
-import org.wso2.cep.email.monitor.internal.config.esb.config.util.SecurityConstants;
-import org.wso2.cep.email.monitor.internal.util.EmailMonitorConstants;
+import org.wso2.cep.email.monitor.internal.ds.EmailMonitorValueHolder;
 
-
-import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StreamDeployer {
 
     private static Logger logger = Logger.getLogger(StreamDeployer.class);
-    private static EventStreamAdminServiceStub eventStreamAdminServiceStub;
 
-    public StreamDeployer(String cookie, String backendServerURL,
+    EventStreamService eventStreamService ;
+    private EmailMonitorValueHolder emailMonitorValueHolder;
 
-                          ConfigurationContext configCtx) throws EmailMonitorServiceException {
-        String endPoint = backendServerURL + EmailMonitorConstants.EVENT_STREAM_ADMIN_SERVICE;
+    public StreamDeployer() throws EmailMonitorServiceException {
 
-
-        try {
-            eventStreamAdminServiceStub = new EventStreamAdminServiceStub(configCtx, endPoint);
-        } catch (AxisFault axisFault) {
-            logger.error(axisFault.getMessage());
-            throw new EmailMonitorServiceException("Error When creating StreamDeployer", axisFault);
-        }
-        ServiceClient client = eventStreamAdminServiceStub._getServiceClient();
-        Options option = client.getOptions();
-        option.setManageSession(true);
-        option.setProperty(org.apache.axis2.transport.http.HTTPConstants.COOKIE_STRING, cookie);
+         emailMonitorValueHolder = EmailMonitorValueHolder.getInstance();
+        eventStreamService = emailMonitorValueHolder.getEventStreamService() ;
 
     }
 
@@ -47,125 +36,110 @@ public class StreamDeployer {
     public void createMailInputStream() throws EmailMonitorServiceException {
 
 
-        EventStreamAttributeDto metaTenantID = new EventStreamAttributeDto();
-        metaTenantID.setAttributeName("tenant_id");
-        metaTenantID.setAttributeType("int");
+        StreamDefinition streamDefinition = null;
+        try {
+             streamDefinition = new StreamDefinition("gmailInputStream", "1.0.0") ;
+        } catch (MalformedStreamDefinitionException e) {
+            logger.error(e.getMessage());
+        }
 
-        EventStreamAttributeDto metaHttpMethod = new EventStreamAttributeDto();
-        metaHttpMethod.setAttributeName("http_method");
-        metaHttpMethod.setAttributeType("string");
+        List<Attribute> metaData = new ArrayList<Attribute>() ;
 
-        EventStreamAttributeDto metaCharacterSet = new EventStreamAttributeDto();
-        metaCharacterSet.setAttributeName("character_set_encoding");
-        metaCharacterSet.setAttributeType("string");
+        Attribute metaTenantID = new Attribute("tenant_id", AttributeType.INT);
+        metaData.add(metaTenantID);
 
-        EventStreamAttributeDto metaRemoteAddress = new EventStreamAttributeDto();
-        metaRemoteAddress.setAttributeName("remote_address");
-        metaRemoteAddress.setAttributeType("string");
+        Attribute metaHttpMethod = new Attribute("http_method", AttributeType.STRING);
+        metaData.add(metaHttpMethod);
 
-        EventStreamAttributeDto metaTransportIn = new EventStreamAttributeDto();
-        metaTransportIn.setAttributeName("transport_in_url");
-        metaTransportIn.setAttributeType("string");
+        Attribute metaCharacterSet = new Attribute("character_set_encoding", AttributeType.STRING);
+        metaData.add(metaCharacterSet);
 
-        EventStreamAttributeDto metaMessageType = new EventStreamAttributeDto();
-        metaMessageType.setAttributeName("message_type");
-        metaMessageType.setAttributeType("string");
+        Attribute metaRemoteAddress = new Attribute("remote_address", AttributeType.STRING);
+        metaData.add(metaRemoteAddress);
 
-        EventStreamAttributeDto metaRemoteHost = new EventStreamAttributeDto();
-        metaRemoteHost.setAttributeName("remote_host");
-        metaRemoteHost.setAttributeType("string");
+        Attribute metaTransportIn = new Attribute("transport_in_url", AttributeType.STRING);
+        metaData.add(metaTransportIn);
 
-        EventStreamAttributeDto metaServicePrefix = new EventStreamAttributeDto();
-        metaServicePrefix.setAttributeName("service_prefix");
-        metaServicePrefix.setAttributeType("string");
+        Attribute metaMessageType = new Attribute("message_type", AttributeType.STRING);
+        metaData.add(metaMessageType);
 
-        EventStreamAttributeDto metaHost = new EventStreamAttributeDto();
-        metaHost.setAttributeName("host");
-        metaHost.setAttributeType("string");
+        Attribute metaRemoteHost = new Attribute("remote_host", AttributeType.STRING);
+        metaData.add(metaRemoteHost);
 
-        EventStreamAttributeDto[] metaAttributes = new EventStreamAttributeDto[]{metaTenantID, metaHttpMethod, metaCharacterSet, metaRemoteAddress, metaTransportIn, metaMessageType, metaRemoteHost, metaServicePrefix, metaHost};
+        Attribute metaServicePrefix = new Attribute("service_prefix", AttributeType.STRING);
+        metaData.add(metaServicePrefix);
 
-        EventStreamAttributeDto correlationActivityID = new EventStreamAttributeDto();
-        correlationActivityID.setAttributeName("activity_id");
-        correlationActivityID.setAttributeType("string");
+        Attribute metaHost = new Attribute("host", AttributeType.STRING);
+        metaData.add(metaHost);
 
-        EventStreamAttributeDto[] correlationAttributes = new EventStreamAttributeDto[]{correlationActivityID};
-
-        EventStreamAttributeDto payloadMessageDirection = new EventStreamAttributeDto();
-        payloadMessageDirection.setAttributeName("message_direction");
-        payloadMessageDirection.setAttributeType("string");
-
-        EventStreamAttributeDto payloadServiceName = new EventStreamAttributeDto();
-        payloadServiceName.setAttributeName("service_name");
-        payloadServiceName.setAttributeType("string");
-
-        EventStreamAttributeDto payloadOperationName = new EventStreamAttributeDto();
-        payloadOperationName.setAttributeName("operation_name");
-        payloadOperationName.setAttributeType("string");
-
-        EventStreamAttributeDto payloadMessageID = new EventStreamAttributeDto();
-        payloadMessageID.setAttributeName("message_id");
-        payloadMessageID.setAttributeType("string");
-
-        EventStreamAttributeDto payloadTimestamp = new EventStreamAttributeDto();
-        payloadTimestamp.setAttributeName("timestamp");
-        payloadTimestamp.setAttributeType("long");
-
-        EventStreamAttributeDto payloadEmailMessageID = new EventStreamAttributeDto();
-        payloadEmailMessageID.setAttributeName("messageID");
-        payloadEmailMessageID.setAttributeType("long");
-
-        EventStreamAttributeDto payloadSubject = new EventStreamAttributeDto();
-        payloadSubject.setAttributeName("subject");
-        payloadSubject.setAttributeType("string");
-
-        EventStreamAttributeDto payloadFrom = new EventStreamAttributeDto();
-        payloadFrom.setAttributeName("sender");
-        payloadFrom.setAttributeType("string");
-
-        EventStreamAttributeDto payloadTo = new EventStreamAttributeDto();
-        payloadTo.setAttributeName("to");
-        payloadTo.setAttributeType("string");
-
-        EventStreamAttributeDto payloadSentDate = new EventStreamAttributeDto();
-        payloadSentDate.setAttributeName("sentDate");
-        payloadSentDate.setAttributeType("string");
-
-        EventStreamAttributeDto payloadThreadID = new EventStreamAttributeDto();
-        payloadThreadID.setAttributeName("threadID");
-        payloadThreadID.setAttributeType("long");
-
-        EventStreamAttributeDto payloadStatus = new EventStreamAttributeDto();
-        payloadStatus.setAttributeName("status");
-        payloadStatus.setAttributeType("string");
-
-        EventStreamAttributeDto payloadContent = new EventStreamAttributeDto();
-        payloadContent.setAttributeName("content");
-        payloadContent.setAttributeType("string");
+        streamDefinition.setMetaData(metaData);
 
 
-        EventStreamAttributeDto payloadLabels = new EventStreamAttributeDto();
-        payloadLabels.setAttributeName("labels");
-        payloadLabels.setAttributeType("string");
+        List<Attribute> correlationData = new ArrayList<Attribute>() ;
 
-        EventStreamAttributeDto payloadSoapHeader = new EventStreamAttributeDto();
-        payloadSoapHeader.setAttributeName("soap_header");
-        payloadSoapHeader.setAttributeType("string");
+        Attribute correlationActivityID = new Attribute("activity_id", AttributeType.STRING);
+        correlationData.add(correlationActivityID);
 
-        EventStreamAttributeDto payloadSoapBody = new EventStreamAttributeDto();
-        payloadSoapBody.setAttributeName("soap_body");
-        payloadSoapBody.setAttributeType("string");
+        streamDefinition.setCorrelationData(correlationData);
 
+        List<Attribute> payloadData = new ArrayList<Attribute>() ;
 
-        EventStreamAttributeDto[] payloadAttributes = new EventStreamAttributeDto[]{payloadMessageDirection, payloadServiceName, payloadOperationName,
-                payloadMessageID, payloadTimestamp, payloadEmailMessageID, payloadSubject, payloadFrom, payloadTo, payloadSentDate, payloadThreadID, payloadStatus, payloadContent, payloadLabels, payloadSoapHeader, payloadSoapBody};
+        Attribute payloadMessageDirection = new Attribute("message_direction", AttributeType.STRING);
+        payloadData.add(payloadMessageDirection);
+
+        Attribute payloadServiceName = new Attribute("service_name", AttributeType.STRING);
+        payloadData.add(payloadServiceName);
+
+        Attribute payloadOperationName = new Attribute("operation_name", AttributeType.STRING);
+        payloadData.add(payloadOperationName);
+
+        Attribute payloadMessageID = new Attribute("message_id", AttributeType.STRING);
+        payloadData.add(payloadMessageID);
+
+        Attribute payloadTimestamp = new Attribute("timestamp", AttributeType.LONG);
+        payloadData.add(payloadTimestamp);
+
+        Attribute payloadEmailMessageID = new Attribute("messageID", AttributeType.LONG);
+        payloadData.add(payloadEmailMessageID);
+
+        Attribute payloadSubject = new Attribute("subject", AttributeType.STRING);
+        payloadData.add(payloadSubject);
+
+        Attribute payloadFrom = new Attribute("sender", AttributeType.STRING);
+        payloadData.add(payloadSubject);
+
+        Attribute payloadTo = new Attribute("to", AttributeType.STRING);
+        payloadData.add(payloadSubject);
+
+        Attribute payloadSentDate = new Attribute("sentDate", AttributeType.LONG);
+        payloadData.add(payloadSentDate);
+
+        Attribute payloadThreadID = new Attribute("threadID", AttributeType.LONG);
+        payloadData.add(payloadThreadID);
+
+        Attribute payloadStatus = new Attribute("status", AttributeType.STRING);
+        payloadData.add(payloadStatus);
+
+        Attribute payloadContent = new Attribute("content", AttributeType.STRING);
+        payloadData.add(payloadContent);
+
+        Attribute payloadLabels = new Attribute("labels", AttributeType.STRING);
+        payloadData.add(payloadLabels);
+
+        Attribute payloadSoapHeader = new Attribute("soap_header", AttributeType.STRING);
+        payloadData.add(payloadSoapHeader);
+
+        Attribute payloadSoapBody = new Attribute("soap_body", AttributeType.STRING);
+        payloadData.add(payloadSoapBody);
+
+        streamDefinition.setPayloadData(payloadData);
+        streamDefinition.setDescription("email information stream");
+        streamDefinition.setNickName("gmail");
 
         try {
-            eventStreamAdminServiceStub.addEventStreamInfo("gmailInputStream", "1.0.0", metaAttributes, correlationAttributes, payloadAttributes, "email information stream", "gmail");
-
-        } catch (RemoteException e) {
+            eventStreamService.addEventStreamDefinition(streamDefinition, -123);
+        } catch (EventStreamConfigurationException e) {
             logger.error(e.getMessage());
-            throw new EmailMonitorServiceException("Error when creating mailInputStream", e);
         }
 
 
@@ -173,25 +147,30 @@ public class StreamDeployer {
 
 
     public void createMailOutputStream() {
-        EventStreamAttributeDto payloadThreadID = new EventStreamAttributeDto();
-        payloadThreadID.setAttributeName("threadID");
-        payloadThreadID.setAttributeType("long");
-
-        EventStreamAttributeDto payloadLabel = new EventStreamAttributeDto();
-        payloadLabel.setAttributeName("label");
-        payloadLabel.setAttributeType("string");
-
-
-        EventStreamAttributeDto[] payloadAttributes = new EventStreamAttributeDto[]{payloadThreadID, payloadLabel};
-
+        StreamDefinition streamDefinition = null;
         try {
-            eventStreamAdminServiceStub.addEventStreamInfo("gmailOutputStream", "1.0.0", null, null, payloadAttributes, "analyzed email stream", "gmail_output");
-
-        } catch (RemoteException e) {
+            streamDefinition = new StreamDefinition("gmailOutputStream", "1.0.0") ;
+        } catch (MalformedStreamDefinitionException e) {
             logger.error(e.getMessage());
         }
 
+        List<Attribute> payloadData = new ArrayList<Attribute>() ;
 
+        Attribute payloadThreadID = new Attribute("threadID", AttributeType.LONG);
+        payloadData.add(payloadThreadID);
+
+        Attribute payloadLabel = new Attribute("label", AttributeType.STRING);
+        payloadData.add(payloadLabel);
+
+        streamDefinition.setPayloadData(payloadData);
+        streamDefinition.setDescription("analyzed email stream");
+        streamDefinition.setNickName("gmail_output");
+
+        try {
+            eventStreamService.addEventStreamDefinition(streamDefinition, -123);
+        } catch (EventStreamConfigurationException e) {
+            logger.error(e.getMessage());
+        }
     }
 
 

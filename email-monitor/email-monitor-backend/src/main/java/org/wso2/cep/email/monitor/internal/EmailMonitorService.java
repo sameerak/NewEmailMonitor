@@ -2,6 +2,7 @@ package org.wso2.cep.email.monitor.internal;
 
 
 import org.apache.axis2.context.ConfigurationContext;
+import org.apache.axis2.engine.AxisConfiguration;
 import org.apache.log4j.Logger;
 import org.wso2.cep.email.monitor.EmailMonitorServiceInterface;
 import org.wso2.cep.email.monitor.exception.EmailMonitorServiceException;
@@ -63,11 +64,11 @@ public class EmailMonitorService implements EmailMonitorServiceInterface {
     }
 
     @Override
-    public boolean createExecutionPlan(String cookie, String backendServerURL, Object configCtx, String executionPlanXmlConfiguration) throws EmailMonitorServiceException {
+    public boolean createExecutionPlan( String executionPlanXmlConfiguration,AxisConfiguration axisConfiguration) throws EmailMonitorServiceException {
 
         try {
-            ExecutionPlanDeployer executionPlanDeployer = new ExecutionPlanDeployer(cookie, backendServerURL, (ConfigurationContext)configCtx);
-            executionPlanDeployer.createExecutionPlan(executionPlanXmlConfiguration);
+            ExecutionPlanDeployer executionPlanDeployer = new ExecutionPlanDeployer();
+            executionPlanDeployer.createExecutionPlan(executionPlanXmlConfiguration,axisConfiguration);
             return true;
         } catch (EmailMonitorServiceException e) {
             logger.error(e.getMessage());
@@ -77,10 +78,10 @@ public class EmailMonitorService implements EmailMonitorServiceInterface {
     }
 
     @Override
-    public boolean createMailInputStream(String cookie, String backendServerURL, Object configCtx) throws EmailMonitorServiceException {
+    public boolean createMailInputStream() throws EmailMonitorServiceException {
 
         try {
-            StreamDeployer streamDeployer = new StreamDeployer(cookie, backendServerURL,(ConfigurationContext) configCtx);
+            StreamDeployer streamDeployer = new StreamDeployer();
             streamDeployer.createMailInputStream();
             return true;
         } catch (EmailMonitorServiceException e) {
