@@ -134,7 +134,7 @@
                 CEPConfigUtils cepConfigUtils = new CEPConfigUtils(cookie, backendServerURL, configContext);
 
                 ESBConfigUtils esbConfigUtils = new ESBConfigUtils(esbIP, esbPort, esbUserName, esbPassword);
-                esbConfigUtils.AddConfigurations(cepUserName, cepPassword, emailAddress, emailPassword, cepIP, cepPort);
+                esbConfigUtils.AddConfigurations(cepUserName, cepPassword, emailAddress, emailPassword, cepIP, cepPort, backendServerURL, configContext);
             %>
             <script>
                 CARBON.showInfoDialog("ESB server configurations stored successfully");
