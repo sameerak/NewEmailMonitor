@@ -18,24 +18,27 @@ public class CEPConfigUtils {
 
     public CEPConfigUtils(String cookie, String backendServerURL, ConfigurationContext configCtx){
         String endPoint = backendServerURL + "EmailMonitorAdminService";
-//        try {
-//            emailMonitorAdminServiceStub = new EmailMonitorAdminServiceStub(configCtx, endPoint);
-//
-//            emailMonitorAdminServiceStub.createMailInputStream(cookie, backendServerURL, configCtx);
-//
-//        } catch (AxisFault axisFault) {
-//            axisFault.printStackTrace();
-//        }catch (RemoteException e) {
-//            e.printStackTrace();
-//        } catch (EmailMonitorAdminServiceEmailMonitorAdminException e) {
-//            e.printStackTrace();
-//        }
         try {
-            streamDeployer = new StreamDeployer(cookie, backendServerURL, configCtx);
-            streamDeployer.createMailInputStream();
-            streamDeployer.createMailOutputStream();
-        } catch (EmailMonitorServiceException e) {
+            emailMonitorAdminServiceStub = new EmailMonitorAdminServiceStub(configCtx, endPoint);
+
+            emailMonitorAdminServiceStub.createMailInputStream();
+
+        } catch (AxisFault axisFault) {
+            axisFault.printStackTrace();
+        }catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (EmailMonitorAdminServiceEmailMonitorAdminException e) {
             e.printStackTrace();
         }
+
+
+
+//        try {
+//            streamDeployer = new StreamDeployer(cookie, backendServerURL, configCtx);
+//            streamDeployer.createMailInputStream();
+//            streamDeployer.createMailOutputStream();
+//        } catch (EmailMonitorServiceException e) {
+//            e.printStackTrace();
+//        }
     }
 }
