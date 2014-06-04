@@ -66,7 +66,7 @@ public class EmailMonitorService implements EmailMonitorServiceInterface {
     public boolean createExecutionPlan(String cookie, String backendServerURL, Object configCtx, String executionPlanXmlConfiguration) throws EmailMonitorServiceException {
 
         try {
-            ExecutionPlanDeployer executionPlanDeployer = new ExecutionPlanDeployer(cookie, backendServerURL, (ConfigurationContext)configCtx);
+            ExecutionPlanDeployer executionPlanDeployer = new ExecutionPlanDeployer();
             executionPlanDeployer.createExecutionPlan(executionPlanXmlConfiguration);
             return true;
         } catch (EmailMonitorServiceException e) {
@@ -80,7 +80,7 @@ public class EmailMonitorService implements EmailMonitorServiceInterface {
     public boolean createMailInputStream(String cookie, String backendServerURL, Object configCtx) throws EmailMonitorServiceException {
 
         try {
-            StreamDeployer streamDeployer = new StreamDeployer(cookie, backendServerURL,(ConfigurationContext) configCtx);
+            StreamDeployer streamDeployer = new StreamDeployer();
             streamDeployer.createMailInputStream();
             return true;
         } catch (EmailMonitorServiceException e) {
