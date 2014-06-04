@@ -1,48 +1,41 @@
 package org.wso2.cep.email.monitor.internal.config;
 
 
-import org.apache.axis2.AxisFault;
-import org.apache.axis2.client.Options;
-import org.apache.axis2.client.ServiceClient;
-import org.apache.axis2.context.ConfigurationContext;
+
+import org.apache.axis2.engine.AxisConfiguration;
 import org.apache.log4j.Logger;
-import org.wso2.carbon.event.output.adaptor.manager.stub.OutputEventAdaptorManagerAdminServiceStub;
-import org.wso2.carbon.event.output.adaptor.manager.stub.types.OutputEventAdaptorPropertyDto;
-import org.wso2.carbon.event.processor.stub.EventProcessorAdminServiceStub;
+import org.wso2.carbon.event.output.adaptor.core.config.OutputEventAdaptorConfiguration;
+import org.wso2.carbon.event.output.adaptor.manager.core.OutputEventAdaptorManagerService;
+import org.wso2.carbon.event.output.adaptor.manager.core.exception.OutputEventAdaptorManagerConfigurationException;
+
 import org.wso2.cep.email.monitor.exception.EmailMonitorServiceException;
+import org.wso2.cep.email.monitor.internal.ds.EmailMonitorValueHolder;
 
 import java.rmi.RemoteException;
 
 public class OutputAdapterDeployer {
 
+
     private static Logger logger = Logger.getLogger(OutputAdapterDeployer.class);
-    private OutputEventAdaptorManagerAdminServiceStub outputEventAdaptorManagerAdminServiceStub;
-
-    public OutputAdapterDeployer(String cookie, String backendServerURL, ConfigurationContext configCtx) throws EmailMonitorServiceException {
-
-        String endPoint = backendServerURL + "OutputEventAdaptorManagerAdminService";
+    private EmailMonitorValueHolder emailMonitorValueHolder;
+    private OutputEventAdaptorManagerService outputEventAdaptorManagerService;
 
 
-        try {
-            outputEventAdaptorManagerAdminServiceStub = new OutputEventAdaptorManagerAdminServiceStub(configCtx, endPoint);
-        } catch (AxisFault axisFault) {
-            logger.error(axisFault.getMessage());
-            throw new EmailMonitorServiceException("Error when creating OutputAdapterDeployer", axisFault);
-        }
 
-        ServiceClient client = outputEventAdaptorManagerAdminServiceStub._getServiceClient();
-        Options option = client.getOptions();
-        option.setManageSession(true);
-        option.setProperty(org.apache.axis2.transport.http.HTTPConstants.COOKIE_STRING, cookie);
+    public OutputAdapterDeployer() throws EmailMonitorServiceException {
 
+        emailMonitorValueHolder = EmailMonitorValueHolder.getInstance();
+        outputEventAdaptorManagerService = emailMonitorValueHolder.getOutputEventAdaptorManagerService() ;
     }
 
     public void createSoapOutputAdapter() throws EmailMonitorServiceException {
+        OutputEventAdaptorConfiguration outputEventAdaptorConfiguration = new OutputEventAdaptorConfiguration();
+        outputEventAdaptorConfiguration.setName("SOAP_output_Adaptor");
+        outputEventAdaptorConfiguration.setType("soap");
         try {
-            outputEventAdaptorManagerAdminServiceStub.deployOutputEventAdaptorConfiguration("soap-sender", "soap", new OutputEventAdaptorPropertyDto[0]);
-        } catch (RemoteException e) {
+            outputEventAdaptorManagerService.deployOutputEventAdaptorConfiguration(outputEventAdaptorConfiguration, new AxisConfiguration());
+        } catch (OutputEventAdaptorManagerConfigurationException e) {
             logger.error(e.getMessage());
-            throw new EmailMonitorServiceException("Error when creating OutputAdapter", e);
         }
     }
 }

@@ -1,6 +1,9 @@
 package org.wso2.cep.email.monitor.internal.ds;
 
 
+import org.wso2.carbon.event.formatter.core.EventFormatterService;
+import org.wso2.carbon.event.output.adaptor.core.OutputEventAdaptorFactory;
+import org.wso2.carbon.event.output.adaptor.manager.core.OutputEventAdaptorManagerService;
 import org.wso2.carbon.event.processor.core.EventProcessorService;
 import org.wso2.carbon.event.stream.manager.core.EventStreamService;
 import org.wso2.carbon.utils.ConfigurationContextService;
@@ -14,6 +17,9 @@ public class EmailMonitorValueHolder {
     private ConfigurationContextService configurationContextService;
     private EventStreamService eventStreamService;
     private EventProcessorService eventProcessorService;
+    private OutputEventAdaptorManagerService outputEventAdaptorManagerService;
+    private EventFormatterService eventFormatterService;
+
 
     private EmailMonitorValueHolder() {
         emailMonitorServiceInterface = new EmailMonitorService();
@@ -48,8 +54,18 @@ public class EmailMonitorValueHolder {
     public void unsetEventStreamService(){
         this.eventStreamService = null;
     }
+
     public EventProcessorService getEventProcessorService() {
         return  eventProcessorService;
+    }
+
+    public OutputEventAdaptorManagerService getOutputEventAdaptorManagerService() {
+        return  outputEventAdaptorManagerService;
+    }
+
+
+    public EventFormatterService getEventFormatterService(){
+        return  eventFormatterService;
     }
 
     public void setEventProcessorService(EventProcessorService eventProcessorService){
