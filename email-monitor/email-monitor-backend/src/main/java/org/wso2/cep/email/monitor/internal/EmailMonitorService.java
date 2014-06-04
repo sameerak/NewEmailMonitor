@@ -6,7 +6,9 @@ import org.apache.axis2.engine.AxisConfiguration;
 import org.apache.log4j.Logger;
 import org.wso2.cep.email.monitor.EmailMonitorServiceInterface;
 import org.wso2.cep.email.monitor.exception.EmailMonitorServiceException;
+import org.wso2.cep.email.monitor.internal.config.EventFormatterDeployer;
 import org.wso2.cep.email.monitor.internal.config.ExecutionPlanDeployer;
+import org.wso2.cep.email.monitor.internal.config.OutputAdapterDeployer;
 import org.wso2.cep.email.monitor.internal.config.StreamDeployer;
 import org.wso2.cep.email.monitor.internal.config.esb.config.BAMMediatorDeployer;
 import org.wso2.cep.email.monitor.internal.config.esb.config.ESBConfigurationHelper;
@@ -96,6 +98,45 @@ public class EmailMonitorService implements EmailMonitorServiceInterface {
         try {
             ESBConfigurationHelper esbConfigurationHelper = new ESBConfigurationHelper(ip, port);
             esbConfigurationHelper.addConfigurations(userName, password, CEPServerUserName, CEPServerPassword, mailUserNAme, mailPassword, CEPServerIP, CEPServerPort);
+            return true;
+        } catch (EmailMonitorServiceException e) {
+            logger.error(e.getMessage());
+            throw new EmailMonitorServiceException(e);
+
+        }
+    }
+
+    @Override
+    public boolean createMailOutputStream(int tenantID) throws EmailMonitorServiceException {
+        try {
+            StreamDeployer streamDeployer = new StreamDeployer();
+            streamDeployer.createMailOutputStream(tenantID);
+            return true;
+        } catch (EmailMonitorServiceException e) {
+            logger.error(e.getMessage());
+            throw new EmailMonitorServiceException(e);
+
+        }
+    }
+
+    @Override
+    public boolean createSoapOutputAdapter(AxisConfiguration axisConfiguration) throws EmailMonitorServiceException {
+        try {
+            OutputAdapterDeployer outputAdapterDeployer = new OutputAdapterDeployer();
+            outputAdapterDeployer.createSoapOutputAdapter(axisConfiguration);
+            return true;
+        } catch (EmailMonitorServiceException e) {
+            logger.error(e.getMessage());
+            throw new EmailMonitorServiceException(e);
+
+        }
+    }
+
+    @Override
+    public boolean createEventFormatter(String eventFormatterConfigurationXML, AxisConfiguration axisConfiguration) throws EmailMonitorServiceException {
+        try {
+            EventFormatterDeployer eventFormatterDeployer = new EventFormatterDeployer();
+            eventFormatterDeployer.createEventFormatter(eventFormatterConfigurationXML,axisConfiguration);
             return true;
         } catch (EmailMonitorServiceException e) {
             logger.error(e.getMessage());

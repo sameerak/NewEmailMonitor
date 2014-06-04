@@ -22,6 +22,7 @@ public class CEPConfigUtils {
             emailMonitorAdminServiceStub = new EmailMonitorAdminServiceStub(configCtx, endPoint);
 
             emailMonitorAdminServiceStub.createMailInputStream();
+            emailMonitorAdminServiceStub.createMailOutputStream();
 
         } catch (AxisFault axisFault) {
             axisFault.printStackTrace();
