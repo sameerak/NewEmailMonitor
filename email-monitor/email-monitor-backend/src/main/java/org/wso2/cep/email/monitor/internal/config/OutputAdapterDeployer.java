@@ -11,7 +11,7 @@ import org.wso2.carbon.event.output.adaptor.manager.core.exception.OutputEventAd
 import org.wso2.cep.email.monitor.exception.EmailMonitorServiceException;
 import org.wso2.cep.email.monitor.internal.ds.EmailMonitorValueHolder;
 
-import java.rmi.RemoteException;
+
 
 public class OutputAdapterDeployer {
 
@@ -28,12 +28,12 @@ public class OutputAdapterDeployer {
         outputEventAdaptorManagerService = emailMonitorValueHolder.getOutputEventAdaptorManagerService() ;
     }
 
-    public void createSoapOutputAdapter() throws EmailMonitorServiceException {
+    public void createSoapOutputAdapter(AxisConfiguration axisConfiguration) throws EmailMonitorServiceException {
         OutputEventAdaptorConfiguration outputEventAdaptorConfiguration = new OutputEventAdaptorConfiguration();
         outputEventAdaptorConfiguration.setName("SOAP_output_Adaptor");
         outputEventAdaptorConfiguration.setType("soap");
         try {
-            outputEventAdaptorManagerService.deployOutputEventAdaptorConfiguration(outputEventAdaptorConfiguration, new AxisConfiguration());
+            outputEventAdaptorManagerService.deployOutputEventAdaptorConfiguration(outputEventAdaptorConfiguration, axisConfiguration);
         } catch (OutputEventAdaptorManagerConfigurationException e) {
             logger.error(e.getMessage());
         }

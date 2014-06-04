@@ -2,6 +2,7 @@ package org.wso2.cep.email.monitor.admin;
 import org.apache.axis2.context.ConfigurationContext;
 import org.apache.log4j.Logger;
 import org.wso2.carbon.core.AbstractAdmin;
+import org.wso2.carbon.user.core.UserStoreException;
 import org.wso2.cep.email.monitor.EmailMonitorServiceInterface;
 import org.wso2.cep.email.monitor.admin.exception.EmailMonitorAdminException;
 import org.wso2.cep.email.monitor.admin.internal.EmailMonitorAdminValueHolder;
@@ -64,8 +65,16 @@ private static final Logger log = Logger.getLogger(EmailMonitorAdminService.clas
 
     public boolean createMailInputStream() throws EmailMonitorAdminException {
         EmailMonitorServiceInterface emailMonitorServiceInterface = EmailMonitorAdminValueHolder.getInstance().getEmailMonitorService();
+
+        int tenantID = 0;
         try {
-            return  emailMonitorServiceInterface.createMailInputStream();
+            tenantID = getUserRealm().getRealmConfiguration().getTenantId();
+        } catch (UserStoreException e) {
+            log.error(e.getMessage());
+            throw new EmailMonitorAdminException(e);
+        }
+        try {
+            return  emailMonitorServiceInterface.createMailInputStream(tenantID);
         } catch (EmailMonitorServiceException e) {
             log.error(e.getMessage());
             throw new EmailMonitorAdminException(e);

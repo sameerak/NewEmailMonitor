@@ -62,7 +62,7 @@ public interface EmailMonitorServiceInterface {
      * Create MailInputStream and stores it in the CEP
      * @return
      */
-    public boolean createMailInputStream( ) throws EmailMonitorServiceException;
+    public boolean createMailInputStream(int tenantID) throws EmailMonitorServiceException;
 
     /**
      * Add bam proxy and tasks configurations to esb
