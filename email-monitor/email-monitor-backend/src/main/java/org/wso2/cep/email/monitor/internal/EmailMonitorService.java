@@ -78,11 +78,11 @@ public class EmailMonitorService implements EmailMonitorServiceInterface {
     }
 
     @Override
-    public boolean createMailInputStream() throws EmailMonitorServiceException {
+    public boolean createMailInputStream(int tenantID) throws EmailMonitorServiceException {
 
         try {
             StreamDeployer streamDeployer = new StreamDeployer();
-            streamDeployer.createMailInputStream();
+            streamDeployer.createMailInputStream(tenantID);
             return true;
         } catch (EmailMonitorServiceException e) {
             logger.error(e.getMessage());

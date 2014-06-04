@@ -33,7 +33,7 @@ public class StreamDeployer {
     }
 
 
-    public void createMailInputStream() throws EmailMonitorServiceException {
+    public void createMailInputStream(int tenantID) throws EmailMonitorServiceException {
 
 
         StreamDefinition streamDefinition = null;
@@ -106,10 +106,10 @@ public class StreamDeployer {
         payloadData.add(payloadSubject);
 
         Attribute payloadFrom = new Attribute("sender", AttributeType.STRING);
-        payloadData.add(payloadSubject);
+        payloadData.add(payloadFrom);
 
         Attribute payloadTo = new Attribute("to", AttributeType.STRING);
-        payloadData.add(payloadSubject);
+        payloadData.add(payloadTo);
 
         Attribute payloadSentDate = new Attribute("sentDate", AttributeType.LONG);
         payloadData.add(payloadSentDate);
@@ -137,7 +137,7 @@ public class StreamDeployer {
         streamDefinition.setNickName("gmail");
 
         try {
-            eventStreamService.addEventStreamDefinition(streamDefinition, -123);
+            eventStreamService.addEventStreamDefinition(streamDefinition, tenantID);
         } catch (EventStreamConfigurationException e) {
             logger.error(e.getMessage());
         }
@@ -146,7 +146,7 @@ public class StreamDeployer {
     }
 
 
-    public void createMailOutputStream() {
+    public void createMailOutputStream(int tenantID) {
         StreamDefinition streamDefinition = null;
         try {
             streamDefinition = new StreamDefinition("gmailOutputStream", "1.0.0") ;
@@ -167,7 +167,7 @@ public class StreamDeployer {
         streamDefinition.setNickName("gmail_output");
 
         try {
-            eventStreamService.addEventStreamDefinition(streamDefinition, -123);
+            eventStreamService.addEventStreamDefinition(streamDefinition,tenantID);
         } catch (EventStreamConfigurationException e) {
             logger.error(e.getMessage());
         }
