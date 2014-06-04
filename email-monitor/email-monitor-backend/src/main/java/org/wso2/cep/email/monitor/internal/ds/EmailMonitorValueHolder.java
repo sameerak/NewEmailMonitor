@@ -30,9 +30,7 @@ public class EmailMonitorValueHolder {
         return (EmailMonitorService) emailMonitorServiceInterface;
     }
 
-    public void setEmailMonitorServiceInterface(EmailMonitorServiceInterface emailMonitorServiceInterface) {
-        this.emailMonitorServiceInterface = emailMonitorServiceInterface;
-    }
+
 
     public static EmailMonitorValueHolder getInstance() {
         if (emailMonitorValueHolder == null) {
