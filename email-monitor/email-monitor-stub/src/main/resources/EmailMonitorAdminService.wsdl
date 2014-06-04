@@ -15,6 +15,30 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
+            <xs:element name="createSoapOutputAdapter">
+                <xs:complexType>
+                    <xs:sequence></xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="createSoapOutputAdapterResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" type="xs:boolean"></xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="createMailOutputStream">
+                <xs:complexType>
+                    <xs:sequence></xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="createMailOutputStreamResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" type="xs:boolean"></xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
             <xs:element name="createMailInputStream">
                 <xs:complexType>
                     <xs:sequence></xs:sequence>
@@ -35,6 +59,20 @@
                 </xs:complexType>
             </xs:element>
             <xs:element name="createExecutionPlanResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" type="xs:boolean"></xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="createEventFormatter">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="eventFormatterConfigurationXML" nillable="true" type="xs:string"></xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="createEventFormatterResponse">
                 <xs:complexType>
                     <xs:sequence>
                         <xs:element minOccurs="0" name="return" type="xs:boolean"></xs:element>
@@ -144,6 +182,18 @@
     <wsdl:message name="createMailInputStreamResponse">
         <wsdl:part name="parameters" element="ns:createMailInputStreamResponse"></wsdl:part>
     </wsdl:message>
+    <wsdl:message name="createSoapOutputAdapterRequest">
+        <wsdl:part name="parameters" element="ns:createSoapOutputAdapter"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="createSoapOutputAdapterResponse">
+        <wsdl:part name="parameters" element="ns:createSoapOutputAdapterResponse"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="createEventFormatterRequest">
+        <wsdl:part name="parameters" element="ns:createEventFormatter"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="createEventFormatterResponse">
+        <wsdl:part name="parameters" element="ns:createEventFormatterResponse"></wsdl:part>
+    </wsdl:message>
     <wsdl:message name="addESBConfigurationsRequest">
         <wsdl:part name="parameters" element="ns:addESBConfigurations"></wsdl:part>
     </wsdl:message>
@@ -162,6 +212,12 @@
     <wsdl:message name="addMailProxyResponse">
         <wsdl:part name="parameters" element="ns:addMailProxyResponse"></wsdl:part>
     </wsdl:message>
+    <wsdl:message name="createMailOutputStreamRequest">
+        <wsdl:part name="parameters" element="ns:createMailOutputStream"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="createMailOutputStreamResponse">
+        <wsdl:part name="parameters" element="ns:createMailOutputStreamResponse"></wsdl:part>
+    </wsdl:message>
     <wsdl:portType name="EmailMonitorAdminServicePortType">
         <wsdl:operation name="addScheduledTask">
             <wsdl:input message="tns:addScheduledTaskRequest" wsaw:Action="urn:addScheduledTask"></wsdl:input>
@@ -178,6 +234,16 @@
             <wsdl:output message="tns:createMailInputStreamResponse" wsaw:Action="urn:createMailInputStreamResponse"></wsdl:output>
             <wsdl:fault message="tns:EmailMonitorAdminServiceEmailMonitorAdminException" name="EmailMonitorAdminServiceEmailMonitorAdminException" wsaw:Action="urn:createMailInputStreamEmailMonitorAdminServiceEmailMonitorAdminException"></wsdl:fault>
         </wsdl:operation>
+        <wsdl:operation name="createSoapOutputAdapter">
+            <wsdl:input message="tns:createSoapOutputAdapterRequest" wsaw:Action="urn:createSoapOutputAdapter"></wsdl:input>
+            <wsdl:output message="tns:createSoapOutputAdapterResponse" wsaw:Action="urn:createSoapOutputAdapterResponse"></wsdl:output>
+            <wsdl:fault message="tns:EmailMonitorAdminServiceEmailMonitorAdminException" name="EmailMonitorAdminServiceEmailMonitorAdminException" wsaw:Action="urn:createSoapOutputAdapterEmailMonitorAdminServiceEmailMonitorAdminException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="createEventFormatter">
+            <wsdl:input message="tns:createEventFormatterRequest" wsaw:Action="urn:createEventFormatter"></wsdl:input>
+            <wsdl:output message="tns:createEventFormatterResponse" wsaw:Action="urn:createEventFormatterResponse"></wsdl:output>
+            <wsdl:fault message="tns:EmailMonitorAdminServiceEmailMonitorAdminException" name="EmailMonitorAdminServiceEmailMonitorAdminException" wsaw:Action="urn:createEventFormatterEmailMonitorAdminServiceEmailMonitorAdminException"></wsdl:fault>
+        </wsdl:operation>
         <wsdl:operation name="addESBConfigurations">
             <wsdl:input message="tns:addESBConfigurationsRequest" wsaw:Action="urn:addESBConfigurations"></wsdl:input>
             <wsdl:output message="tns:addESBConfigurationsResponse" wsaw:Action="urn:addESBConfigurationsResponse"></wsdl:output>
@@ -192,6 +258,11 @@
             <wsdl:input message="tns:addMailProxyRequest" wsaw:Action="urn:addMailProxy"></wsdl:input>
             <wsdl:output message="tns:addMailProxyResponse" wsaw:Action="urn:addMailProxyResponse"></wsdl:output>
             <wsdl:fault message="tns:EmailMonitorAdminServiceEmailMonitorAdminException" name="EmailMonitorAdminServiceEmailMonitorAdminException" wsaw:Action="urn:addMailProxyEmailMonitorAdminServiceEmailMonitorAdminException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="createMailOutputStream">
+            <wsdl:input message="tns:createMailOutputStreamRequest" wsaw:Action="urn:createMailOutputStream"></wsdl:input>
+            <wsdl:output message="tns:createMailOutputStreamResponse" wsaw:Action="urn:createMailOutputStreamResponse"></wsdl:output>
+            <wsdl:fault message="tns:EmailMonitorAdminServiceEmailMonitorAdminException" name="EmailMonitorAdminServiceEmailMonitorAdminException" wsaw:Action="urn:createMailOutputStreamEmailMonitorAdminServiceEmailMonitorAdminException"></wsdl:fault>
         </wsdl:operation>
     </wsdl:portType>
     <wsdl:binding name="EmailMonitorAdminServiceSoap11Binding" type="tns:EmailMonitorAdminServicePortType">
@@ -232,6 +303,30 @@
                 <soap:fault use="literal" name="EmailMonitorAdminServiceEmailMonitorAdminException"></soap:fault>
             </wsdl:fault>
         </wsdl:operation>
+        <wsdl:operation name="createSoapOutputAdapter">
+            <soap:operation soapAction="urn:createSoapOutputAdapter" style="document"></soap:operation>
+            <wsdl:input>
+                <soap:body use="literal"></soap:body>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"></soap:body>
+            </wsdl:output>
+            <wsdl:fault name="EmailMonitorAdminServiceEmailMonitorAdminException">
+                <soap:fault use="literal" name="EmailMonitorAdminServiceEmailMonitorAdminException"></soap:fault>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="createEventFormatter">
+            <soap:operation soapAction="urn:createEventFormatter" style="document"></soap:operation>
+            <wsdl:input>
+                <soap:body use="literal"></soap:body>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"></soap:body>
+            </wsdl:output>
+            <wsdl:fault name="EmailMonitorAdminServiceEmailMonitorAdminException">
+                <soap:fault use="literal" name="EmailMonitorAdminServiceEmailMonitorAdminException"></soap:fault>
+            </wsdl:fault>
+        </wsdl:operation>
         <wsdl:operation name="createExecutionPlan">
             <soap:operation soapAction="urn:createExecutionPlan" style="document"></soap:operation>
             <wsdl:input>
@@ -258,6 +353,18 @@
         </wsdl:operation>
         <wsdl:operation name="addMailProxy">
             <soap:operation soapAction="urn:addMailProxy" style="document"></soap:operation>
+            <wsdl:input>
+                <soap:body use="literal"></soap:body>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"></soap:body>
+            </wsdl:output>
+            <wsdl:fault name="EmailMonitorAdminServiceEmailMonitorAdminException">
+                <soap:fault use="literal" name="EmailMonitorAdminServiceEmailMonitorAdminException"></soap:fault>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="createMailOutputStream">
+            <soap:operation soapAction="urn:createMailOutputStream" style="document"></soap:operation>
             <wsdl:input>
                 <soap:body use="literal"></soap:body>
             </wsdl:input>
@@ -307,6 +414,30 @@
                 <soap12:fault use="literal" name="EmailMonitorAdminServiceEmailMonitorAdminException"></soap12:fault>
             </wsdl:fault>
         </wsdl:operation>
+        <wsdl:operation name="createSoapOutputAdapter">
+            <soap12:operation soapAction="urn:createSoapOutputAdapter" style="document"></soap12:operation>
+            <wsdl:input>
+                <soap12:body use="literal"></soap12:body>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"></soap12:body>
+            </wsdl:output>
+            <wsdl:fault name="EmailMonitorAdminServiceEmailMonitorAdminException">
+                <soap12:fault use="literal" name="EmailMonitorAdminServiceEmailMonitorAdminException"></soap12:fault>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="createEventFormatter">
+            <soap12:operation soapAction="urn:createEventFormatter" style="document"></soap12:operation>
+            <wsdl:input>
+                <soap12:body use="literal"></soap12:body>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"></soap12:body>
+            </wsdl:output>
+            <wsdl:fault name="EmailMonitorAdminServiceEmailMonitorAdminException">
+                <soap12:fault use="literal" name="EmailMonitorAdminServiceEmailMonitorAdminException"></soap12:fault>
+            </wsdl:fault>
+        </wsdl:operation>
         <wsdl:operation name="createExecutionPlan">
             <soap12:operation soapAction="urn:createExecutionPlan" style="document"></soap12:operation>
             <wsdl:input>
@@ -333,6 +464,18 @@
         </wsdl:operation>
         <wsdl:operation name="addMailProxy">
             <soap12:operation soapAction="urn:addMailProxy" style="document"></soap12:operation>
+            <wsdl:input>
+                <soap12:body use="literal"></soap12:body>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"></soap12:body>
+            </wsdl:output>
+            <wsdl:fault name="EmailMonitorAdminServiceEmailMonitorAdminException">
+                <soap12:fault use="literal" name="EmailMonitorAdminServiceEmailMonitorAdminException"></soap12:fault>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="createMailOutputStream">
+            <soap12:operation soapAction="urn:createMailOutputStream" style="document"></soap12:operation>
             <wsdl:input>
                 <soap12:body use="literal"></soap12:body>
             </wsdl:input>
@@ -373,6 +516,24 @@
                 <mime:content type="text/xml" part="parameters"></mime:content>
             </wsdl:output>
         </wsdl:operation>
+        <wsdl:operation name="createSoapOutputAdapter">
+            <http:operation location="createSoapOutputAdapter"></http:operation>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"></mime:content>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"></mime:content>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="createEventFormatter">
+            <http:operation location="createEventFormatter"></http:operation>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"></mime:content>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"></mime:content>
+            </wsdl:output>
+        </wsdl:operation>
         <wsdl:operation name="createExecutionPlan">
             <http:operation location="createExecutionPlan"></http:operation>
             <wsdl:input>
@@ -393,6 +554,15 @@
         </wsdl:operation>
         <wsdl:operation name="addMailProxy">
             <http:operation location="addMailProxy"></http:operation>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"></mime:content>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"></mime:content>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="createMailOutputStream">
+            <http:operation location="createMailOutputStream"></http:operation>
             <wsdl:input>
                 <mime:content type="text/xml" part="parameters"></mime:content>
             </wsdl:input>

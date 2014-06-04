@@ -81,5 +81,26 @@ public interface EmailMonitorServiceInterface {
      */
     public boolean addESBConfigurations(String ip, String port, String userName, String password, String CEPServerUserName, String CEPServerPassword, String mailUserNAme, String mailPassword, String CEPServerIP, String CEPServerPort) throws EmailMonitorServiceException;
 
+    /**
+     * @param tenantID
+     * @return
+     * @throws EmailMonitorServiceException
+     */
+    public boolean createMailOutputStream(int tenantID) throws EmailMonitorServiceException;
+
+    /**
+     * @param axisConfiguration
+     * @return
+     * @throws EmailMonitorServiceException
+     */
+    public boolean createSoapOutputAdapter(AxisConfiguration axisConfiguration) throws EmailMonitorServiceException;
+
+    /**
+     * @param eventFormatterConfigurationXML
+     * @param axisConfiguration
+     * @return
+     * @throws EmailMonitorServiceException
+     */
+    public boolean createEventFormatter(String eventFormatterConfigurationXML, AxisConfiguration axisConfiguration)throws EmailMonitorServiceException;;
 
 }
