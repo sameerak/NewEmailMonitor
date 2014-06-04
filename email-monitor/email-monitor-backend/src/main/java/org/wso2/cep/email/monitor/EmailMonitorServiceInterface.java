@@ -2,6 +2,7 @@ package org.wso2.cep.email.monitor;
 
 
 import org.apache.axis2.context.ConfigurationContext;
+import org.apache.axis2.engine.AxisConfiguration;
 import org.wso2.cep.email.monitor.exception.EmailMonitorServiceException;
 
 /**
@@ -52,24 +53,16 @@ public interface EmailMonitorServiceInterface {
 
     /**
      * Create Execution Plan for deploy in CEP for the run CEP queries among mails
-     *
-     * @param cookie
-     * @param backendServerURL
-     * @param configCtx
      * @param executionPlanXmlConfiguration
      * @return
      */
-    public boolean createExecutionPlan(String cookie, String backendServerURL, Object configCtx, String executionPlanXmlConfiguration) throws EmailMonitorServiceException;
+    public boolean createExecutionPlan( String executionPlanXmlConfiguration,AxisConfiguration axisConfiguration) throws EmailMonitorServiceException;
 
     /**
      * Create MailInputStream and stores it in the CEP
-     *
-     * @param cookie
-     * @param backendServerURL
-     * @param configCtx
      * @return
      */
-    public boolean createMailInputStream(String cookie, String backendServerURL, Object configCtx) throws EmailMonitorServiceException;
+    public boolean createMailInputStream( ) throws EmailMonitorServiceException;
 
     /**
      * Add bam proxy and tasks configurations to esb

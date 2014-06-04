@@ -36,9 +36,9 @@ public class ExecutionPlanDeployer {
 
 
 
-    public void createExecutionPlan(String executionPlanXmlConfiguration) throws EmailMonitorServiceException {
+    public void createExecutionPlan(String executionPlanXmlConfiguration,AxisConfiguration axisConfiguration) throws EmailMonitorServiceException {
         try {
-            eventProcessorService.deployExecutionPlanConfiguration(executionPlanXmlConfiguration, new AxisConfiguration());
+            eventProcessorService.deployExecutionPlanConfiguration(executionPlanXmlConfiguration,axisConfiguration );
         } catch (ExecutionPlanDependencyValidationException e) {
             logger.error(e.getMessage());
         } catch (ExecutionPlanConfigurationException e) {
