@@ -15,43 +15,94 @@
     <div id="workArea">
 
         <form method="POST">
-        <table>
-            <tr>
-                <td>email address:</td> <td><input type="text" name="emailAddress"></td>
-            </tr>
-            <tr>
-                <td>email password:</td> <td><input type="password" name="emailPassword"></td>
-            </tr>
-            <tr>
-                <td>ESB IP:</td> <td><input type="text" name="esbIP"></td>
-            </tr>
-            <tr>
-                <td>ESB Port:</td> <td><input type="text" name="esbPort"></td>
-            </tr>
-            <tr>
-                <td>ESB Username:</td> <td><input type="text" name="esbUserName"></td>
-            </tr>
-            <tr>
-                <td>ESB Password:</td> <td><input type="password" name="esbPassword"></td>
-            </tr>
-            <tr>
-                <td>CEP IP:</td> <td><input type="text" name="cepIP"></td>
-            </tr>
-            <tr>
-                <td>CEP Port:</td> <td><input type="text" name="cepPort"></td>
-            </tr>
-            <tr>
-                <td>CEP Username:</td> <td><input type="text" name="cepUserName"></td>
-            </tr>
-            <tr>
-                <td>CEP Password:</td> <td><input type="password" name="cepPassword"></td>
-            </tr>
-            <tr>
-                <td>CEP Queries:</td> <td><textarea name="cepQueries" rows="4" cols="50" style="margin: 2px; width: 415px; height: 115px;"></textarea></td>
-            </tr>
-            <tr>
-                <td><input type="submit" value="Submit"></td>
-            </tr>
+        <table style="width:100%">
+            <tbody>
+                <tr>
+                    <td>
+                        <table class="styledLeft noBorders" style="width:100%">
+                            <thead>
+                                    <tr>
+                                        <th colspan="2"><h4>E-mail Credentials</h4></th>
+                                    </tr>
+                            </thead>
+                            <tbody>
+                                    <tr>
+                                        <td style="width:10%">email address:<span class="required">*</span></td> <td><input type="text" name="emailAddress"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%">email password:<span class="required">*</span></td> <td><input type="password" name="emailPassword"></td>
+                                    </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table class="styledLeft noBorders" style="width:100%">
+                            <thead>
+                                    <tr>
+                                        <th colspan="2"><h4>ESB Details</h4></th>
+                                    </tr>
+                            </thead>
+                            <tbody>
+                                    <tr>
+                                        <td style="width:10%">ESB Username:<span class="required">*</span></td> <td><input type="text" name="esbUserName"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%">ESB Password:<span class="required">*</span></td> <td><input type="password" name="esbPassword"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%">ESB IP:<span class="required">*</span></td> <td><input type="text" name="esbIP"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%">ESB Port:<span class="required">*</span></td> <td><input type="text" name="esbPort"></td>
+                                    </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table class="styledLeft noBorders" style="width:100%">
+                            <thead>
+                                    <tr>
+                                        <th colspan="2"><h4>CEP Details</h4></th>
+                                    </tr>
+                            </thead>
+                            <tbody>
+                                    <tr>
+                                        <td style="width:10%">CEP Username:<span class="required">*</span></td> <td><input type="text" name="cepUserName"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%">CEP Password:<span class="required">*</span></td> <td><input type="password" name="cepPassword"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%">CEP IP:<span class="required">*</span></td> <td><input type="text" name="cepIP"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%">CEP Port:<span class="required">*</span></td> <td><input type="text" name="cepPort"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%">CEP Queries:<span class="required">*</span></td> <td><textarea name="cepQueries" rows="4" cols="50" style="margin: 2px; width: 415px; height: 115px;"></textarea></td>
+                                    </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="submit" value="Save"></td>
+                </tr>
+            </tbody>
         </table>
         </form>
 
@@ -82,14 +133,18 @@
 
                 CEPConfigUtils cepConfigUtils = new CEPConfigUtils(cookie, backendServerURL, configContext);
 
-                ESBConfigUtils esbConfigUtils = new ESBConfigUtils(esbIP, esbPort, esbUserName, esbPassword);
-                esbConfigUtils.AddConfigurations(cepUserName, cepPassword, emailAddress, emailPassword, cepIP, cepPort);
+                //ESBConfigUtils esbConfigUtils = new ESBConfigUtils(esbIP, esbPort, esbUserName, esbPassword);
+                //esbConfigUtils.AddConfigurations(cepUserName, cepPassword, emailAddress, emailPassword, cepIP, cepPort);
             %>
             <script>
                 CARBON.showInfoDialog("ESB server configurations stored successfully");
             </script>
             <% }
-            else {%>
+            else if(emailAddress == "" || emailPassword == "" ||
+                 esbIP == "" || esbPort == "" ||
+                 esbUserName == "" || esbPassword == "" ||
+                 cepIP == "" || cepPort == "" ||
+                 cepUserName == "" || cepPassword == ""){%>
             <script>
                 CARBON.showInfoDialog("Please fill all the detail fields!");
             </script>
