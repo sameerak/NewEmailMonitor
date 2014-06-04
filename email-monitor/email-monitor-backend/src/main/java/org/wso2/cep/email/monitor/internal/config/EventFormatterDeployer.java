@@ -16,7 +16,7 @@ public class EventFormatterDeployer {
     private EventFormatterService eventFormatterService ;
     private EmailMonitorValueHolder emailMonitorValueHolder;
 
-    public EventFormatterDeployer(String cookie, String backendServerURL, ConfigurationContext configCtx) throws EmailMonitorServiceException {
+    public EventFormatterDeployer() throws EmailMonitorServiceException {
 
         emailMonitorValueHolder = EmailMonitorValueHolder.getInstance();
         eventFormatterService = emailMonitorValueHolder.getEventFormatterService() ;
