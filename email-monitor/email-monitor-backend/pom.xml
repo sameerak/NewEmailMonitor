@@ -18,30 +18,35 @@
             <groupId>org.wso2.carbon</groupId>
             <artifactId>org.wso2.carbon.proxyadmin.stub</artifactId>
             <version>4.2.0</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.wso2.carbon</groupId>
             <artifactId>org.wso2.carbon.utils</artifactId>
             <version>4.2.0</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.wso2.carbon</groupId>
             <artifactId>org.wso2.carbon.authenticator.stub</artifactId>
             <version>4.2.0</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.wso2.carbon</groupId>
             <artifactId>org.wso2.carbon.task.stub</artifactId>
             <version>4.2.0</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>4.0-beta1</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -54,12 +59,14 @@
             <groupId>org.wso2.carbon</groupId>
             <artifactId>org.wso2.carbon.event.stream.manager.stub</artifactId>
             <version>1.0.1</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.wso2.carbon</groupId>
             <artifactId>org.wso2.carbon.event.processor.stub</artifactId>
             <version>1.0.2</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -73,12 +80,14 @@
             <groupId>org.wso2.carbon</groupId>
             <artifactId>org.wso2.carbon.event.formatter.stub</artifactId>
             <version>1.0.2</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.wso2.carbon</groupId>
             <artifactId>org.wso2.carbon.event.output.adaptor.manager.stub</artifactId>
             <version>1.0.1</version>
+            <scope>provided</scope>
         </dependency>
 
 
@@ -105,16 +114,19 @@
             <groupId>org.wso2.carbon</groupId>
             <artifactId>org.wso2.carbon.event.stream.manager.core</artifactId>
             <version>1.0.1</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.wso2.carbon</groupId>
             <artifactId>org.wso2.carbon.event.processor.core</artifactId>
             <version>1.0.1</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.wso2.carbon</groupId>
             <artifactId>org.wso2.carbon.event.formatter.core</artifactId>
             <version>1.0.1</version>
+            <scope>provided</scope>
         </dependency>
 
     </dependencies>
@@ -163,10 +175,13 @@
                 </Private-Package>
                 <Export-Package>
                     !org.wso2.cep.email.monitor.internal,
-                    org.wso2.cep.email.monitor.internal.*,
                     org.wso2.cep.email.monitor.*,
                     org.wso2.carbon.task.*; version="4.2.0"
                 </Export-Package>
+                <Import-Package>
+                   org.wso2.carbon.mediator.bam.config.stub;resolution:=optional
+                </Import-Package>
+                <DynamicImport-Package>*</DynamicImport-Package>
             </instructions>
         </configuration>
     </plugin>

@@ -13,9 +13,6 @@ import org.wso2.cep.email.monitor.internal.EmailMonitorService;
 
 /**
  * @scr.component name="emailmonitor.component" immediate="true"
- * @scr.reference name="configurationcontext.service"
- * interface="org.wso2.carbon.utils.ConfigurationContextService" cardinality="1..1"
- * policy="dynamic" bind="setConfigurationContextService" unbind="unsetConfigurationContextService"
  * @scr.reference name="eventstream.service"
  * interface="org.wso2.carbon.event.stream.manager.core.EventStreamService" cardinality="1..1"
  * policy="dynamic" bind="setEventStreamService" unbind="unsetEventStreamService"
@@ -47,15 +44,6 @@ public class EmailMonitorServiceDS {
         // context.getBundleContext().ungetService();
     }
 
-    protected void setConfigurationContextService(
-            ConfigurationContextService configurationContextService) {
-        EmailMonitorValueHolder.getInstance().registerConfigurationContextService(configurationContextService);
-    }
-
-    protected void unsetConfigurationContextService(
-            ConfigurationContextService configurationContextService) {
-
-    }
     protected void setEventStreamService(EventStreamService eventStreamService){
         EmailMonitorValueHolder.getInstance().setEventStreamService(eventStreamService);
     }
