@@ -5,6 +5,15 @@ public class AddLabel extends Action {
 
     private String to;
 
+    public AddLabel(){
+
+    }
+    public AddLabel(String label){
+        to = label;
+
+    }
+
+
     public String getTo() {
         return to;
     }
