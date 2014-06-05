@@ -43,6 +43,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.wso2.carbon</groupId>
+            <artifactId>org.wso2.carbon.localentry.stub</artifactId>
+            <version>4.2.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>4.0-beta1</version>
@@ -115,7 +121,6 @@
             <artifactId>org.wso2.carbon.event.stream.manager.core</artifactId>
             <scope>provided</scope>
             <version>1.0.1</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.wso2.carbon</groupId>
