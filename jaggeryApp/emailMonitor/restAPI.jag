@@ -1,0 +1,65 @@
+<%
+var emailAddress = request.getParameter("emailAddress");
+var emailPassword = request.getParameter("emailPassword");
+var esbIP = request.getParameter("esbIP");
+var esbPort = request.getParameter("esbPort");
+var esbUserName = request.getParameter("esbUserName");
+var esbPassword = request.getParameter("esbPassword");
+var cepIP = request.getParameter("cepIP");
+var cepPort = request.getParameter("cepPort");
+var cepUserName = request.getParameter("cepUserName");
+var cepPassword = request.getParameter("cepPassword");
+var verb = request.getMethod();
+response.contentType = 'text/plain';
+
+
+if(verb == "DELETE" || verb == "PUT" || verb == "GET") {
+	response.status = 400;
+	print("Only method allowed on this resource is HTTP POST");
+} else if(verb == "POST" && (emailAddress == null || emailPassword == null)) {
+	response.status = 400;
+   	print("Please provide valid credentials of an email account");
+} else if(verb == "POST") {
+	try{
+		//get the class to log in to email account
+		//request the results of the analysis with given credentials
+
+
+		//var esbConfig = Packages.org.wso2.cep.email.ui.ESBConfigUtils;
+		//var myESBConfig = new esbConfig(esbIP, esbPort, esbUserName, esbPassword);
+		//myESBConfig.AddConfigurations(cepUserName, cepPassword, emailAddress, emailPassword, cepIP, cepPort);
+
+		var util = require("util/utility.jag");
+
+		var log = new Log();
+		var serverUrl = util.getServiceUrl();
+//var serverUrl = "https://10.100.5.85:9444/services/";
+		serverUrl = serverUrl + "EmailMonitorAdminService";
+		
+		var emailMonitorAdminServiceStub = Packages.org.wso2.cep.email.monitor.stub.admin.EmailMonitorAdminServiceStub;
+		var myEmailMonitorAdminServiceStub = new emailMonitorAdminServiceStub(serverUrl);
+		myEmailMonitorAdminServiceStub.createMailInputStream();
+            	myEmailMonitorAdminServiceStub.createMailOutputStream();
+
+
+		var test = Packages.org.wso2.sameera.test;
+		var myTest = new test();
+		var name = 'sameera';
+		print(myTest.myName(name));
+		print('<br/>');
+		print(myTest.myName());
+
+		//testing the handling of request parameters in the server side
+		print(emailAddress);
+		print('<br/>');
+		print(emailPassword);
+		print('<br/>');
+	}
+	catch(error){
+		//extend catch blocks as needed by the error case
+		response.status = 500;
+		print("Something went wrong!");
+print(error);
+	}
+}
+%>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="css/bootstrap.css" rel="stylesheet">
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.js"></script>
+</head>
+<body>
+<div class="container">
+			<div class="row">
+<div class="col-md-6 col-md-offset-3">
+<form action="api" method="POST">
+        <table class="table table-no-border" style="width:100%">
+            <tbody>
+                <tr>
+                    <td>
+                        <table class="table table-no-border" style="width:100%">
+                            <thead>
+                                    <tr>
+                                        <th colspan="2"><h4>E-mail Credentials</h4></th>
+                                    </tr>
+                            </thead>
+                            <tbody>
+                                    <tr>
+                                        <td style="width:30%">email address:<span class="required">*</span></td> <td><input type="text" name="emailAddress"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%">email password:<span class="required">*</span></td> <td><input type="password" name="emailPassword"></td>
+                                    </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table class="table table-no-border" style="width:100%">
+                            <thead>
+                                    <tr>
+                                        <th colspan="2"><h4>ESB Details</h4></th>
+                                    </tr>
+                            </thead>
+                            <tbody>
+                                    <tr>
+                                        <td style="width:30%">ESB Username:<span class="required">*</span></td> <td><input type="text" name="esbUserName"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%">ESB Password:<span class="required">*</span></td> <td><input type="password" name="esbPassword"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%">ESB IP:<span class="required">*</span></td> <td><input type="text" name="esbIP"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%">ESB Port:<span class="required">*</span></td> <td><input type="text" name="esbPort"></td>
+                                    </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table class="table table-no-border" style="width:100%">
+                            <thead>
+                                    <tr>
+                                        <th colspan="2"><h4>CEP Details</h4></th>
+                                    </tr>
+                            </thead>
+                            <tbody>
+                                    <tr>
+                                        <td style="width:30%">CEP Username:<span class="required">*</span></td> <td><input type="text" name="cepUserName"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%">CEP Password:<span class="required">*</span></td> <td><input type="password" name="cepPassword"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%">CEP IP:<span class="required">*</span></td> <td><input type="text" name="cepIP"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%">CEP Port:<span class="required">*</span></td> <td><input type="text" name="cepPort"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%">CEP Queries:<span class="required">*</span></td> <td><textarea name="cepQueries" rows="4" cols="20"></textarea></td>
+                                    </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="row"><input class="col-md-offset-3" type="submit" value="Save"></td>
+                </tr>
+            </tbody>
+        </table>
+        </form>
+			</div>
+</div>
+			</div>
+
+</body>
+</html>
