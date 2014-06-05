@@ -32,7 +32,7 @@ public class ESBConfigUtils {
 
         try {
             emailMonitorAdminServiceStub = new EmailMonitorAdminServiceStub(configCtx, endPoint);
-            emailMonitorAdminServiceStub.addBAMServerProfile(esbIP, esbPort, esbUserName, esbPassword, CEPServerUserName, CEPServerPassword, CEPServerIP, CEPServerPort);
+            emailMonitorAdminServiceStub.addESBConfigurations(esbIP, esbPort, esbUserName, esbPassword, CEPServerUserName, CEPServerPassword, mailUserNAme, mailPassword, CEPServerIP, CEPServerPort);
         } catch (AxisFault axisFault) {
             axisFault.printStackTrace();
         } catch (RemoteException e) {

@@ -17,7 +17,8 @@
     <iterate xmlns:ns="http://org.wso2.esbconnectors.gmail"
              id="iter1"
              expression="//ns:messages/ns:message"
-             sequential="true">
+             sequential="true"
+             continueParent="true">
         <target>
             <sequence>
                 <property name="M_Id" expression="//ns:messageID/text()"/>

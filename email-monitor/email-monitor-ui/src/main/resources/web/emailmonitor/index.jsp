@@ -127,11 +127,10 @@
                  configUtils.isNotNullOrEmpty(cepUserName) && configUtils.isNotNullOrEmpty(cepPassword)){
 
                 String backendServerURL = CarbonUIUtil.getServerURL(config.getServletContext(), session);
-                String cookie = (String) session.getAttribute(ServerConstants.ADMIN_SERVICE_COOKIE);
                 ConfigurationContext configContext =
                     (ConfigurationContext) config.getServletContext().getAttribute(CarbonConstants.CONFIGURATION_CONTEXT);
 
-                CEPConfigUtils cepConfigUtils = new CEPConfigUtils(cookie, backendServerURL, configContext);
+                CEPConfigUtils cepConfigUtils = new CEPConfigUtils(backendServerURL, configContext);
 
                 ESBConfigUtils esbConfigUtils = new ESBConfigUtils(esbIP, esbPort, esbUserName, esbPassword);
                 esbConfigUtils.AddConfigurations(cepUserName, cepPassword, emailAddress, emailPassword, cepIP, cepPort, backendServerURL, configContext);

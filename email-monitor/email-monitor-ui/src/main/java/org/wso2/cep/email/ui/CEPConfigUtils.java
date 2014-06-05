@@ -16,12 +16,13 @@ public class CEPConfigUtils {
     StreamDeployer streamDeployer;
     EmailMonitorAdminServiceStub emailMonitorAdminServiceStub;
 
-    public CEPConfigUtils(String cookie, String backendServerURL, ConfigurationContext configCtx){
+    public CEPConfigUtils(String backendServerURL, ConfigurationContext configCtx){
         String endPoint = backendServerURL + "EmailMonitorAdminService";
         try {
             emailMonitorAdminServiceStub = new EmailMonitorAdminServiceStub(configCtx, endPoint);
 
             emailMonitorAdminServiceStub.createMailInputStream();
+            emailMonitorAdminServiceStub.createMailOutputStream();
 
         } catch (AxisFault axisFault) {
             axisFault.printStackTrace();
