@@ -9,6 +9,8 @@ public class EmailMonitorConstants {
     public static final String SERVICES = "/services/";
     public static final String BAM_SERVER_PROFILE_CONFIGURATION_PATH = "/config/bamMediator.xml";
 
+    public static final String LOCAL_ENTRY_ADMIN_SERVICE = "LocalEntryAdmin";
+
     public static final String BAM_SERVER_PROFILE_NAME = "bamServerProfiles/gmailEventProfile";
     public static final String PROXY_NAME = "gmail_passwordAuthentication";
 
