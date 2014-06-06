@@ -18,7 +18,10 @@ options {
   MIN;
   SEC;
   MILLI_SEC;
-  
+   LBL;
+   TO;
+   ACT;
+   ST;
 }
  
  
@@ -56,9 +59,9 @@ import org.wso2.cep.email.monitor.query.api.operators.NOTEqualOP;
   import org.wso2.cep.email.monitor.query.api.conditions.ConditionAttribute;
   import org.wso2.cep.email.monitor.query.api.conditions.FrequencyCondition;
   import org.wso2.cep.email.monitor.query.api.conditions.FromCondition;
-  import org.wso2.cep.email.monitor.query.api.conditions.FromFrequencyCondition;
+  import org.wso2.cep.email.monitor.query.api.conditions.LabelToCondition;
   import org.wso2.cep.email.monitor.query.api.conditions.LabelCondition;
-  import org.wso2.cep.email.monitor.query.api.conditions.LabelFromFrequencyCondition;
+  import org.wso2.cep.email.monitor.query.api.conditions.LabelFromToCondition;
   import org.wso2.cep.email.monitor.query.api.conditions.ORCondition;
   import org.wso2.cep.email.monitor.query.api.conditions.ToCondition;
 }
@@ -69,7 +72,7 @@ prog returns [Query query]
              $query = new Query();
 }
 :^(EMAIL_PRO conditions{
-$query.setConditionAttribute($conditions.condition);} action{
+$query.setConditionAttribute($conditions.condition);}action{
 $query.setAction($action.act);})
 ;
 
@@ -79,65 +82,82 @@ conditions returns [ConditionAttribute condition]
 @init{
 $condition=null;
 }
-:toCondition{$condition = $toCondition.to;}
-    | toCondition{$condition=new AndCondition();
-    $condition.setLeft($toCondition.to);
+: frequencyCondition{$condition = $frequencyCondition.freqCond;}
+    | labelFromToCondition{$condition=new AndCondition();
+            $condition.setLeft($labelFromToCondition.labelFromTo);
 
-} 'and'  ^labelFromFrequencyCondition{
-      $condition.setRight($labelFromFrequencyCondition.labelFromFreq);
+      } 'and' frequencyCondition{
+    $condition.setRight($frequencyCondition.freqCond);
 
 }
-    | toCondition{$condition=new ORCondition();
-      $condition.setLeft($toCondition.to);
+    |labelFromToCondition{$condition=new ORCondition();
 
-    } 'or' ^labelFromFrequencyCondition{
+           $condition.setLeft($labelFromToCondition.labelFromTo);
+         } 'or' frequencyCondition{
+                   $condition.setRight($frequencyCondition.freqCond);
 
-      $condition.setRight($labelFromFrequencyCondition.labelFromFreq);
-    }
-    | labelFromFrequencyCondition{$condition= $labelFromFrequencyCondition.labelFromFreq;}
+               }
+    | labelFromToCondition{$condition= $labelFromToCondition.labelFromTo;}
 ;
 
 
 
-labelFromFrequencyCondition returns [ConditionAttribute labelFromFreq]
+labelFromToCondition returns [ConditionAttribute labelFromTo]
   @init{
-      $labelFromFreq=null;
+      $labelFromTo=null;
   }
-    : labelCondition {$labelFromFreq=$labelCondition.lbCondition;}
-    | labelCondition{$labelFromFreq= new AndCondition();
-         $labelFromFreq.setLeft($labelCondition.lbCondition);
-     } 'and' ^ fromFrequencyCondition{
-          $labelFromFreq.setRight($fromFrequencyCondition.fromFreqCond);
+    : fromCondition{$labelFromTo= $fromCondition.fromCond;}
+
+    | labelToCondition{$labelFromTo= new AndCondition();
+         $labelFromTo.setLeft($labelToCondition.lbToCondition);
+     } 'and'  fromCondition{
+          $labelFromTo.setRight($fromCondition.fromCond);
 
      }
-    | labelCondition{$labelFromFreq= new ORCondition();
-                             $labelFromFreq.setLeft($labelCondition.lbCondition);
-                         } 'or' ^fromFrequencyCondition{
-                                                                $labelFromFreq.setRight($fromFrequencyCondition.fromFreqCond);
+    | labelToCondition{$labelFromTo= new ORCondition();
+                             $labelFromTo.setLeft($labelToCondition.lbToCondition);
+                         } 'or' ^fromCondition{
+                                                                $labelFromTo.setRight($fromCondition.fromCond);
 
                                                            }
-    | fromFrequencyCondition{$labelFromFreq= $fromFrequencyCondition.fromFreqCond;}
+    | labelToCondition{$labelFromTo= $labelToCondition.lbToCondition;}
     ;
 
 
 
 
     
- fromFrequencyCondition returns [ConditionAttribute fromFreqCond]
-   @init{
-      $fromFreqCond=null;
-   }
-    : fromCondition{$fromFreqCond=$fromCondition.fromCond;}
-    | fromCondition{$fromFreqCond= new AndCondition();
-        $fromFreqCond.setLeft($fromCondition.fromCond);} 'and' ^ frequencyCondition{ $fromFreqCond.setRight($frequencyCondition.freqCond);}
-    | fromCondition {$fromFreqCond= new ORCondition();
-                            $fromFreqCond.setLeft($fromCondition.fromCond);}'or' ^ frequencyCondition{ $fromFreqCond.setRight($frequencyCondition.freqCond);}
-    | frequencyCondition{$fromFreqCond=$frequencyCondition.freqCond;}
-    ;
+ labelToCondition returns [ConditionAttribute lbToCondition]
+ @init{
+    $lbToCondition = null;
+ }
+     : labelCondition{$lbToCondition = $labelCondition.lbCondition;}
+     | toCondition{
+           $lbToCondition = new AndCondition();
+           $lbToCondition.setLeft($toCondition.to);
+
+     } 'and'labelCondition{
+           $lbToCondition.setRight($labelCondition.lbCondition);
+     }
+     | toCondition {
+                              $lbToCondition = new ORCondition();
+                              $lbToCondition.setLeft($toCondition.to);
+
+                        } 'or' labelCondition{
+                              $lbToCondition.setRight($labelCondition.lbCondition);
+                        }
+     | toCondition{$lbToCondition=$toCondition.to;}
+     ;
+
+
+
+
     
 action returns [Action act]
-    :   'add' 'label' stringVal{$act = new AddLabel($stringVal.val);}
-    | 'send' 'mail' '(' 'to' ':' emailAddr 'subject' ':' stringVal 'body' ':' stringVal ('$frequency')? stringVal ')'
+    : ^(LBL stringVal{$act = new AddLabel($stringVal.val);})
+    | 'send' 'mail' '(' 'to' ':' emailAddr{$act= new SendMail($emailAddr.email);
+
+    } 'subject' ':'subject{$act.setSubject($subject.sub);} 'body' ':' emailBody{$act.setBody($emailBody.body);} ')'
     ;
 
 
@@ -148,7 +168,7 @@ toCondition returns [ConditionAttribute to]
 @init{
 $to= new ToCondition();
 }
-    :   'to' '='	'"'emailAddrSet{$to.setEmailAddressSet($emailAddrSet.emailSet);} '"';
+    :   'to' '='	'('emailAddrSet{$to.setEmailAddressSet($emailAddrSet.emailSet);} ')';
 
 
 
@@ -157,7 +177,7 @@ labelCondition returns [ConditionAttribute lbCondition]
 @init{
    $lbCondition=new LabelCondition();
 }
- 	: 'label' '=' '"' labelSet{$lbCondition.setLabelSet($labelSet.lbSet);} '"'
+ 	: 'label' '=' '(' labelSet{$lbCondition.setLabelSet($labelSet.lbSet);} ')'
  	;
 
 
@@ -167,7 +187,7 @@ labelCondition returns [ConditionAttribute lbCondition]
  @init{
     $fromCond= new FromCondition();
  }
-      :	'from' '=' '"'emailAddrSet{$fromCond.setEmailAddressSet($emailAddrSet.emailSet);} '"'
+      :	'from' '=' '('emailAddrSet{$fromCond.setEmailAddressSet($emailAddrSet.emailSet);} ')'
       	;
 
 
@@ -178,10 +198,10 @@ labelCondition returns [ConditionAttribute lbCondition]
      $freqCond= new FrequencyCondition();
      Operator operator=null;
  }
- 	:	 ^(FREQ_COND 'thread'{$freqCond.setType(Constants.THREAD)}? timeExpr compareOperation{
+ 	:	 ^(FREQ_COND ('thread'{$freqCond.setType(Constants.THREAD);})? timeExpr compareOperation{
  	   operator= $compareOperation.oper;
  	   operator.setLeft($timeExpr.timeEx);
- 	$freqCond.setOperator();
+ 	$freqCond.setOperator(operator);
  	} intVal{operator.setRight(new CompareVal(Integer.parseInt($intVal.val)));});
 
 
@@ -191,7 +211,7 @@ labelCondition returns [ConditionAttribute lbCondition]
  @init{
      $timeEx= new TimeExpr();
  }
- 	: ^(TIME_EXP yearValue{$timeEx.setYear(Integer.parseInt($yearValue.year))}? monthValue{$timeEx.setMonth(Integer.parseInt($monthValue.month))}? weekValue{$timeEx.setWeek(Integer.parseInt($weekValue.week))}? dayValue{$timeEx.setDay(Integer.parseInt($dayValue.day))}? hourValue{$timeEx.setHour(Integer.parseInt($hourValue.hour))}? minuteValue{$timeEx.setMinute(Integer.parseInt($minuteValue.minute))}? secondValue{$timeEx.setSecond(Integer.parseInt($secondValue.second))}? milliSecondValue{$timeEx.setMilisecond(Integer.parseInt($milliSecondValue.milisecond))}?  )
+ 	: ^(TIME_EXP (yearValue{$timeEx.setYear(Integer.parseInt($yearValue.year));})? (monthValue{$timeEx.setMonth(Integer.parseInt($monthValue.month));})? (weekValue{$timeEx.setWeek(Integer.parseInt($weekValue.week));})? (dayValue{$timeEx.setDay(Integer.parseInt($dayValue.day));})? (hourValue{$timeEx.setHour(Integer.parseInt($hourValue.hour));})? (minuteValue{$timeEx.setMiniute(Integer.parseInt($minuteValue.minute));})? (secondValue{$timeEx.setSecond(Integer.parseInt($secondValue.second));})? (milliSecondValue{$timeEx.setMilisecond(Integer.parseInt($milliSecondValue.milisecond));})?  )
  	;
     
 
@@ -239,7 +259,7 @@ secondValue returns[String second]
 
 
 milliSecondValue returns [String milisecond]
-	:  ^(MILLI_SEC  intVal{$milisecond=$intval.val;})
+	:  ^(MILLI_SEC  intVal{$milisecond=$intVal.val;})
 	;
 
 
@@ -253,21 +273,27 @@ labelSet returns [ConditionAttribute lbSet]
 	$lbSet.setConditionAttribute($label.label);}
 	| label{$lbSet= new AndCondition();
 	$lbSet.setLeft($label.label);
-	} ('and' labelSetRec{
+	} 'and' labelSetRec{
 	  $lbSet.setRight($labelSetRec.lbSetRec);
-	})
+	}
     | label{$lbSet= new ORCondition();
            	$lbSet.setLeft($label.label);
-           	} ('or' labelSetRec{
+           	} 'or' labelSetRec{
            	$lbSet.setRight($labelSetRec.lbSetRec);
-           	})
+           	}
 	;
 
-	labelSetRec returns[LabelSet lbSetRec]
+	labelSetRec returns[ConditionAttribute lbSetRec]
 
 	:labelSet{$lbSetRec=$labelSet.lbSet;};
 
 
+subject returns [String sub]
+:stringVal{$sub=$stringVal.val;};
+
+emailBody returns [String body]
+:stringVal{$body=$stringVal.val;}
+;
 
 
 
@@ -275,8 +301,7 @@ labelSet returns [ConditionAttribute lbSet]
 
 
 
-
-  emailAddrSet returns [ConditionAttribute emailSet]
+  emailAddrSet returns [ConditionAttribute  emailSet]
   @init{
     $emailSet= null;
   }
@@ -289,28 +314,28 @@ labelSet returns [ConditionAttribute lbSet]
 
 
 
-    	}('and' emailAddrSetRec{
+    	}'and' emailAddrSetRec{
 
     	$emailSet.setRight($emailAddrSetRec.emailSetRec);
 
 
-    	})
+    	}
     	| emailAddr{
                        	$emailSet= new ORCondition();
                        	$emailSet.setLeft($emailAddr.email);
 
 
 
-                       	}('or' emailAddrSetRec{
+                       	}'or' emailAddrSetRec{
 
                        	$emailSet.setRight($emailAddrSetRec.emailSetRec);
 
 
-                       	})
+                       	}
     	;
 
 
-    emailAddrSetRec returns[EmailAddressSet emailSetRec]
+    emailAddrSetRec returns[ConditionAttribute  emailSetRec]
 
 
     :emailAddrSet{$emailSetRec=$emailAddrSet.emailSet;};
@@ -338,7 +363,7 @@ emailAddr returns [EmailAddress email]
 
 stringVal returns [String val]
 
-: STRING_VAL{$val = $STRING_VAL.text;} ;
+: ID{$val = $ID.text;} ;
 
 
 
@@ -346,3 +371,5 @@ stringVal returns [String val]
 intVal returns [String val]
 
 	:	INT_VAL{$val = $INT_VAL.text;};
+
+
