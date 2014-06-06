@@ -20,64 +20,70 @@ tokens {
   MIN;
   SEC;
   MILLI_SEC;
-  
+  LBL;
+  TO;
+  ACT;
+  ST;
+  AND;
 }
 
 @header {
-package test;
+package org.wso2.cep.email.monitor.query.compiler;
 import java.util.HashMap;
 }
 
-@lexer::header {package test;}
+@lexer::header {package org.wso2.cep.email.monitor.query.compiler;}
 
 @members {
 /** Map variable name to Integer object holding value */
 HashMap memory = new HashMap();
 }
 
-prog:   'if'    conditions   'then' action  -> ^(EMAIL_PRO conditions action);
+prog:   'if'    conditions   'then' action  ->^(EMAIL_PRO conditions action);
                 
-conditions:   toCondition
-    | toCondition 'and'  ^labelFromFrequencyCondtion
-    | toCondition 'or' ^labelFromFrequencyCondtion
-    | labelFromFrequencyCondtion
-    ;
+conditions:   frequencyCondition
+     | labelFromToCondition  'and'  frequencyCondition
+     | labelFromToCondition 'or' frequencyCondition
+     | labelFromToCondition
+     ;
 
-labelFromFrequencyCondtion
-    : labelCondition
-    | labelCondition 'and' ^ fromFrequencyCondtion
-    | labelCondition 'or' ^fromFrequencyCondtion
-    | fromFrequencyCondtion	
+
+
+labelFromToCondition
+    : fromCondition
+    | labelToCondition 'and' fromCondition
+    | labelToCondition 'or' fromCondition
+    | labelToCondition
     ;
     
     
-fromFrequencyCondtion
-    : fromCondition
-    | fromCondition 'and' ^ frequencyCondtion
-    | fromCondition 'or' ^ frequencyCondtion
-    | frequencyCondtion	
+labelToCondition
+    : labelCondition
+    | toCondition 'and'labelCondition
+    | toCondition 'or' labelCondition
+    | toCondition
     ;
     
 action 
-    :   'add' 'label' stringVal
-    | 'send' 'mail' '(' 'to' ':' emailAddr 'subject' ':' stringVal 'body' ':' stringVal  ('$frequency')?    stringVal')'
+    :   'add' 'label' stringVal -> ^(LBL stringVal)
+    | 'send' 'mail' '(' 'to' ':' emailAddr 'subject' ':' subject 'body' ':' emailBody')'
     ;
 
 
     
 toCondition 
-    :   'to' '='	'"'emailAddrSet '"';
+    :   'to'  '='	'('emailAddrSet ')';
     
 labelCondition
- 	: 'label' '=' '"' labelSet '"'
+ 	: 'label' '='  '('labelSet')'
  	;
  	
  fromCondition
-      :	'from' '=' '"'emailAddrSet '"'
+      :	'from' '=' '('emailAddrSet')'
       	;
       	
- frequencyCondtion 
- 	:	('thread')? 'frequency' 'per' timeExpr compareOperation intVal  -> ^(FREQ_COND  timeExpr compareOperation intVal);	
+ frequencyCondition
+ 	:	('thread')? 'frequency' 'per' timeExpr compareOperation intVal  -> ^(FREQ_COND 'thread'? timeExpr compareOperation intVal);
  	
  timeExpr 
  	:(yearValue)? (monthValue)? (weekValue)? (dayValue)? (hourValue)? (minuteValue)? (secondValue)?  (milliSecondValue)?	
@@ -120,14 +126,25 @@ milliSecondValue
 
 labelSet
 	: label
-	| label ('and' ^labelSet)
-    	| label ('or' ^labelSet)	
+	| label 'and' labelSetRec
+    	| label 'or' labelSetRec
 	;
-	
+
+labelSetRec:labelSet;
+
+subject : stringVal ;
+
+emailBody : stringVal;
+
   emailAddrSet
     	:  emailAddr
-    	| emailAddr ('and' ^emailAddrSet)
-    	| emailAddr ('or' ^emailAddrSet)	;
+    	| emailAddr 'and' emailAddrSetRec
+    	| emailAddr 'or' emailAddrSetRec
+    	;
+
+
+   emailAddrSetRec:emailAddrSet;
+
 
 compareOperation
 	:'=' |'!=' |'<='|'>=' |'<' |'>'  
@@ -142,7 +159,7 @@ emailAddr
    :  stringVal
    ;
 
-stringVal: STRING_VAL ;
+stringVal: ID ;
 
 
 intVal 	:	INT_VAL;

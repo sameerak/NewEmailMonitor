@@ -40,4 +40,6 @@ public class Query {
     public String toString() {
         return "if "+ conditionAttribute.toString()+  "then  "+action.toString();
     }
+
+
 }
