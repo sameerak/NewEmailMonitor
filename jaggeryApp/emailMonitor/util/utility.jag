@@ -98,6 +98,13 @@ application.put('serviceUrl', serviceUrl);
 		
 }
 
+function isNotNullOrEmpty(checkText){
+	if(checkText == "" || checkText === 'null' || checkText == null || checkText.length <= 0){
+		return false;
+	}
+	return true;
+}
+
 function getSuccessErrorJson(request, i18n){
     var error = request.getParameter("e");
     var errorMsg = request.getParameter("error");
