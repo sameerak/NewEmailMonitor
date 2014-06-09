@@ -37,19 +37,14 @@ public class LocalEntryDeployer {
         CryptographyManager cryptographyManager = new CryptographyManager();
 
            try {
-            stub.addEntry("<localEntry key=\"email\">"+mailUserNAme+"<description/></localEntry>");
-            stub.addEntry("<localEntry key=\"password\">"+cryptographyManager.encryptAndBase64Encode(mailPassword)+"<description/></localEntry>");
+            stub.addEntry("<localEntry key=\"email\"><email>"+mailUserNAme+"</email><description/></localEntry>");
+            stub.addEntry("<localEntry key=\"password\"><password>"+cryptographyManager.encryptAndBase64Encode(mailPassword)+"</password><description/></localEntry>");
         } catch (RemoteException e) {
             e.printStackTrace();
         } catch (LocalEntryAdminException e) {
             e.printStackTrace();
         }
     }
-
-
-
-
-
 
 
     }
