@@ -91,9 +91,8 @@ serviceUrl = "https://" + carbon.server.ip + ":" + carbon.server.httpsPort + "/s
 		
 	//	application.put(SERVER_URL, serverUrl);
 application.put('serviceUrl', serviceUrl);
-serverURL = serverUrl;
 	
-	log.info("connecting to " + serverUrl);
+	log.info("connecting to " + serviceUrl);
 
 	}
 		

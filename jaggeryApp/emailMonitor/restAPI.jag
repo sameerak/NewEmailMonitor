@@ -39,26 +39,29 @@ if(verb == "DELETE" || verb == "PUT" || verb == "GET") {
 		var emailMonitorAdminServiceStub = Packages.org.wso2.cep.email.monitor.stub.admin.EmailMonitorAdminServiceStub;
 		var myEmailMonitorAdminServiceStub = new emailMonitorAdminServiceStub(serverUrl);
 		myEmailMonitorAdminServiceStub.createMailInputStream();
-            	myEmailMonitorAdminServiceStub.createMailOutputStream();
+		myEmailMonitorAdminServiceStub.createMailOutputStream();
+		myEmailMonitorAdminServiceStub.addESBConfigurations(esbIP, esbPort, esbUserName, esbPassword, 
+			cepUserName, cepPassword, emailAddress, emailPassword, cepIP, cepPort);
 
 
-		var test = Packages.org.wso2.sameera.test;
-		var myTest = new test();
-		var name = 'sameera';
-		print(myTest.myName(name));
-		print('<br/>');
-		print(myTest.myName());
+// 		var test = Packages.org.wso2.sameera.test;
+// 		var myTest = new test();
+// 		var name = 'sameera';
+// 		print(myTest.myName(name));
+// 		print('<br/>');
+// 		print(myTest.myName());
 
 		//testing the handling of request parameters in the server side
-		print(emailAddress);
-		print('<br/>');
-		print(emailPassword);
-		print('<br/>');
+// 		print(emailAddress);
+// 		print('<br/>');
+// 		print(emailPassword);
+// 		print('<br/>');
 	}
 	catch(error){
 		//extend catch blocks as needed by the error case
 		response.status = 500;
 		print("Something went wrong!");
+		log.debug(error);
 print(error);
 	}
 }
