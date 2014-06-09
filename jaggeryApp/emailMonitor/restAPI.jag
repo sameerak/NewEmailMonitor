@@ -16,53 +16,40 @@ response.contentType = 'text/plain';
 if(verb == "DELETE" || verb == "PUT" || verb == "GET") {
 	response.status = 400;
 	print("Only method allowed on this resource is HTTP POST");
-} else if(verb == "POST" && (emailAddress == null || emailPassword == null)) {
-	response.status = 400;
-   	print("Please provide valid credentials of an email account");
 } else if(verb == "POST") {
-	try{
-		//get the class to log in to email account
-		//request the results of the analysis with given credentials
-
-
-		//var esbConfig = Packages.org.wso2.cep.email.ui.ESBConfigUtils;
-		//var myESBConfig = new esbConfig(esbIP, esbPort, esbUserName, esbPassword);
-		//myESBConfig.AddConfigurations(cepUserName, cepPassword, emailAddress, emailPassword, cepIP, cepPort);
-
 		var util = require("util/utility.jag");
-
-		var log = new Log();
-		var serverUrl = util.getServiceUrl();
-//var serverUrl = "https://10.100.5.85:9444/services/";
-		serverUrl = serverUrl + "EmailMonitorAdminService";
-		
-		var emailMonitorAdminServiceStub = Packages.org.wso2.cep.email.monitor.stub.admin.EmailMonitorAdminServiceStub;
-		var myEmailMonitorAdminServiceStub = new emailMonitorAdminServiceStub(serverUrl);
-		myEmailMonitorAdminServiceStub.createMailInputStream();
-		myEmailMonitorAdminServiceStub.createMailOutputStream();
-		myEmailMonitorAdminServiceStub.addESBConfigurations(esbIP, esbPort, esbUserName, esbPassword, 
-			cepUserName, cepPassword, emailAddress, emailPassword, cepIP, cepPort);
-
-
-// 		var test = Packages.org.wso2.sameera.test;
-// 		var myTest = new test();
-// 		var name = 'sameera';
-// 		print(myTest.myName(name));
-// 		print('<br/>');
-// 		print(myTest.myName());
-
-		//testing the handling of request parameters in the server side
-// 		print(emailAddress);
-// 		print('<br/>');
-// 		print(emailPassword);
-// 		print('<br/>');
-	}
-	catch(error){
-		//extend catch blocks as needed by the error case
-		response.status = 500;
-		print("Something went wrong!");
-		log.debug(error);
-print(error);
-	}
+	
+            if(util.isNotNullOrEmpty(emailAddress) && util.isNotNullOrEmpty(emailPassword) &&
+                 util.isNotNullOrEmpty(esbIP) && util.isNotNullOrEmpty(esbPort) &&
+                 util.isNotNullOrEmpty(esbUserName) && util.isNotNullOrEmpty(esbPassword) &&
+                 util.isNotNullOrEmpty(cepIP) && util.isNotNullOrEmpty(cepPort) &&
+                 util.isNotNullOrEmpty(cepUserName) && util.isNotNullOrEmpty(cepPassword)){
+					try{
+				
+				
+						var log = new Log();
+						var serverUrl = util.getServiceUrl();
+						serverUrl = serverUrl + "EmailMonitorAdminService";
+						
+						var emailMonitorAdminServiceStub = Packages.org.wso2.cep.email.monitor.stub.admin.EmailMonitorAdminServiceStub;
+						var myEmailMonitorAdminServiceStub = new emailMonitorAdminServiceStub(serverUrl);
+						myEmailMonitorAdminServiceStub.createMailInputStream();
+						myEmailMonitorAdminServiceStub.createMailOutputStream();
+						myEmailMonitorAdminServiceStub.addESBConfigurations(esbIP, esbPort, esbUserName, esbPassword, 
+							cepUserName, cepPassword, emailAddress, emailPassword, cepIP, cepPort);
+						response.status = 200;
+						print("CEP and ESB configured successfully.");
+					}
+					catch(error){
+						response.status = 500;
+						print("Something went wrong!");
+						log.debug(error);
+				print(error);
+					}
+            }
+            else {
+            	response.status = 400;
+            	print("Please fill details to all the parameters asked");
+            }
 }
 %>
