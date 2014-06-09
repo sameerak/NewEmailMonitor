@@ -29,7 +29,7 @@ $(document).ready(function() {
 		 // callback handler that will be called on success
 		 request.done(function (response, textStatus, jqXHR){
 		     // log a message to the console
-		     alert("ok");
+		     alert(response);
 		     console.log("Hooray, it worked!");
 		 });
 		
@@ -40,6 +40,7 @@ $(document).ready(function() {
 		         "The following error occured: "+
 		         textStatus, errorThrown
 		     );
+		     alert("Please fill all parameters!");
 		 });
 		
 		 // callback handler that will be called regardless
