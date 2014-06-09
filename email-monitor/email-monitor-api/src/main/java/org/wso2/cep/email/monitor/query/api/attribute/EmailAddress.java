@@ -23,6 +23,6 @@ public class EmailAddress extends Attribute {
 
     @Override
     public String toString() {
-        return getValue();
+        return this.address;
     }
 }

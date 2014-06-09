@@ -8,7 +8,7 @@ public class Label extends Attribute {
     }
 
    public Label(String value){
-       this.setValue(value);
+       setValue(value);
    }
 
 

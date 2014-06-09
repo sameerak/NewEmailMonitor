@@ -6,9 +6,18 @@ import org.wso2.cep.email.monitor.query.api.attribute.EmailAddress;
 public abstract class Action {
 
     private String to;
+    private String label;
     private EmailAddress emailAddress;
     private String subject;
     private String body;
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
 
     public String getTo() {
         return to;

@@ -1,7 +1,7 @@
 package org.wso2.cep.email.monitor.query.api.conditions;
 
 
-import org.wso2.cep.email.monitor.query.api.attribute.set.EmailAddressSet;
+
 
 public class ToCondition extends Condition {
 
