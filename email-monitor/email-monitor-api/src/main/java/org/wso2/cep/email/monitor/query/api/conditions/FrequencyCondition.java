@@ -8,14 +8,7 @@ public class FrequencyCondition extends Condition {
 
 
 
-    public FrequencyCondition() {
 
-    }
-
-    public FrequencyCondition(String type, Operator operator) {
-       setType(type);
-        setOperator(operator);
-    }
 
 
 
@@ -23,9 +16,9 @@ public class FrequencyCondition extends Condition {
     @Override
     public String toString() {
         if (getType().equals(Constants.THREAD)) {
-            return "thread frequency per " + getOperator().toString();
+            return "thread frequency per " + getOperator().getLeft().toString()+" " +getOperator().toString() +" "+ getOperator().getRight().toString() ;
         } else {
-            return "frequency per " + getOperator().toString();
+            return "frequency per " + getOperator().getLeft().toString()+" " +getOperator().toString() +" "+ getOperator().getRight().toString() ;
         }
     }
 }
