@@ -32,16 +32,22 @@ public class LocalEntryDeployer {
 
     }
 
-    public void addLocalEntry(String userName, String password) throws EmailMonitorServiceException {
+    public void addLocalEntry(String userName, String password, String mailUserNAme, String mailPassword) throws EmailMonitorServiceException {
         CarbonUtils.setBasicAccessSecurityHeaders(userName, password, stub._getServiceClient());
-        try {
-            stub.addEntry("localEntryrou");
+        CryptographyManager cryptographyManager = new CryptographyManager();
+
+           try {
+            stub.addEntry("<localEntry key=\"email\">"+mailUserNAme+"<description/></localEntry>");
+            stub.addEntry("<localEntry key=\"password\">"+cryptographyManager.encryptAndBase64Encode(mailPassword)+"<description/></localEntry>");
         } catch (RemoteException e) {
             e.printStackTrace();
         } catch (LocalEntryAdminException e) {
             e.printStackTrace();
         }
     }
+
+
+
 
 
 

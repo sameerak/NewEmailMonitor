@@ -12,9 +12,13 @@ public class EmailMonitorConstants {
     public static final String LOCAL_ENTRY_ADMIN_SERVICE = "LocalEntryAdmin";
 
     public static final String BAM_SERVER_PROFILE_NAME = "bamServerProfiles/gmailEventProfile";
-    public static final String PROXY_NAME = "gmail_passwordAuthentication";
+    public static final String MAIL_READER_PROXY_NAME = "gmail_passwordAuthentication";
 
-    public static final String PROXY_PATH = "/config/insequence.xml";
+    public static final String LABEL_ADDER_PROXY_NAME = "gmail_label_adder";
+
+    public static final String MAIL_READER_PROXY_PATH = "/config/insequence.xml";
+    public static final String LABEL_ADDER_PROXY_PATH = "/config/labelAdderProxyInsequence.xml";
+
     public static final String TASK_ADMIN_SERVICE = "TaskAdmin";
     public static final String TASK_CONFIGURATION_FILE_PATH = "/config/taskConfig.xml";
     public static final String EVENT_STREAM_ADMIN_SERVICE = "EventStreamAdminService";

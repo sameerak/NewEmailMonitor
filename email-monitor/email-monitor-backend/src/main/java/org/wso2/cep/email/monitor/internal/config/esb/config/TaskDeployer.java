@@ -22,9 +22,11 @@ public class TaskDeployer {
 
     private static Logger logger = Logger.getLogger(TaskDeployer.class);
     private TaskAdminStub stub;
+    private XMLReader xmlReader;
 
 
     public TaskDeployer(String ip, String port) throws EmailMonitorServiceException {
+        xmlReader = new XMLReader();
         String endPoint = EmailMonitorConstants.PROTOCOL + ip + ":" + port + EmailMonitorConstants.SERVICES + EmailMonitorConstants.TASK_ADMIN_SERVICE;
 
         try {
@@ -40,24 +42,7 @@ public class TaskDeployer {
     public void addScheduledTask(String userName, String password, String mailUserName, String mailPassword) throws EmailMonitorServiceException {
         CarbonUtils.setBasicAccessSecurityHeaders(userName, password, stub._getServiceClient());
 
-        String content = "";
-
-        InputStream is = null;
-        BufferedReader br = null;
-        String line;
-
-        is = ProxyDeployer.class.getResourceAsStream(EmailMonitorConstants.TASK_CONFIGURATION_FILE_PATH);
-        br = new BufferedReader(new InputStreamReader(is));
-        try {
-            while (null != (line = br.readLine())) {
-                content = content + line;
-            }
-        } catch (IOException e) {
-            logger.error(e.getMessage());
-            throw new EmailMonitorServiceException("Error when adding Tasks", e);
-        }
-
-
+        String content = xmlReader.readXML(EmailMonitorConstants.TASK_CONFIGURATION_FILE_PATH);
 
         content = content.replace(EmailMonitorConstants.GMAIL_USERNAME,mailUserName);
 
