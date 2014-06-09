@@ -95,10 +95,74 @@ public class EmailMonitorAdminService extends AbstractAdmin {
         }
     }
 
+    public boolean createThreadDetailsStream() throws EmailMonitorAdminException {
+        EmailMonitorServiceInterface emailMonitorServiceInterface = EmailMonitorAdminValueHolder.getInstance().getEmailMonitorService();
+
+        int tenantID = 0;
+        try {
+            tenantID = getUserRealm().getRealmConfiguration().getTenantId();
+        } catch (UserStoreException e) {
+            log.error(e.getMessage());
+            throw new EmailMonitorAdminException(e);
+        }
+        try {
+            return emailMonitorServiceInterface.createThreadDetailsStream(tenantID);
+        } catch (EmailMonitorServiceException e) {
+            log.error(e.getMessage());
+            throw new EmailMonitorAdminException(e);
+        }
+    }
+
+    public boolean createLabelDetailsStream() throws EmailMonitorAdminException {
+        EmailMonitorServiceInterface emailMonitorServiceInterface = EmailMonitorAdminValueHolder.getInstance().getEmailMonitorService();
+
+        int tenantID = 0;
+        try {
+            tenantID = getUserRealm().getRealmConfiguration().getTenantId();
+        } catch (UserStoreException e) {
+            log.error(e.getMessage());
+            throw new EmailMonitorAdminException(e);
+        }
+        try {
+            return emailMonitorServiceInterface.createLabelDetailsStream(tenantID);
+        } catch (EmailMonitorServiceException e) {
+            log.error(e.getMessage());
+            throw new EmailMonitorAdminException(e);
+        }
+    }
+
+    public boolean createEmailSenderOutputStream() throws EmailMonitorAdminException {
+        EmailMonitorServiceInterface emailMonitorServiceInterface = EmailMonitorAdminValueHolder.getInstance().getEmailMonitorService();
+
+        int tenantID = 0;
+        try {
+            tenantID = getUserRealm().getRealmConfiguration().getTenantId();
+        } catch (UserStoreException e) {
+            log.error(e.getMessage());
+            throw new EmailMonitorAdminException(e);
+        }
+        try {
+            return emailMonitorServiceInterface.createEmailSenderOutputStream(tenantID);
+        } catch (EmailMonitorServiceException e) {
+            log.error(e.getMessage());
+            throw new EmailMonitorAdminException(e);
+        }
+    }
+
     public boolean createSoapOutputAdapter() throws EmailMonitorAdminException {
         EmailMonitorServiceInterface emailMonitorServiceInterface = EmailMonitorAdminValueHolder.getInstance().getEmailMonitorService();
         try {
             return emailMonitorServiceInterface.createSoapOutputAdapter(getAxisConfig());
+        } catch (EmailMonitorServiceException e) {
+            log.error(e.getMessage());
+            throw new EmailMonitorAdminException(e);
+        }
+    }
+
+    public boolean createEmailOutputAdapter() throws EmailMonitorAdminException {
+        EmailMonitorServiceInterface emailMonitorServiceInterface = EmailMonitorAdminValueHolder.getInstance().getEmailMonitorService();
+        try {
+            return emailMonitorServiceInterface.createEmailOutputAdapter(getAxisConfig());
         } catch (EmailMonitorServiceException e) {
             log.error(e.getMessage());
             throw new EmailMonitorAdminException(e);

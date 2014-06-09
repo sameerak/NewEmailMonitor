@@ -38,5 +38,16 @@ public class OutputAdapterDeployer {
             logger.error(e.getMessage());
         }
     }
+
+    public void createEmailOutputAdapter(AxisConfiguration axisConfiguration) throws EmailMonitorServiceException {
+        OutputEventAdaptorConfiguration outputEventAdaptorConfiguration = new OutputEventAdaptorConfiguration();
+        outputEventAdaptorConfiguration.setName("EMAIL_output_Adaptor");
+        outputEventAdaptorConfiguration.setType("email");
+        try {
+            outputEventAdaptorManagerService.deployOutputEventAdaptorConfiguration(outputEventAdaptorConfiguration, axisConfiguration);
+        } catch (OutputEventAdaptorManagerConfigurationException e) {
+            logger.error(e.getMessage());
+        }
+    }
 }
 

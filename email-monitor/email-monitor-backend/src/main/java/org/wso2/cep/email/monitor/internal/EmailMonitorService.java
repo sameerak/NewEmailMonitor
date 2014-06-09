@@ -120,10 +120,62 @@ public class EmailMonitorService implements EmailMonitorServiceInterface {
     }
 
     @Override
+    public boolean createThreadDetailsStream(int tenantID) throws EmailMonitorServiceException {
+        try {
+            StreamDeployer streamDeployer = new StreamDeployer();
+            streamDeployer.createThreadDetailsStream(tenantID);
+            return true;
+        } catch (EmailMonitorServiceException e) {
+            logger.error(e.getMessage());
+            throw new EmailMonitorServiceException(e);
+
+        }
+    }
+
+    @Override
+    public boolean createLabelDetailsStream(int tenantID) throws EmailMonitorServiceException {
+        try {
+            StreamDeployer streamDeployer = new StreamDeployer();
+            streamDeployer.createLabelDetailsStream(tenantID);
+            return true;
+        } catch (EmailMonitorServiceException e) {
+            logger.error(e.getMessage());
+            throw new EmailMonitorServiceException(e);
+
+        }
+    }
+
+    @Override
+    public boolean createEmailSenderOutputStream(int tenantID) throws EmailMonitorServiceException {
+        try {
+            StreamDeployer streamDeployer = new StreamDeployer();
+            streamDeployer.createEmailSenderOutputStream(tenantID);
+            return true;
+        } catch (EmailMonitorServiceException e) {
+            logger.error(e.getMessage());
+            throw new EmailMonitorServiceException(e);
+
+        }
+    }
+
+    @Override
     public boolean createSoapOutputAdapter(AxisConfiguration axisConfiguration) throws EmailMonitorServiceException {
         try {
             OutputAdapterDeployer outputAdapterDeployer = new OutputAdapterDeployer();
             outputAdapterDeployer.createSoapOutputAdapter(axisConfiguration);
+            return true;
+        } catch (EmailMonitorServiceException e) {
+            logger.error(e.getMessage());
+            throw new EmailMonitorServiceException(e);
+
+        }
+    }
+
+    @Override
+    public boolean createEmailOutputAdapter(AxisConfiguration axisConfiguration) throws EmailMonitorServiceException {
+        try {
+            OutputAdapterDeployer outputAdapterDeployer = new OutputAdapterDeployer();
+            outputAdapterDeployer.createEmailOutputAdapter(axisConfiguration);
             return true;
         } catch (EmailMonitorServiceException e) {
             logger.error(e.getMessage());
