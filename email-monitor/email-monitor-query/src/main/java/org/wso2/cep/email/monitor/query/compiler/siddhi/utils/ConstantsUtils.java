@@ -1,0 +1,14 @@
+package org.wso2.cep.email.monitor.query.compiler.siddhi.utils;
+
+
+public class ConstantsUtils {
+
+    public static final String INPUTSTREAM = "gmailInputStream";
+    public static final String THREADSTREAM = "threadDetails";
+    public static final String OUTPUTSTREAM = "gmailOutputStream";
+    public static final String LABELSTREAM = "labelDetails";
+    public static final String EMAIL_SENDER_OUTPUTSTREAM = "emailSenderOutputStream";
+    public static final String FILTERED_EMAIL_DETAILS = "filteredEmailDetails";
+    public  static final String ONE = "one";
+    public static final String TWO ="two";
+}

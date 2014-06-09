@@ -83,7 +83,7 @@ labelCondition
       	;
       	
  frequencyCondition
- 	:	('thread')? 'frequency' 'per' timeExpr compareOperation intVal  -> ^(FREQ_COND 'thread'? timeExpr compareOperation intVal);
+ 	:	('thread')?  'frequency' 'per' timeExpr compareOperation intVal  -> ^(FREQ_COND 'thread'? timeExpr compareOperation intVal);
  	
  timeExpr 
  	:(yearValue)? (monthValue)? (weekValue)? (dayValue)? (hourValue)? (minuteValue)? (secondValue)?  (milliSecondValue)?	
