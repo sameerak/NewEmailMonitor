@@ -1,6 +1,7 @@
 package org.wso2.cep.email.monitor.internal.config.esb.config;
 
 
+import edu.umd.cs.findbugs.annotations.Priority;
 import org.apache.axis2.AxisFault;
 
 import org.wso2.carbon.proxyadmin.stub.ProxyServiceAdminProxyAdminException;
@@ -91,6 +92,17 @@ public class ProxyDeployer {
             logger.error(e.getMessage());
             throw new EmailMonitorServiceException("Error when adding proxy to stub", e);
         }
+
+
+        try {
+            String dfd =stub.getEndpoint(EmailMonitorConstants.LABEL_ADDER_PROXY_NAME);
+     dfd.charAt(8);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (ProxyServiceAdminProxyAdminException e) {
+            e.printStackTrace();
+        }
+
     }
 
 
