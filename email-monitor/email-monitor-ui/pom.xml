@@ -12,6 +12,7 @@
     <artifactId>email-monitor-ui</artifactId>
     <packaging>bundle</packaging>
 
+
     <dependencies>
         <dependency>
             <groupId>org.apache.felix</groupId>

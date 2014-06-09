@@ -15,6 +15,9 @@
         <module>email-monitor-admin</module>
         <module>email-monitor-stub</module>
         <module>email-monitor-ui</module>
+        <module>email-monitor-api</module>
+        <module>email-monitor-query</module>
+
 
     </modules>
     <repositories>

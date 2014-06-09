@@ -13,6 +13,7 @@ public class ESBConfigurationHelper {
     private ProxyDeployer proxyDeployer;
     private BAMMediatorDeployer bamMediatorDeployer;
     private TaskDeployer taskDeployer;
+    private LocalEntryDeployer localEntryDeployer;
 
     public ESBConfigurationHelper(String ip, String port) throws EmailMonitorServiceException {
 
@@ -21,6 +22,7 @@ public class ESBConfigurationHelper {
         System.setProperty(SecurityConstants.TRUSTSTORE_PASSWORD, SecurityConstants.KEY_STORE_PASSWORD);
         System.setProperty(SecurityConstants.TRUSTSTORE_TYPE, SecurityConstants.KEY_STORE_TYPE);
 
+        localEntryDeployer = new LocalEntryDeployer(ip,port);
         proxyDeployer = new ProxyDeployer(ip, port);
         bamMediatorDeployer = new BAMMediatorDeployer(ip, port);
         taskDeployer = new TaskDeployer(ip, port);
@@ -34,10 +36,11 @@ public class ESBConfigurationHelper {
 
         logger.info("Stared adding ESB configurations");
 
+        localEntryDeployer.addLocalEntry(ESBUserName,ESBPassword,mailUserNAme,mailPassword);
         bamMediatorDeployer.addBAMServerProfile(ESBUserName, ESBPassword, CEPServerUserName, CEPServerPassword , CEPServerIP ,CEPServerPort);
         proxyDeployer.addMailProxy(ESBUserName, ESBPassword);
-       taskDeployer.addScheduledTask(ESBUserName, ESBPassword, mailUserNAme, mailPassword);
-
+        proxyDeployer.addLabelAdderProxy(ESBUserName,ESBPassword);
+        taskDeployer.addScheduledTask(ESBUserName, ESBPassword, mailUserNAme, mailPassword);
 
     }
 
