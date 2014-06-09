@@ -19,9 +19,11 @@ public class BAMMediatorDeployer {
 
     private static Logger logger = Logger.getLogger(BAMMediatorDeployer.class);
     private BAMMediatorConfigAdminStub stub;
+    private XMLReader xmlReader;
 
 
     public BAMMediatorDeployer(String ip, String port) throws EmailMonitorServiceException {
+        xmlReader = new XMLReader();
         String endPoint = EmailMonitorConstants.PROTOCOL + ip + ":" + port + EmailMonitorConstants.SERVICES + EmailMonitorConstants.BAM_MEDIATOR_ADMIN_SERVICE;
 
         try {
@@ -38,23 +40,7 @@ public class BAMMediatorDeployer {
 
         CarbonUtils.setBasicAccessSecurityHeaders(userName, password, stub._getServiceClient());
 
-        String content = "";
-
-        InputStream is = null;
-        BufferedReader br = null;
-        String line;
-
-        is = ProxyDeployer.class.getResourceAsStream(EmailMonitorConstants.BAM_SERVER_PROFILE_CONFIGURATION_PATH);
-        br = new BufferedReader(new InputStreamReader(is));
-        try {
-            while (null != (line = br.readLine())) {
-                content = content + line;
-            }
-        } catch (IOException e) {
-            logger.error(e.getMessage());
-            throw new EmailMonitorServiceException("Error when adding BAM Server Profiles", e);
-        }
-
+        String content = xmlReader.readXML(EmailMonitorConstants.BAM_SERVER_PROFILE_CONFIGURATION_PATH);
 
         content.replace("CEPServerUserName", CEPServerUserName);
         content.replace("CEPServerIP", CEPServerIP);

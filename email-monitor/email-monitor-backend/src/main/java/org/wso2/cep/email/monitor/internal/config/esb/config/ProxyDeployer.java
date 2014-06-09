@@ -11,7 +11,6 @@ import org.apache.log4j.Logger;
 import org.wso2.cep.email.monitor.exception.EmailMonitorServiceException;
 import org.wso2.cep.email.monitor.internal.util.EmailMonitorConstants;
 
-import java.io.*;
 import java.rmi.RemoteException;
 
 
@@ -19,9 +18,12 @@ public class ProxyDeployer {
 
     private static Logger logger = Logger.getLogger(ProxyDeployer.class);
     private ProxyServiceAdminStub stub;
+    private XMLReader xmlReader;
 
 
     public ProxyDeployer(String ip, String port) throws EmailMonitorServiceException {
+        xmlReader = new XMLReader();
+
         String endPoint = EmailMonitorConstants.PROTOCOL + ip + ":" + port + EmailMonitorConstants.SERVICES + EmailMonitorConstants.PROXY_ADMIN_SERVICE;
 
         try {
@@ -38,7 +40,7 @@ public class ProxyDeployer {
 
         CarbonUtils.setBasicAccessSecurityHeaders(userName, password, stub._getServiceClient());
 
-        String proxyName = EmailMonitorConstants.PROXY_NAME;
+        String proxyName = EmailMonitorConstants.MAIL_READER_PROXY_NAME;
 
         //Set proxy configuration data
         String[] transport = {"http", "https"};
@@ -46,22 +48,7 @@ public class ProxyDeployer {
         data.setName(proxyName);
         data.setStartOnLoad(true);
         data.setTransports(transport);
-        String content = "";
-
-        InputStream is = null;
-        BufferedReader br = null;
-        String line;
-
-        is = ProxyDeployer.class.getResourceAsStream(EmailMonitorConstants.PROXY_PATH);
-        br = new BufferedReader(new InputStreamReader(is));
-        try {
-            while (null != (line = br.readLine())) {
-                content = content + line;
-            }
-        } catch (IOException e) {
-            logger.error(e.getMessage());
-            throw new EmailMonitorServiceException("Error when adding Mail Proxy", e);
-        }
+        String content = xmlReader.readXML((EmailMonitorConstants.MAIL_READER_PROXY_PATH));
 
         data.setInSeqXML(content);
 
@@ -76,6 +63,34 @@ public class ProxyDeployer {
             throw new EmailMonitorServiceException("Error when adding proxy to stub", e);
         }
 
+    }
+
+    public void addLabelAdderProxy(String userName, String password)throws EmailMonitorServiceException {
+
+        CarbonUtils.setBasicAccessSecurityHeaders(userName, password, stub._getServiceClient());
+
+        String proxyName = EmailMonitorConstants.LABEL_ADDER_PROXY_NAME;
+
+        //Set proxy configuration data
+        String[] transport = {"http", "https"};
+        ProxyData data = new ProxyData();
+        data.setName(proxyName);
+        data.setStartOnLoad(true);
+        data.setTransports(transport);
+        String content = xmlReader.readXML(EmailMonitorConstants.LABEL_ADDER_PROXY_PATH);
+
+        data.setInSeqXML(content);
+
+
+        try {
+            stub.addProxy(data);
+        } catch (RemoteException e) {
+            logger.error(e.getMessage());
+            throw new EmailMonitorServiceException("Error when adding proxy to Stub", e);
+        } catch (ProxyServiceAdminProxyAdminException e) {
+            logger.error(e.getMessage());
+            throw new EmailMonitorServiceException("Error when adding proxy to stub", e);
+        }
     }
 
 
