@@ -8,7 +8,7 @@ public class AddLabel extends Action {
 
     }
     public AddLabel(String label){
-     setTo(label);
+    setLabel(label);
 
     }
 
@@ -17,6 +17,6 @@ public class AddLabel extends Action {
 
     @Override
     public String toString() {
-        return "add label " + getTo();
+        return "add label " + getLabel();
     }
 }

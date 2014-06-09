@@ -30,9 +30,9 @@ options {
 package org.wso2.cep.email.monitor.query.compiler;
 
     import org.wso2.cep.email.monitor.query.api.Query;
-  import org.wso2.cep.email.monitor.query.api.actions.Action;
-  import org.wso2.cep.email.monitor.query.api.actions.AddLabel;
-   import org.wso2.cep.email.monitor.query.api.actions.SendMail;
+    import org.wso2.cep.email.monitor.query.api.actions.Action;
+    import org.wso2.cep.email.monitor.query.api.actions.AddLabel;
+     import org.wso2.cep.email.monitor.query.api.actions.SendMail;
 
   import org.wso2.cep.email.monitor.query.api.attribute.EmailAddress;
   import org.wso2.cep.email.monitor.query.api.attribute.Label;
