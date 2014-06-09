@@ -89,11 +89,43 @@ public interface EmailMonitorServiceInterface {
     public boolean createMailOutputStream(int tenantID) throws EmailMonitorServiceException;
 
     /**
+     *
+     * @param tenantID
+     * @return
+     * @throws EmailMonitorServiceException
+     */
+    public boolean createThreadDetailsStream(int tenantID) throws EmailMonitorServiceException;
+
+    /**
+     *
+     * @param tenantID
+     * @return
+     * @throws EmailMonitorServiceException
+     */
+    public boolean createLabelDetailsStream(int tenantID) throws EmailMonitorServiceException;
+
+    /**
+     *
+     * @param tenantID
+     * @return
+     * @throws EmailMonitorServiceException
+     */
+    public boolean createEmailSenderOutputStream(int tenantID) throws EmailMonitorServiceException;
+
+    /**
      * @param axisConfiguration
      * @return
      * @throws EmailMonitorServiceException
      */
     public boolean createSoapOutputAdapter(AxisConfiguration axisConfiguration) throws EmailMonitorServiceException;
+
+    /**
+     *
+     * @param axisConfiguration
+     * @return
+     * @throws EmailMonitorServiceException
+     */
+    public boolean createEmailOutputAdapter(AxisConfiguration axisConfiguration) throws EmailMonitorServiceException;
 
     /**
      * @param eventFormatterConfigurationXML

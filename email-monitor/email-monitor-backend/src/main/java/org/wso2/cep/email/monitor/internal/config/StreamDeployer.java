@@ -173,6 +173,110 @@ public class StreamDeployer {
         }
     }
 
+    public void createThreadDetailsStream(int tenantID) {
+        StreamDefinition streamDefinition = null;
+        try {
+            streamDefinition = new StreamDefinition("threadDetails", "1.0.0") ;
+        } catch (MalformedStreamDefinitionException e) {
+            logger.error(e.getMessage());
+        }
+
+        List<Attribute> payloadData = new ArrayList<Attribute>() ;
+
+        Attribute payloadThreadID = new Attribute("threadID", AttributeType.LONG);
+        payloadData.add(payloadThreadID);
+
+        Attribute payloadEmailCount = new Attribute("emailCount", AttributeType.LONG);
+        payloadData.add(payloadEmailCount);
+
+        Attribute payloadTo = new Attribute("to", AttributeType.STRING);
+        payloadData.add(payloadTo);
+
+        Attribute payloadSenders = new Attribute("senders", AttributeType.STRING);
+        payloadData.add(payloadSenders);
+
+        Attribute payloadNewLabel = new Attribute("newLabel", AttributeType.STRING);
+        payloadData.add(payloadNewLabel);
+
+
+        streamDefinition.setPayloadData(payloadData);
+        streamDefinition.setDescription("thread detail stream");
+        streamDefinition.setNickName("thread detail");
+
+        try {
+            eventStreamService.addEventStreamDefinition(streamDefinition,tenantID);
+        } catch (EventStreamConfigurationException e) {
+            logger.error(e.getMessage());
+        }
+
+    }
+
+    public void createLabelDetailsStream(int tenantID) {
+        StreamDefinition streamDefinition = null;
+        try {
+            streamDefinition = new StreamDefinition("labelDetails", "1.0.0") ;
+        } catch (MalformedStreamDefinitionException e) {
+            logger.error(e.getMessage());
+        }
+
+        List<Attribute> payloadData = new ArrayList<Attribute>() ;
+
+        Attribute payloadThreadCount = new Attribute("threadCount", AttributeType.LONG);
+        payloadData.add(payloadThreadCount);
+
+        Attribute payloadTo = new Attribute("to", AttributeType.STRING);
+        payloadData.add(payloadTo);
+
+        Attribute payloadSenders = new Attribute("senders", AttributeType.STRING);
+        payloadData.add(payloadSenders);
+
+        Attribute payloadRelevantLabel = new Attribute("relevantLabel", AttributeType.STRING);
+        payloadData.add(payloadRelevantLabel);
+
+
+        streamDefinition.setPayloadData(payloadData);
+        streamDefinition.setDescription("label detail stream");
+        streamDefinition.setNickName("label detail");
+
+        try {
+            eventStreamService.addEventStreamDefinition(streamDefinition,tenantID);
+        } catch (EventStreamConfigurationException e) {
+            logger.error(e.getMessage());
+        }
+
+    }
+
+
+    public void createEmailSenderOutputStream(int tenantID) {
+        StreamDefinition streamDefinition = null;
+        try {
+            streamDefinition = new StreamDefinition("emailSenderOutputStream", "1.0.0") ;
+        } catch (MalformedStreamDefinitionException e) {
+            logger.error(e.getMessage());
+        }
+
+        List<Attribute> payloadData = new ArrayList<Attribute>() ;
+
+        Attribute payloadLabel = new Attribute("label", AttributeType.STRING);
+        payloadData.add(payloadLabel);
+
+        Attribute payloadThreadCount = new Attribute("threadCount", AttributeType.LONG);
+        payloadData.add(payloadThreadCount);
+
+
+
+        streamDefinition.setPayloadData(payloadData);
+        streamDefinition.setDescription("email sender");
+        streamDefinition.setNickName("email_sender_output");
+
+        try {
+            eventStreamService.addEventStreamDefinition(streamDefinition,tenantID);
+        } catch (EventStreamConfigurationException e) {
+            logger.error(e.getMessage());
+        }
+    }
+
+
 
 }
 
