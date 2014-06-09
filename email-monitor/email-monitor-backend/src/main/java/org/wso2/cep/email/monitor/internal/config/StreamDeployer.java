@@ -276,7 +276,40 @@ public class StreamDeployer {
         }
     }
 
+    public void createFilteredEmailDetailsStream(int tenantID) {
+        StreamDefinition streamDefinition = null;
+        try {
+            streamDefinition = new StreamDefinition("filteredEmailDetails", "1.0.0") ;
+        } catch (MalformedStreamDefinitionException e) {
+            logger.error(e.getMessage());
+        }
 
+        List<Attribute> payloadData = new ArrayList<Attribute>() ;
+
+        Attribute payloadThreadID = new Attribute("threadID", AttributeType.LONG);
+        payloadData.add(payloadThreadID);
+
+        Attribute payloadTo = new Attribute("to", AttributeType.STRING);
+        payloadData.add(payloadTo);
+
+        Attribute payloadSenders = new Attribute("senders", AttributeType.STRING);
+        payloadData.add(payloadSenders);
+
+        Attribute payloadNewLabel = new Attribute("newLabel", AttributeType.STRING);
+        payloadData.add(payloadNewLabel);
+
+
+        streamDefinition.setPayloadData(payloadData);
+        streamDefinition.setDescription("filtered email detail stream");
+        streamDefinition.setNickName("filtered email detail");
+
+        try {
+            eventStreamService.addEventStreamDefinition(streamDefinition,tenantID);
+        } catch (EventStreamConfigurationException e) {
+            logger.error(e.getMessage());
+        }
+
+    }
 
 }
 
