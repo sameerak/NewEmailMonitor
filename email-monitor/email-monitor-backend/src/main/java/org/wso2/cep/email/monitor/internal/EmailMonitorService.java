@@ -5,10 +5,7 @@ import org.apache.axis2.engine.AxisConfiguration;
 import org.apache.log4j.Logger;
 import org.wso2.cep.email.monitor.EmailMonitorServiceInterface;
 import org.wso2.cep.email.monitor.exception.EmailMonitorServiceException;
-import org.wso2.cep.email.monitor.internal.config.EventFormatterDeployer;
-import org.wso2.cep.email.monitor.internal.config.ExecutionPlanDeployer;
-import org.wso2.cep.email.monitor.internal.config.OutputAdapterDeployer;
-import org.wso2.cep.email.monitor.internal.config.StreamDeployer;
+import org.wso2.cep.email.monitor.internal.config.*;
 import org.wso2.cep.email.monitor.internal.config.esb.config.BAMMediatorDeployer;
 import org.wso2.cep.email.monitor.internal.config.esb.config.ESBConfigurationHelper;
 import org.wso2.cep.email.monitor.internal.config.esb.config.ProxyDeployer;
@@ -97,6 +94,19 @@ public class EmailMonitorService implements EmailMonitorServiceInterface {
         try {
             ESBConfigurationHelper esbConfigurationHelper = new ESBConfigurationHelper(ip, port);
             esbConfigurationHelper.addConfigurations(userName, password, CEPServerUserName, CEPServerPassword, mailUserNAme, mailPassword, CEPServerIP, CEPServerPort);
+            return true;
+        } catch (EmailMonitorServiceException e) {
+            logger.error(e.getMessage());
+            throw new EmailMonitorServiceException(e);
+
+        }
+    }
+
+    @Override
+    public boolean addCEPConfigurations(String ESBServerIP, String ESBServerPort, String ESBServerUsername, String ESBServerPassword, String mailAddress, int tenantID, AxisConfiguration axisConfiguration) throws EmailMonitorServiceException {
+        try {
+            CEPConfigurationHelper cepConfigurationHelper = new CEPConfigurationHelper();
+            cepConfigurationHelper.addCEPConfigurations(ESBServerIP, ESBServerPort, ESBServerUsername, ESBServerPassword, mailAddress, tenantID, axisConfiguration);
             return true;
         } catch (EmailMonitorServiceException e) {
             logger.error(e.getMessage());

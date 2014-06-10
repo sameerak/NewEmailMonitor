@@ -236,4 +236,25 @@ public class EmailMonitorAdminService extends AbstractAdmin {
     }
 
 
-}
+    public boolean addCEPConfigurations(String ESBServerIP, String ESBServerPort, String ESBServerUsername, String ESBServerPassword, String mailAddress) throws EmailMonitorAdminException {
+
+        int tenantID = 0;
+        try {
+            tenantID = getUserRealm().getRealmConfiguration().getTenantId();
+        } catch (UserStoreException e) {
+            log.error(e.getMessage());
+            throw new EmailMonitorAdminException(e);
+        }
+
+
+        EmailMonitorServiceInterface emailMonitorServiceInterface = EmailMonitorAdminValueHolder.getInstance().getEmailMonitorService();
+        try {
+            return emailMonitorServiceInterface.addCEPConfigurations(ESBServerIP, ESBServerPort, ESBServerUsername, ESBServerPassword, mailAddress, tenantID, getAxisConfig());
+        } catch (EmailMonitorServiceException e) {
+            log.error(e.getMessage());
+            throw new EmailMonitorAdminException(e);
+        }
+    }
+
+
+    }
