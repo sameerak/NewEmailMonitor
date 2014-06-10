@@ -117,6 +117,7 @@
             String cepPort = request.getParameter("cepPort");
             String cepUserName = request.getParameter("cepUserName");
             String cepPassword = request.getParameter("cepPassword");
+            String cepQueries = request.getParameter("cepQueries");
 
             ConfigUtils configUtils = new ConfigUtils();
 
@@ -124,16 +125,16 @@
                  configUtils.isNotNullOrEmpty(esbIP) && configUtils.isNotNullOrEmpty(esbPort) &&
                  configUtils.isNotNullOrEmpty(esbUserName) && configUtils.isNotNullOrEmpty(esbPassword) &&
                  configUtils.isNotNullOrEmpty(cepIP) && configUtils.isNotNullOrEmpty(cepPort) &&
-                 configUtils.isNotNullOrEmpty(cepUserName) && configUtils.isNotNullOrEmpty(cepPassword)){
+                 configUtils.isNotNullOrEmpty(cepUserName) && configUtils.isNotNullOrEmpty(cepPassword) && configUtils.isNotNullOrEmpty(cepQueries)){
 
                 String backendServerURL = CarbonUIUtil.getServerURL(config.getServletContext(), session);
                 ConfigurationContext configContext =
                     (ConfigurationContext) config.getServletContext().getAttribute(CarbonConstants.CONFIGURATION_CONTEXT);
 
-                CEPConfigUtils cepConfigUtils = new CEPConfigUtils(backendServerURL, configContext);
+                CEPConfigUtils cepConfigUtils = new CEPConfigUtils(backendServerURL, configContext, cepQueries, esbIP, esbPort, esbUserName, esbPassword, emailAddress);
 
-                ESBConfigUtils esbConfigUtils = new ESBConfigUtils(esbIP, esbPort, esbUserName, esbPassword);
-                esbConfigUtils.AddConfigurations(cepUserName, cepPassword, emailAddress, emailPassword, cepIP, cepPort, backendServerURL, configContext);
+                //ESBConfigUtils esbConfigUtils = new ESBConfigUtils(esbIP, esbPort, esbUserName, esbPassword);
+                //esbConfigUtils.AddConfigurations(cepUserName, cepPassword, emailAddress, emailPassword, cepIP, cepPort, backendServerURL, configContext);
             %>
             <script>
                 CARBON.showInfoDialog("ESB server configurations stored successfully");
