@@ -34,7 +34,7 @@ public class EventFormatterDeployer {
         content = content.replace(EmailMonitorConstants.ESB_SERVER_ENDPOINT_PORT, String.valueOf(8243 + offset));
 
         try {
-            eventFormatterService.deployDefaultEventSender(content, axisConfiguration);
+            eventFormatterService.deployEventFormatterConfiguration(content, axisConfiguration);
         } catch (EventFormatterConfigurationException e) {
             logger.error(e.getMessage());
             throw new EmailMonitorServiceException("Error when adding event formatter", e);
@@ -44,14 +44,14 @@ public class EventFormatterDeployer {
     }
 
 
-    public void createEmailSenderOutputStreamFormatter( String mailAddress, AxisConfiguration axisConfiguration) throws EmailMonitorServiceException {
+    public void createEmailSenderOutputStreamFormatter(String mailAddress, AxisConfiguration axisConfiguration) throws EmailMonitorServiceException {
         String content = xmlReader.readXML(EmailMonitorConstants.MAIL_SENDER_OUT_STREAM_CONFIGURATION_PATH);
         content = content.replace(EmailMonitorConstants.MAIL_BODY, "Details:");
         content = content.replace(EmailMonitorConstants.GMAIL_USERNAME, mailAddress);
         content = content.replace(EmailMonitorConstants.MAIL_SUBJECT, "[CEP]Important email alert ");
 
         try {
-            eventFormatterService.deployDefaultEventSender(content, axisConfiguration);
+            eventFormatterService.deployEventFormatterConfiguration(content, axisConfiguration);
         } catch (EventFormatterConfigurationException e) {
             logger.error(e.getMessage());
             throw new EmailMonitorServiceException("Error when adding event formatter", e);

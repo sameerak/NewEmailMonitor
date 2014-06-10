@@ -21,10 +21,7 @@ public class CEPConfigUtils {
         try {
             emailMonitorAdminServiceStub = new EmailMonitorAdminServiceStub(configCtx, endPoint);
 
-            emailMonitorAdminServiceStub.createMailInputStream();
-            emailMonitorAdminServiceStub.createMailOutputStream();
-
-            emailMonitorAdminServiceStub.addCEPConfigurations(esbIP, esbPort, esbUserName, esbPassword, mailUserName);
+           emailMonitorAdminServiceStub.addCEPConfigurations(esbIP, esbPort, esbUserName, esbPassword, mailUserName);
 
             String[] siddhiQueries = emailMonitorAdminServiceStub.getSiddhiQuery(mailquery);
             for (String siddhiquery: siddhiQueries){
