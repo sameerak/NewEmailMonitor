@@ -16,13 +16,20 @@ public class CEPConfigUtils {
     StreamDeployer streamDeployer;
     EmailMonitorAdminServiceStub emailMonitorAdminServiceStub;
 
-    public CEPConfigUtils(String backendServerURL, ConfigurationContext configCtx){
+    public CEPConfigUtils(String backendServerURL, ConfigurationContext configCtx, String mailquery, String esbIP, String esbPort, String esbUserName, String esbPassword, String mailUserName){
         String endPoint = backendServerURL + "EmailMonitorAdminService";
         try {
             emailMonitorAdminServiceStub = new EmailMonitorAdminServiceStub(configCtx, endPoint);
 
             emailMonitorAdminServiceStub.createMailInputStream();
             emailMonitorAdminServiceStub.createMailOutputStream();
+
+            emailMonitorAdminServiceStub.addCEPConfigurations(esbIP, esbPort, esbUserName, esbPassword, mailUserName);
+
+            String[] siddhiQueries = emailMonitorAdminServiceStub.getSiddhiQuery(mailquery);
+            for (String siddhiquery: siddhiQueries){
+                emailMonitorAdminServiceStub.createExecutionPlan(siddhiquery);
+            }
 
         } catch (AxisFault axisFault) {
             axisFault.printStackTrace();
