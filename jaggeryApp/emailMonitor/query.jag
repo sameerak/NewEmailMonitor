@@ -1,0 +1,58 @@
+<%
+var emailAddress = application.get("emailMon_emailAddress");
+var emailPassword = application.get("emailMon_emailPassword");
+var esbIP = application.get("emailMon_esbIP");
+var esbPort = application.get("emailMon_esbPort");
+var esbUserName = application.get("emailMon_esbUserName");
+var esbPassword = application.get("emailMon_esbPassword");
+var cepIP = application.get("emailMon_cepIP");
+var cepPort = application.get("emailMon_cepPort");
+var cepUserName = application.get("emailMon_cepUserName");
+var cepPassword = application.get("emailMon_cepPassword");
+var cepQuery = request.getParameter("cepQueries");
+var verb = request.getMethod();
+response.contentType = 'text/plain';
+
+
+if(verb == "DELETE" || verb == "PUT" || verb == "GET") {
+	response.status = 400;
+	print("Only method allowed on this resource is HTTP POST");
+} else if(verb == "POST") {
+		var util = require("util/utility.jag");
+	
+            if(util.isNotNullOrEmpty(emailAddress) && util.isNotNullOrEmpty(emailPassword) &&
+                 util.isNotNullOrEmpty(esbIP) && util.isNotNullOrEmpty(esbPort) &&
+                 util.isNotNullOrEmpty(esbUserName) && util.isNotNullOrEmpty(esbPassword) &&
+                 util.isNotNullOrEmpty(cepIP) && util.isNotNullOrEmpty(cepPort) &&
+                 util.isNotNullOrEmpty(cepUserName) && util.isNotNullOrEmpty(cepPassword) && util.isNotNullOrEmpty(cepQuery)){
+					try{
+				
+				
+						var log = new Log();
+						var serverUrl = util.getServiceUrl();
+						serverUrl = serverUrl + "EmailMonitorAdminService";
+						
+						var emailMonitorAdminServiceStub = Packages.org.wso2.cep.email.monitor.stub.admin.EmailMonitorAdminServiceStub;
+						var myEmailMonitorAdminServiceStub = new emailMonitorAdminServiceStub(serverUrl);
+						
+						//TODO add code to apply this quiery in to CEP
+						
+// 						myEmailMonitorAdminServiceStub.createMailInputStream();
+// 						myEmailMonitorAdminServiceStub.createMailOutputStream();
+						
+						response.status = 200;
+						print("CEP quer added successfully.");
+					}
+					catch(error){
+						response.status = 500;
+						print("Something went wrong!");
+						log.debug(error);
+				print(error);
+					}
+            }
+            else {
+            	response.status = 400;
+            	print("Please configure the email monitor system correctly!");
+            }
+}
+%>

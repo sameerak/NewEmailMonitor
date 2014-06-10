@@ -6,18 +6,52 @@
 <link href="css/bootstrap.css" rel="stylesheet">
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.js"></script>
+<script src="js/bootbox.js"></script>
 <script src="js/emailMonitor.js"></script>
 </head>
 <body>
 <div class="container">
-			<div class="row">
-<div class="col-md-6 col-md-offset-3">
-<div class="text-center">
-<h3>E-mail monitoring with <a href="http://wso2.com/products/enterprise-service-bus/"><img alt="WSO2ESB" src="./images/esb-logo-h42.png" width="290px" height="32px"></a></h3> 
-<h3>and <a href="http://wso2.com/products/complex-event-processor/"><img alt="WSO2CEP" src="./images/cep-logo-h42.png" width="290px" height="32px"></a></h3>
+			<div class="row text-center">
+<div class="col-md-10 col-md-offset-1">
+	<div class="text-center">
+		<h3>E-mail monitoring with <a href="http://wso2.com/products/enterprise-service-bus/"><img alt="WSO2ESB" src="./images/esb-logo-h42.png" width="290px" height="32px"></a></h3> 
+		<h3>and <a href="http://wso2.com/products/complex-event-processor/"><img alt="WSO2CEP" src="./images/cep-logo-h42.png" width="290px" height="32px"></a></h3>
+	</div>
+<ul id="myTab" class="nav nav-tabs">
+      <li class="active"><a href="#query" data-toggle="tab">Query</a></li>
+      <li class=""><a href="#configure" data-toggle="tab">Configure</a></li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+      <div class="tab-pane fade active in" id="query">
+        <form id="emailMonitorQueryForm">
+        <table class="table table-no-border text-left" style="width:100%">
+            <tbody>
+                <tr>
+                    <td>
+                        <table class="table table-no-border" style="width:100%">
+                            <thead>
+                                    <tr>
+                                        <th colspan="2"><h4>E-mail Queries</h4></th>
+                                    </tr>
+                            </thead>
+                            <tbody>
+                                    <tr>
+                                        <td style="width:15%">CEP Queries:<span class="required">*</span></td> <td><textarea name="cepQueries" rows="8" cols="120"></textarea></td>
+                                    </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="row"><input class="col-md-offset-2" type="submit" value="Save Query"></td>
+                </tr>
+            </tbody>
+        </table>
+        </form>
 </div>
+<div class="tab-pane fade" id="configure">
 <form id="emailMonitorConfigForm">
-        <table class="table table-no-border" style="width:100%">
+        <table class="table table-no-border text-left" style="width:100%">
             <tbody>
                 <tr>
                     <td>
@@ -29,10 +63,10 @@
                             </thead>
                             <tbody>
                                     <tr>
-                                        <td style="width:30%">email address:<span class="required">*</span></td> <td><input type="text" name="emailAddress"></td>
+                                        <td style="width:15%">email address:<span class="required">*</span></td> <td><input type="text" name="emailAddress"></td>
                                     </tr>
                                     <tr>
-                                        <td style="width:30%">email password:<span class="required">*</span></td> <td><input type="password" name="emailPassword"></td>
+                                        <td style="width:15%">email password:<span class="required">*</span></td> <td><input type="password" name="emailPassword"></td>
                                     </tr>
                             </tbody>
                         </table>
@@ -48,16 +82,16 @@
                             </thead>
                             <tbody>
                                     <tr>
-                                        <td style="width:30%">ESB Username:<span class="required">*</span></td> <td><input type="text" name="esbUserName"></td>
+                                        <td style="width:15%">ESB Username:<span class="required">*</span></td> <td><input type="text" name="esbUserName"></td>
                                     </tr>
                                     <tr>
-                                        <td style="width:30%">ESB Password:<span class="required">*</span></td> <td><input type="password" name="esbPassword"></td>
+                                        <td style="width:15%">ESB Password:<span class="required">*</span></td> <td><input type="password" name="esbPassword"></td>
                                     </tr>
                                     <tr>
-                                        <td style="width:30%">ESB IP:<span class="required">*</span></td> <td><input type="text" name="esbIP"></td>
+                                        <td style="width:15%">ESB IP:<span class="required">*</span></td> <td><input type="text" name="esbIP"></td>
                                     </tr>
                                     <tr>
-                                        <td style="width:30%">ESB Port:<span class="required">*</span></td> <td><input type="text" name="esbPort"></td>
+                                        <td style="width:15%">ESB Port:<span class="required">*</span></td> <td><input type="text" name="esbPort"></td>
                                     </tr>
                             </tbody>
                         </table>
@@ -73,30 +107,29 @@
                             </thead>
                             <tbody>
                                     <tr>
-                                        <td style="width:30%">CEP Username:<span class="required">*</span></td> <td><input type="text" name="cepUserName"></td>
+                                        <td style="width:15%">CEP Username:<span class="required">*</span></td> <td><input type="text" name="cepUserName"></td>
                                     </tr>
                                     <tr>
-                                        <td style="width:30%">CEP Password:<span class="required">*</span></td> <td><input type="password" name="cepPassword"></td>
+                                        <td style="width:15%">CEP Password:<span class="required">*</span></td> <td><input type="password" name="cepPassword"></td>
                                     </tr>
                                     <tr>
-                                        <td style="width:30%">CEP IP:<span class="required">*</span></td> <td><input type="text" name="cepIP"></td>
+                                        <td style="width:15%">CEP IP:<span class="required">*</span></td> <td><input type="text" name="cepIP"></td>
                                     </tr>
                                     <tr>
-                                        <td style="width:30%">CEP Port:<span class="required">*</span></td> <td><input type="text" name="cepPort"></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width:30%">CEP Queries:<span class="required">*</span></td> <td><textarea name="cepQueries" rows="8" cols="40"></textarea></td>
+                                        <td style="width:15%">CEP Port:<span class="required">*</span></td> <td><input type="text" name="cepPort"></td>
                                     </tr>
                             </tbody>
                         </table>
                     </td>
                 </tr>
                 <tr>
-                    <td class="row"><input class="col-md-offset-3" type="submit" value="Save"></td>
+                    <td class="row"><input class="col-md-offset-2" type="submit" value="Configure"></td>
                 </tr>
             </tbody>
         </table>
 </form>
+      </div>
+</div>
 			</div>
 </div>
 			</div>
