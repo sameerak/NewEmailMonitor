@@ -12,10 +12,6 @@ import org.wso2.cep.email.monitor.exception.EmailMonitorServiceException;
 import org.wso2.cep.email.monitor.internal.util.EmailMonitorConstants;
 
 import javax.xml.stream.XMLStreamException;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.rmi.RemoteException;
 
 public class TaskDeployer {
@@ -44,10 +40,10 @@ public class TaskDeployer {
 
         String content = xmlReader.readXML(EmailMonitorConstants.TASK_CONFIGURATION_FILE_PATH);
 
-        content = content.replace(EmailMonitorConstants.GMAIL_USERNAME,mailUserName);
+        content = content.replace(EmailMonitorConstants.GMAIL_USERNAME, mailUserName);
 
         CryptographyManager cryptographyManager = new CryptographyManager();
-        content = content.replace(EmailMonitorConstants.GMAIL_PASSWORD,cryptographyManager.encryptAndBase64Encode(mailPassword));
+        content = content.replace(EmailMonitorConstants.GMAIL_PASSWORD, cryptographyManager.encryptAndBase64Encode(mailPassword));
 
 
         OMElement omElementTask = null;

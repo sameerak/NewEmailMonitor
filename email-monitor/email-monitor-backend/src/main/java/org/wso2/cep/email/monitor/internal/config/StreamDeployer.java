@@ -18,6 +18,7 @@ import org.wso2.cep.email.monitor.internal.ds.EmailMonitorValueHolder;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class StreamDeployer {
 
     private static Logger logger = Logger.getLogger(StreamDeployer.class);
@@ -140,13 +141,14 @@ public class StreamDeployer {
             eventStreamService.addEventStreamDefinition(streamDefinition, tenantID);
         } catch (EventStreamConfigurationException e) {
             logger.error(e.getMessage());
+            throw new EmailMonitorServiceException("Error when adding new stream", e);
         }
 
 
     }
 
 
-    public void createMailOutputStream(int tenantID) {
+    public void createMailOutputStream(int tenantID) throws EmailMonitorServiceException {
         StreamDefinition streamDefinition = null;
         try {
             streamDefinition = new StreamDefinition("gmailOutputStream", "1.0.0") ;
@@ -170,10 +172,11 @@ public class StreamDeployer {
             eventStreamService.addEventStreamDefinition(streamDefinition,tenantID);
         } catch (EventStreamConfigurationException e) {
             logger.error(e.getMessage());
+            throw new EmailMonitorServiceException("Error when adding new stream", e);
         }
     }
 
-    public void createThreadDetailsStream(int tenantID) {
+    public void createThreadDetailsStream(int tenantID) throws EmailMonitorServiceException {
         StreamDefinition streamDefinition = null;
         try {
             streamDefinition = new StreamDefinition("threadDetails", "1.0.0") ;
@@ -207,11 +210,12 @@ public class StreamDeployer {
             eventStreamService.addEventStreamDefinition(streamDefinition,tenantID);
         } catch (EventStreamConfigurationException e) {
             logger.error(e.getMessage());
+            throw new EmailMonitorServiceException("Error when adding new stream", e);
         }
 
     }
 
-    public void createLabelDetailsStream(int tenantID) {
+    public void createLabelDetailsStream(int tenantID) throws EmailMonitorServiceException {
         StreamDefinition streamDefinition = null;
         try {
             streamDefinition = new StreamDefinition("labelDetails", "1.0.0") ;
@@ -242,12 +246,13 @@ public class StreamDeployer {
             eventStreamService.addEventStreamDefinition(streamDefinition,tenantID);
         } catch (EventStreamConfigurationException e) {
             logger.error(e.getMessage());
+            throw new EmailMonitorServiceException("Error when adding new stream", e);
         }
 
     }
 
 
-    public void createEmailSenderOutputStream(int tenantID) {
+    public void createEmailSenderOutputStream(int tenantID) throws EmailMonitorServiceException {
         StreamDefinition streamDefinition = null;
         try {
             streamDefinition = new StreamDefinition("emailSenderOutputStream", "1.0.0") ;
@@ -273,10 +278,11 @@ public class StreamDeployer {
             eventStreamService.addEventStreamDefinition(streamDefinition,tenantID);
         } catch (EventStreamConfigurationException e) {
             logger.error(e.getMessage());
+            throw new EmailMonitorServiceException("Error when adding new stream", e);
         }
     }
 
-    public void createFilteredEmailDetailsStream(int tenantID) {
+    public void createFilteredEmailDetailsStream(int tenantID) throws EmailMonitorServiceException {
         StreamDefinition streamDefinition = null;
         try {
             streamDefinition = new StreamDefinition("filteredEmailDetails", "1.0.0") ;
@@ -307,6 +313,7 @@ public class StreamDeployer {
             eventStreamService.addEventStreamDefinition(streamDefinition,tenantID);
         } catch (EventStreamConfigurationException e) {
             logger.error(e.getMessage());
+            throw new EmailMonitorServiceException("Error when adding new stream", e);
         }
 
     }
