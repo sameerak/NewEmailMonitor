@@ -1,4 +1,4 @@
-package org.wso2.cep.email.monitor.query.compiler.siddhi.utils;
+package org.wso2.cep.email.monitor.query.compiler.internal.siddhi.utils;
 
 
 public class ConstantsUtils {

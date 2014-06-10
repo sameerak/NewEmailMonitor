@@ -9,6 +9,8 @@ import org.wso2.cep.email.monitor.EmailMonitorServiceInterface;
 import org.wso2.cep.email.monitor.admin.exception.EmailMonitorAdminException;
 import org.wso2.cep.email.monitor.admin.internal.EmailMonitorAdminValueHolder;
 import org.wso2.cep.email.monitor.exception.EmailMonitorServiceException;
+import org.wso2.cep.email.monitor.query.compiler.QueryManagerServiceInterface;
+import org.wso2.cep.email.monitor.query.compiler.exeception.EmailMonitorCompilerException;
 
 
 public class EmailMonitorAdminService extends AbstractAdmin {
@@ -47,6 +49,20 @@ public class EmailMonitorAdminService extends AbstractAdmin {
             throw new EmailMonitorAdminException(e);
         }
     }
+
+    public String[] getSiddhiQuery(String query) throws EmailMonitorAdminException {
+        QueryManagerServiceInterface queryManagerServiceInterface = EmailMonitorAdminValueHolder.getInstance().getQueryManagerServiceInterface();
+        try {
+          return   queryManagerServiceInterface.getSiddhiQuery(query);
+        } catch (EmailMonitorCompilerException e) {
+            log.error(e.getMessage());
+            throw new EmailMonitorAdminException(e);
+        }
+
+
+    }
+
+
 
 
     public boolean createExecutionPlan(String query) throws EmailMonitorAdminException {
@@ -198,7 +214,7 @@ public class EmailMonitorAdminService extends AbstractAdmin {
         }
     }
 
-    public boolean createEmailSenderOutputStreamFormatter(String mailBody, String mailAddress, String mailSubject, AxisConfiguration axisConfiguration) throws EmailMonitorAdminException {
+    public boolean createEmailSenderOutputStreamFormatter(String mailBody, String mailAddress, String mailSubject) throws EmailMonitorAdminException {
         EmailMonitorServiceInterface emailMonitorServiceInterface = EmailMonitorAdminValueHolder.getInstance().getEmailMonitorService();
         try {
             return emailMonitorServiceInterface.createEmailSenderOutputStreamFormatter(mailBody,mailAddress,mailSubject,getAxisConfig());
