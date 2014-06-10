@@ -12,6 +12,6 @@
     <to eventAdaptorName="SOAP_output_Adaptor" eventAdaptorType="soap">
         <property name="username">ESBSERVERUSERNAME</property>
         <property name="password">ESBSERVERPASSWORD</property>
-        <property name="url">https://"ESBSERVERIPADDRESS:ESBENDPOINTPORT/services/gmail_label_adder</property>
+        <property name="url">https://ESBSERVERIPADDRESS:ESBENDPOINTPORT/services/gmail_label_adder</property>
     </to>
 </eventFormatter>
