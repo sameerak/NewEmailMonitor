@@ -22,11 +22,16 @@ public class EmailMonitorConstants {
     public static final String MAIL_SENDER_OUT_STREAM_CONFIGURATION_PATH = "/config/emailSenderStreamFormatter.xml";
 
     public static final String EXECUTION_PLAN_TEMPLATE = "/config/executionPlanTemplate.xml";
+    public static final String ADD_EXECUTION_PLAN_NAME = "executionPlan_";
     public static final String EXECUTION_PLAN_NAME = "EXECUTIONPLANNAME";
     public static final String INPUT_STREAM_NAME = "INPUTSTREAMNAME";
     public static final String OUTPUT_STREAM_NAME = "OUTPUTSTREAMNAME";
     public static final String ADD_QUERY = "ADDQUERYHERE";
 
+    public static final String SOAP_OUTPUT_ADAPTER_NAME = "SOAP_output_Adaptor";
+    public static final String EMAIL_OUTPUT_ADAPTER_NAME = "EMAIL_output_Adaptor";
+    public static final String ADAPTER_TYPE_SOAP = "soap";
+    public static final String ADAPTER_TYPE_EMAIL = "";
 
     public static final String TASK_ADMIN_SERVICE = "TaskAdmin";
     public static final String TASK_CONFIGURATION_FILE_PATH = "/config/taskConfig.xml";
