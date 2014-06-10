@@ -1,8 +1,5 @@
-package org.wso2.cep.email.monitor.query.compiler.siddhi;
+package org.wso2.cep.email.monitor.query.compiler.internal.siddhi;
 
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class SiddhiTemplate {
 
