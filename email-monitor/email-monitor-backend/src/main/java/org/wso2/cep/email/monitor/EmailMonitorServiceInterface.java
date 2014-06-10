@@ -82,10 +82,25 @@ public interface EmailMonitorServiceInterface {
     public boolean addESBConfigurations(String ip, String port, String userName, String password, String CEPServerUserName, String CEPServerPassword, String mailUserNAme, String mailPassword, String CEPServerIP, String CEPServerPort) throws EmailMonitorServiceException;
 
     /**
+     *
+     * @param ESBServerIP
+     * @param ESBServerPort
+     * @param ESBServerUsername
+     * @param ESBServerPassword
+     * @param mailAddress
      * @param tenantID
+     * @param axisConfiguration
      * @return
      * @throws EmailMonitorServiceException
      */
+    public boolean addCEPConfigurations(String ESBServerIP, String ESBServerPort, String ESBServerUsername, String ESBServerPassword, String mailAddress,int tenantID, AxisConfiguration axisConfiguration) throws EmailMonitorServiceException ;
+
+
+        /**
+        * @param tenantID
+        * @return
+        * @throws EmailMonitorServiceException
+        */
     public boolean createMailOutputStream(int tenantID) throws EmailMonitorServiceException;
 
     /**
