@@ -1,3 +1,10 @@
+<%
+var user = require('store').server.current(session);
+if (!user) {
+	response.sendRedirect('./login');
+}
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,7 +43,7 @@
                             </thead>
                             <tbody>
                                     <tr>
-                                        <td style="width:15%">CEP Queries:<span class="required">*</span></td> <td><textarea name="cepQueries" rows="8" cols="120"></textarea></td>
+                                        <td style="width:15%">CEP Queries:<span class="required">*</span></td> <td><textarea name="cepQueries" rows="8" class="queryArea"></textarea></td>
                                     </tr>
                             </tbody>
                         </table>
