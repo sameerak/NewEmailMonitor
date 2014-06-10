@@ -5792,3 +5792,7 @@ button.close {
 .table-no-border>tfoot>tr>td {
   border-top: none; 
 }
+
+.required{
+  content:"*";color:red;
+}
