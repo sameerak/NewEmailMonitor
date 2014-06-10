@@ -53,10 +53,10 @@ public interface EmailMonitorServiceInterface {
 
     /**
      * Create Execution Plan for deploy in CEP for the run CEP queries among mails
-     * @param executionPlanXmlConfiguration
+     * @param query
      * @return
      */
-    public boolean createExecutionPlan( String executionPlanXmlConfiguration,AxisConfiguration axisConfiguration) throws EmailMonitorServiceException;
+    public boolean createExecutionPlan( String query,AxisConfiguration axisConfiguration) throws EmailMonitorServiceException;
 
     /**
      * Create MailInputStream and stores it in the CEP
@@ -113,6 +113,14 @@ public interface EmailMonitorServiceInterface {
     public boolean createEmailSenderOutputStream(int tenantID) throws EmailMonitorServiceException;
 
     /**
+     *
+     * @param tenantID
+     * @return
+     * @throws EmailMonitorServiceException
+     */
+    public boolean createFilteredEmailDetailsStream(int tenantID) throws EmailMonitorServiceException;
+
+    /**
      * @param axisConfiguration
      * @return
      * @throws EmailMonitorServiceException
@@ -128,11 +136,27 @@ public interface EmailMonitorServiceInterface {
     public boolean createEmailOutputAdapter(AxisConfiguration axisConfiguration) throws EmailMonitorServiceException;
 
     /**
-     * @param eventFormatterConfigurationXML
+     *
+     * @param ESBServerIP
+     * @param ESBServerPort
+     * @param ESBServerUsername
+     * @param ESBServerPassword
      * @param axisConfiguration
      * @return
      * @throws EmailMonitorServiceException
      */
-    public boolean createEventFormatter(String eventFormatterConfigurationXML, AxisConfiguration axisConfiguration)throws EmailMonitorServiceException;;
 
-}
+    public boolean createGmailOutStreamEventFormatter(String ESBServerIP, String ESBServerPort, String ESBServerUsername, String ESBServerPassword, AxisConfiguration axisConfiguration)throws EmailMonitorServiceException;;
+
+    /**
+     *
+     * @param mailBody
+     * @param mailAddress
+     * @param mailSubject
+     * @param axisConfiguration
+     * @return
+     * @throws EmailMonitorServiceException
+     */
+    public boolean createEmailSenderOutputStreamFormatter(String mailBody, String mailAddress, String mailSubject, AxisConfiguration axisConfiguration) throws EmailMonitorServiceException ;
+
+    }

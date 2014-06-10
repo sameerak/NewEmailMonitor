@@ -2,11 +2,10 @@ package org.wso2.siddhi.extension;
 
 import org.wso2.siddhi.core.query.selector.attribute.handler.OutputAttributeAggregator;
 import org.wso2.siddhi.query.api.definition.Attribute.Type;
-import java.text.DecimalFormat;
 
-public class SenderConcatAggregatorString implements OutputAttributeAggregator {
+public class StringConcatAggregatorString implements OutputAttributeAggregator {
     private static final long serialVersionUID = 1358667438272544590L;
-    private String aggregatedSender = "";
+    private String aggregatedStringVlaue = "";
 
     @Override
     public Type getReturnType() {
@@ -20,9 +19,9 @@ public class SenderConcatAggregatorString implements OutputAttributeAggregator {
         if (obj instanceof String) {
 
             String sender = (String) obj;
-            aggregatedSender = aggregatedSender+sender;
+            aggregatedStringVlaue = aggregatedStringVlaue +sender;
         }
-        return aggregatedSender;
+        return aggregatedStringVlaue;
     }
 
 
@@ -32,15 +31,15 @@ public class SenderConcatAggregatorString implements OutputAttributeAggregator {
         if (obj instanceof String) {
 
             String sender = (String)obj;
-            aggregatedSender = aggregatedSender.replace(sender, "");
+            aggregatedStringVlaue = aggregatedStringVlaue.replace(sender, "");
         }
-        return aggregatedSender;
+        return aggregatedStringVlaue;
     }
 
 
     @Override
     public OutputAttributeAggregator newInstance() {
-        return new SenderConcatAggregatorString();
+        return new StringConcatAggregatorString();
     }
 
 
