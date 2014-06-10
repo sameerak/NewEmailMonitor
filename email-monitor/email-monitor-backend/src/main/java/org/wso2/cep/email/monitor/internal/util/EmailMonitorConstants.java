@@ -31,7 +31,7 @@ public class EmailMonitorConstants {
     public static final String SOAP_OUTPUT_ADAPTER_NAME = "SOAP_output_Adaptor";
     public static final String EMAIL_OUTPUT_ADAPTER_NAME = "EMAIL_output_Adaptor";
     public static final String ADAPTER_TYPE_SOAP = "soap";
-    public static final String ADAPTER_TYPE_EMAIL = "";
+    public static final String ADAPTER_TYPE_EMAIL = "email";
 
     public static final String TASK_ADMIN_SERVICE = "TaskAdmin";
     public static final String TASK_CONFIGURATION_FILE_PATH = "/config/taskConfig.xml";
