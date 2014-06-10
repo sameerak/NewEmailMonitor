@@ -65,11 +65,11 @@ public class EmailMonitorService implements EmailMonitorServiceInterface {
     }
 
     @Override
-    public boolean createExecutionPlan( String executionPlanXmlConfiguration,AxisConfiguration axisConfiguration) throws EmailMonitorServiceException {
+    public boolean createExecutionPlan( String query,AxisConfiguration axisConfiguration) throws EmailMonitorServiceException {
 
         try {
             ExecutionPlanDeployer executionPlanDeployer = new ExecutionPlanDeployer();
-            executionPlanDeployer.createExecutionPlan(executionPlanXmlConfiguration,axisConfiguration);
+            executionPlanDeployer.createExecutionPlan(query,axisConfiguration);
             return true;
         } catch (EmailMonitorServiceException e) {
             logger.error(e.getMessage());
@@ -201,6 +201,19 @@ public class EmailMonitorService implements EmailMonitorServiceInterface {
         try {
             EventFormatterDeployer eventFormatterDeployer = new EventFormatterDeployer();
             eventFormatterDeployer.createGmailOutStreamEventFormatter(ESBServerIP,ESBServerPort,ESBServerUsername,ESBServerPassword, axisConfiguration);
+            return true;
+        } catch (EmailMonitorServiceException e) {
+            logger.error(e.getMessage());
+            throw new EmailMonitorServiceException(e);
+
+        }
+    }
+
+    @Override
+    public boolean createEmailSenderOutputStreamFormatter(String mailBody, String mailAddress, String mailSubject, AxisConfiguration axisConfiguration) throws EmailMonitorServiceException {
+        try {
+            EventFormatterDeployer eventFormatterDeployer = new EventFormatterDeployer();
+            eventFormatterDeployer.createEmailSenderOutputStreamFormatter(mailBody,mailAddress,mailSubject,axisConfiguration);
             return true;
         } catch (EmailMonitorServiceException e) {
             logger.error(e.getMessage());

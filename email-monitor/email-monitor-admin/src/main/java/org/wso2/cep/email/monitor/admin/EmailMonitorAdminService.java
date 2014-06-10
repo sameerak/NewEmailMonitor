@@ -49,10 +49,10 @@ public class EmailMonitorAdminService extends AbstractAdmin {
     }
 
 
-    public boolean createExecutionPlan(String executionPlanXmlConfiguration) throws EmailMonitorAdminException {
+    public boolean createExecutionPlan(String query) throws EmailMonitorAdminException {
         EmailMonitorServiceInterface emailMonitorServiceInterface = EmailMonitorAdminValueHolder.getInstance().getEmailMonitorService();
         try {
-            return emailMonitorServiceInterface.createExecutionPlan(executionPlanXmlConfiguration, getAxisConfig());
+            return emailMonitorServiceInterface.createExecutionPlan(query, getAxisConfig());
         } catch (EmailMonitorServiceException e) {
             log.error(e.getMessage());
             throw new EmailMonitorAdminException(e);
@@ -198,8 +198,18 @@ public class EmailMonitorAdminService extends AbstractAdmin {
         }
     }
 
+    public boolean createEmailSenderOutputStreamFormatter(String mailBody, String mailAddress, String mailSubject, AxisConfiguration axisConfiguration) throws EmailMonitorAdminException {
+        EmailMonitorServiceInterface emailMonitorServiceInterface = EmailMonitorAdminValueHolder.getInstance().getEmailMonitorService();
+        try {
+            return emailMonitorServiceInterface.createEmailSenderOutputStreamFormatter(mailBody,mailAddress,mailSubject,getAxisConfig());
+        } catch (EmailMonitorServiceException e) {
+            log.error(e.getMessage());
+            throw new EmailMonitorAdminException(e);
+        }
+    }
 
-    public boolean addESBConfigurations(String ip, String port, String userName, String password, String CEPServerUserName, String CEPServerPassword, String mailUserNAme, String mailPassword, String CEPServerIP, String CEPServerPort) throws EmailMonitorAdminException {
+
+        public boolean addESBConfigurations(String ip, String port, String userName, String password, String CEPServerUserName, String CEPServerPassword, String mailUserNAme, String mailPassword, String CEPServerIP, String CEPServerPort) throws EmailMonitorAdminException {
         EmailMonitorServiceInterface emailMonitorServiceInterface = EmailMonitorAdminValueHolder.getInstance().getEmailMonitorService();
         try {
             return emailMonitorServiceInterface.addESBConfigurations(ip, port, userName, password, CEPServerUserName, CEPServerPassword, mailUserNAme, mailPassword, CEPServerIP, CEPServerPort);
