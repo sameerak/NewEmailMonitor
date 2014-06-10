@@ -214,10 +214,10 @@ public class EmailMonitorAdminService extends AbstractAdmin {
         }
     }
 
-    public boolean createEmailSenderOutputStreamFormatter(String mailBody, String mailAddress, String mailSubject) throws EmailMonitorAdminException {
+    public boolean createEmailSenderOutputStreamFormatter( String mailAddress) throws EmailMonitorAdminException {
         EmailMonitorServiceInterface emailMonitorServiceInterface = EmailMonitorAdminValueHolder.getInstance().getEmailMonitorService();
         try {
-            return emailMonitorServiceInterface.createEmailSenderOutputStreamFormatter(mailBody,mailAddress,mailSubject,getAxisConfig());
+            return emailMonitorServiceInterface.createEmailSenderOutputStreamFormatter(mailAddress,getAxisConfig());
         } catch (EmailMonitorServiceException e) {
             log.error(e.getMessage());
             throw new EmailMonitorAdminException(e);
