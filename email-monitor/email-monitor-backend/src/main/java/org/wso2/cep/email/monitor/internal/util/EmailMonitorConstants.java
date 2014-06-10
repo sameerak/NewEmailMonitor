@@ -19,6 +19,14 @@ public class EmailMonitorConstants {
     public static final String MAIL_READER_PROXY_PATH = "/config/insequence.xml";
     public static final String LABEL_ADDER_PROXY_PATH = "/config/labelAdderProxyInsequence.xml";
     public static final String GMAIL_OUT_STREAM_CONFIGURATION_PATH = "/config/gmailoutstreamFormatter.xml";
+    public static final String MAIL_SENDER_OUT_STREAM_CONFIGURATION_PATH = "/config/emailSenderStreamFormatter.xml";
+
+    public static final String EXECUTION_PLAN_TEMPLATE = "/config/executionPlanTemplate.xml";
+    public static final String EXECUTION_PLAN_NAME = "EXECUTIONPLANNAME";
+    public static final String INPUT_STREAM_NAME = "INPUTSTREAMNAME";
+    public static final String OUTPUT_STREAM_NAME = "OUTPUTSTREAMNAME";
+    public static final String ADD_QUERY = "ADDQUERYHERE";
+
 
     public static final String TASK_ADMIN_SERVICE = "TaskAdmin";
     public static final String TASK_CONFIGURATION_FILE_PATH = "/config/taskConfig.xml";
@@ -34,6 +42,8 @@ public class EmailMonitorConstants {
     public static final String ESB_SERVER_ENDPOINT_PORT= "ESBENDPOINTPORT";
     public static final String GMAIL_USERNAME = "GMAILUSERNAME";
     public static final String GMAIL_PASSWORD = "GMAILPASSWORD";
+    public static final String MAIL_BODY = "EMAILBODY";
+    public static final String MAIL_SUBJECT = "EMAILSUBJECT";
 
 
 }

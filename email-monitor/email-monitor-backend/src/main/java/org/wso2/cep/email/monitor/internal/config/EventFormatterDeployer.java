@@ -42,6 +42,24 @@ public class EventFormatterDeployer {
             eventFormatterService.deployDefaultEventSender(content,axisConfiguration);
         } catch (EventFormatterConfigurationException e) {
             logger.error(e.getMessage());
+            throw new EmailMonitorServiceException("Error when adding event formatter", e);
+        }
+
+
+    }
+
+
+    public void createEmailSenderOutputStreamFormatter(String mailBody, String mailAddress, String mailSubject, AxisConfiguration axisConfiguration) throws EmailMonitorServiceException {
+        String content = xmlReader.readXML(EmailMonitorConstants.MAIL_SENDER_OUT_STREAM_CONFIGURATION_PATH);
+        content = content.replace(EmailMonitorConstants.MAIL_BODY, mailBody);
+        content = content.replace(EmailMonitorConstants.GMAIL_USERNAME,mailAddress);
+        content = content.replace(EmailMonitorConstants.MAIL_SUBJECT, mailSubject);
+
+        try {
+            eventFormatterService.deployDefaultEventSender(content,axisConfiguration);
+        } catch (EventFormatterConfigurationException e) {
+            logger.error(e.getMessage());
+            throw new EmailMonitorServiceException("Error when adding event formatter", e);
         }
 
 

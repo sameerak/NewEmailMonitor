@@ -1,0 +1,13 @@
+<eventFormatter name="emailSenderOutputStream_formatter"
+                statistics="disable" trace="disable" xmlns="http://wso2.org/carbon/eventformatter">
+    <from streamName="emailSenderOutputStream" version="1.0.0"/>
+    <mapping customMapping="enable" type="text">
+        <inline>EMAILBODY
+            Label : {{label}}
+            No of threads per given time : {{threadCount}}</inline>
+    </mapping>
+    <to eventAdaptorName="EMAIL_output_Adaptor" eventAdaptorType="email">
+        <property name="email.address">GMAILUSERNAME</property>
+        <property name="email.subject">EMAILSUBJECT</property>
+    </to>
+</eventFormatter>
