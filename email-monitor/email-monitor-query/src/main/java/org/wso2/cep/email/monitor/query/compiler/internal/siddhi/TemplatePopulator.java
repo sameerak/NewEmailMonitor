@@ -1,4 +1,4 @@
-package org.wso2.cep.email.monitor.query.compiler.siddhi;
+package org.wso2.cep.email.monitor.query.compiler.internal.siddhi;
 
 
 import org.apache.log4j.Logger;

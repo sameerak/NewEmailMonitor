@@ -1,8 +1,8 @@
-package org.wso2.cep.email.monitor.query.compiler.siddhi;
+package org.wso2.cep.email.monitor.query.compiler.internal.siddhi;
 
 
 import org.wso2.cep.email.monitor.query.api.Query;
-import org.wso2.cep.email.monitor.query.compiler.siddhi.utils.ConstantsUtils;
+import org.wso2.cep.email.monitor.query.compiler.internal.siddhi.utils.ConstantsUtils;
 
 
 public class SiddhiQueryWriter {

@@ -1,4 +1,4 @@
-package org.wso2.cep.email.monitor.query.compiler;
+package org.wso2.cep.email.monitor.query.compiler.internal;
 
 
 import org.antlr.runtime.ANTLRStringStream;
@@ -6,9 +6,9 @@ import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.tree.CommonTree;
 import org.antlr.runtime.tree.CommonTreeNodeStream;
 import org.wso2.cep.email.monitor.query.api.Query;
-import org.wso2.cep.email.monitor.query.compiler.siddhi.SiddhiQueryWriter;
-import org.wso2.cep.email.monitor.query.compiler.siddhi.SiddhiTemplate;
-import org.wso2.cep.email.monitor.query.compiler.siddhi.TemplatePopulator;
+import org.wso2.cep.email.monitor.query.compiler.emailMonitorGrammerWalker;
+import org.wso2.cep.email.monitor.query.compiler.emailMonitorLexer;
+import org.wso2.cep.email.monitor.query.compiler.emailMonitorParser;
 
 
 public class EmailMonitorCompiler {
