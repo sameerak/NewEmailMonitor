@@ -37,11 +37,11 @@ if(verb == "DELETE" || verb == "PUT" || verb == "GET") {
 						
 						//TODO add code to apply this quiery in to CEP
 						
-						myEmailMonitorAdminServiceStub.createMailInputStream();
-						myEmailMonitorAdminServiceStub.createMailOutputStream();
+// 						myEmailMonitorAdminServiceStub.createMailInputStream();
+// 						myEmailMonitorAdminServiceStub.createMailOutputStream();
 						
 						response.status = 200;
-						print("CEP and ESB configured successfully.");
+						print("CEP quer added successfully.");
 					}
 					catch(error){
 						response.status = 500;
@@ -52,7 +52,7 @@ if(verb == "DELETE" || verb == "PUT" || verb == "GET") {
             }
             else {
             	response.status = 400;
-            	print("Please fill details to all the parameters asked");
+            	print("Please configure the email monitor system correctly!");
             }
 }
 %>
