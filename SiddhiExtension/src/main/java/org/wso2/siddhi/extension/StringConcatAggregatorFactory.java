@@ -4,10 +4,10 @@ import org.wso2.siddhi.core.query.selector.attribute.handler.OutputAttributeAggr
 import org.wso2.siddhi.query.api.definition.Attribute.Type;
 import org.wso2.siddhi.query.api.extension.annotation.SiddhiExtension;
 
-@SiddhiExtension(namespace = "email", function = "getAllSenders")
-public class SenderConcatAggregatorFactory implements OutputAttributeAggregatorFactory {
+@SiddhiExtension(namespace = "email", function = "getAll")
+public class StringConcatAggregatorFactory implements OutputAttributeAggregatorFactory {
     @Override
     public OutputAttributeAggregator createAttributeAggregator(Type[] types) {
-        return new SenderConcatAggregatorString();
+        return new StringConcatAggregatorString();
     }
 }
