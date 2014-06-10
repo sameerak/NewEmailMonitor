@@ -9,6 +9,8 @@ public class ConstantsUtils {
     public static final String LABELSTREAM = "labelDetails";
     public static final String EMAIL_SENDER_OUTPUTSTREAM = "emailSenderOutputStream";
     public static final String FILTERED_EMAIL_DETAILS = "filteredEmailDetails";
-    public  static final String ONE = "one";
-    public static final String TWO ="two";
+    public static final String ONE = "one";
+    public static final String TWO = "two";
+    public static final String AND = "and";
+    public static final String OR = "or";
 }

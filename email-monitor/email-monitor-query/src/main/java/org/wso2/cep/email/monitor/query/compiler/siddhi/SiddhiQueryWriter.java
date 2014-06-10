@@ -4,8 +4,6 @@ package org.wso2.cep.email.monitor.query.compiler.siddhi;
 import org.wso2.cep.email.monitor.query.api.Query;
 import org.wso2.cep.email.monitor.query.compiler.siddhi.utils.ConstantsUtils;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public class SiddhiQueryWriter {
 
@@ -23,6 +21,8 @@ public class SiddhiQueryWriter {
         if (siddhiTemplate.isFreqEnabled()) {
             if (siddhiTemplate.getLabelMails() == null) {
                 return writeQueryWithFrequencyWithoutLabel(siddhiTemplate);
+            } else if (siddhiTemplate.isThreadFre()) {
+                return writeQueryWithFrequencyWithLabelFrequency(siddhiTemplate);
             } else {
                 return writeQueryWithFrequencyWithLabel(siddhiTemplate);
             }
@@ -47,7 +47,7 @@ public class SiddhiQueryWriter {
             stringBuffer.append("[");
             stringBuffer.append(siddhiTemplate.getLabelMails());
             stringBuffer.append("]");
-            stringBuffer.append("select  threadID, email:getAllSenders(to) as to ,email:getAllsenders(sender) as senders,");
+            stringBuffer.append("select  threadID, email:getAll(to) as to ,email:getAll(sender) as senders,");
             if (!siddhiTemplate.isSendMailEnabled()) {
                 stringBuffer.append(" " + '"' + siddhiTemplate.getLabelName() + '"' + " ");
                 stringBuffer.append("as newLabel insert into ");
@@ -121,7 +121,7 @@ public class SiddhiQueryWriter {
             stringBuffer1.append("#window.externalTime(sentDate,");
             stringBuffer1.append(siddhiTemplate.getTimeExpr());
             stringBuffer1.append(")");
-            stringBuffer1.append("select  threadID, count(messageID) as emailCount, email:getAllSenders(to) as to ,email:getAllsenders(sender) as senders,");
+            stringBuffer1.append("select  threadID, count(messageID) as emailCount, email:getAll(to) as to ,email:getAll(sender) as senders,");
             stringBuffer1.append(" " + '"' + siddhiTemplate.getLabelName() + '"' + " ");
             stringBuffer1.append("as newLabel group by threadID  having emailcount ");
             stringBuffer1.append(siddhiTemplate.getCmpAction());
@@ -176,7 +176,7 @@ public class SiddhiQueryWriter {
             stringBuffer1.append("#window.externalTime(sentDate,");
             stringBuffer1.append(siddhiTemplate.getTimeExpr());
             stringBuffer1.append(")");
-            stringBuffer1.append("select  threadID, count(messageID) as emailCount, email:getAllSenders(to) as to ,email:getAllsenders(sender) as senders,");
+            stringBuffer1.append("select  threadID, count(messageID) as emailCount, email:getAll(to) as to ,email:getAll(sender) as senders,");
             stringBuffer1.append(" " + '"' + siddhiTemplate.getLabelName() + '"' + " ");
             stringBuffer1.append("as newLabel group by threadID  having emailcount ");
             stringBuffer1.append(siddhiTemplate.getCmpAction());
@@ -206,11 +206,75 @@ public class SiddhiQueryWriter {
             stringBuffer.append("select threadID, newLabel as label insert into " + ConstantsUtils.OUTPUTSTREAM);
             stringBuffer.append(";");
         }
+        str[1] = stringBuffer.toString();
+        return str;
+    }
+
+
+    public String[] writeQueryWithFrequencyWithLabelFrequency(SiddhiTemplate siddhiTemplate) {
+        StringBuffer stringBuffer1 = new StringBuffer();
+        String[] str = new String[2];
+
+        stringBuffer1.append("from " + ConstantsUtils.INPUTSTREAM);
+        stringBuffer1.append("[");
+        if (siddhiTemplate.getLabelMails() != null) {
+            stringBuffer1.append("(");
+            stringBuffer1.append(siddhiTemplate.getLabelMails());
+            stringBuffer1.append(")");
+
+        }
+
+        stringBuffer1.append("#window.externalTime(sentDate,");
+        stringBuffer1.append(siddhiTemplate.getTimeExpr());
+        stringBuffer1.append(")");
+        stringBuffer1.append("select  email:countUnique(threadID) as threadCount, email:getAll(to) as to ,email:getAll(sender) as senders,");
+        String re = siddhiTemplate.getLabelMails();
+        re = re.substring(re.indexOf('"') + 1, re.length() - 1);
+        stringBuffer1.append(" " + '"' + re + '"' + " ");
+        stringBuffer1.append("as relevantLabel ");
+        stringBuffer1.append(" insert into " + ConstantsUtils.LABELSTREAM);
+        stringBuffer1.append(";");
+
+        str[0] = stringBuffer1.toString();
+
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append("from " + ConstantsUtils.LABELSTREAM);
+        stringBuffer.append("[");
+        if (siddhiTemplate.getToMails() != null) {
+            stringBuffer.append("(");
+            stringBuffer.append(siddhiTemplate.getToMails());
+            stringBuffer.append(")");
+
+        }
+        if (siddhiTemplate.getFromMails() != null) {
+            stringBuffer.append(siddhiTemplate.getLabelFrom());
+            stringBuffer.append("(");
+            stringBuffer.append(siddhiTemplate.getFromMails());
+            stringBuffer.append(")");
+        }
+        if (siddhiTemplate.getFromFrequency() == ConstantsUtils.AND || siddhiTemplate.getFromFrequency() == ConstantsUtils.OR) {
+            stringBuffer.append(siddhiTemplate.getFromFrequency());
+            stringBuffer.append("(");
+            stringBuffer.append("threadCount ");
+            stringBuffer.append(siddhiTemplate.getCmpAction());
+            stringBuffer.append(" " + siddhiTemplate.getCountValue());
+            stringBuffer.append(")");
+        } else {
+            stringBuffer.append("(");
+            stringBuffer.append("threadCount ");
+            stringBuffer.append(siddhiTemplate.getCmpAction());
+            stringBuffer.append(" " + siddhiTemplate.getCountValue());
+            stringBuffer.append(")");
+        }
+        stringBuffer.append("]");
+
+        stringBuffer.append("select relevantLabel as label, threadCount insert into " + ConstantsUtils.EMAIL_SENDER_OUTPUTSTREAM);
+        stringBuffer.append(";");
 
         str[1] = stringBuffer.toString();
-
-
         return str;
+
+
     }
 
 

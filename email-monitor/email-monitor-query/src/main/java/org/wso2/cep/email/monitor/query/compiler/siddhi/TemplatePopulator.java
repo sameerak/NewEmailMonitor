@@ -54,11 +54,13 @@ public class TemplatePopulator {
             siddhiTemplate.setFreqEnabled(true);
             convertFrequencyCondition((FrequencyCondition) conditionAttribute, siddhiTemplate);
         } else if (conditionAttribute instanceof AndCondition && conditionAttribute.getRight() instanceof FrequencyCondition) {
+            siddhiTemplate.setFromFrequency("and");
             siddhiTemplate.setFreqEnabled(true);
             AndCondition andCondition = (AndCondition) conditionAttribute;
             convertLabelFromToCondition(andCondition.getLeft(), siddhiTemplate);
             convertFrequencyCondition((FrequencyCondition) andCondition.getRight(), siddhiTemplate);
         } else if (conditionAttribute instanceof ORCondition && conditionAttribute.getRight() instanceof FrequencyCondition) {
+            siddhiTemplate.setFromFrequency("or");
             siddhiTemplate.setFreqEnabled(true);
             ORCondition orCondition = (ORCondition) conditionAttribute;
             convertLabelFromToCondition(orCondition.getLeft(), siddhiTemplate);
@@ -131,7 +133,7 @@ public class TemplatePopulator {
         return bf.toString();
     }
 
-    public static String convertLabelSet(ConditionAttribute labelSet) {
+    public static String convertLabelSet(ConditionAttribute labelSet, SiddhiTemplate siddhiTemplate) {
         StringBuffer bf = new StringBuffer();
         if (labelSet instanceof LabelSet) {
             LabelSet labelSet1 = (LabelSet) labelSet;
@@ -139,6 +141,7 @@ public class TemplatePopulator {
             bf.append('"');
             bf.append(((Label) labelSet1.getConditionAttribute()).toString());
             bf.append('"');
+
 
         } else if (labelSet instanceof AndCondition) {
             AndCondition andCondition = (AndCondition) labelSet;
@@ -149,7 +152,7 @@ public class TemplatePopulator {
             bf.append('"');
             bf.append(" and ");
             ConditionAttribute lbSet = andCondition.getRight();
-            String result = convertLabelSet(lbSet);
+            String result = convertLabelSet(lbSet, siddhiTemplate);
             bf.append(result);
 
         } else if (labelSet instanceof ORCondition) {
@@ -161,7 +164,7 @@ public class TemplatePopulator {
             bf.append('"');
             bf.append(" or ");
             ConditionAttribute lbSet = orCondition.getRight();
-            String result = convertLabelSet(lbSet);
+            String result = convertLabelSet(lbSet, siddhiTemplate);
             bf.append(result);
         }
         return bf.toString();
@@ -191,7 +194,7 @@ public class TemplatePopulator {
         if (conditionAttribute instanceof LabelCondition) {
             LabelCondition labelCondition = (LabelCondition) conditionAttribute;
             ConditionAttribute conditionAttribute1 = labelCondition.getLabelSet();
-            String result = convertLabelSet(conditionAttribute1);
+            String result = convertLabelSet(conditionAttribute1, siddhiTemplate);
             siddhiTemplate.setLabelMails(result);
         }
         return siddhiTemplate;

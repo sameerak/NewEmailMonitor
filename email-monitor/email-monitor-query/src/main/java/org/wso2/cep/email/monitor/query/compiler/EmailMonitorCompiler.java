@@ -14,15 +14,6 @@ import org.wso2.cep.email.monitor.query.compiler.siddhi.TemplatePopulator;
 public class EmailMonitorCompiler {
 
 
-    public static void main(String[] args) {
-        try {
-            Query query =  parse("if to = (dfg and thryg) and label = (marketing) and frequency per 1 days > 3  then add label olp");
-            SiddhiQueryWriter.getInstance().writeQuery(query);
-
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
-        }
-    }
 
 
     public static Query parse(String source) throws Throwable {
