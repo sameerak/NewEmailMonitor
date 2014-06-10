@@ -11,6 +11,7 @@ public class SiddhiTemplate {
     private String labelMails;
     private String tolabel;
     private String labelFrom;
+    private String fromFrequency;
     private boolean isThreadFre;
     private boolean isFreqEnabled;
     private String timeExpr;
@@ -21,6 +22,8 @@ public class SiddhiTemplate {
     private String to;
     private String subject;
     private String body;
+    private String labelFreqlbName;
+
 
     public String getLabelMails() {
         return labelMails;
@@ -143,5 +146,21 @@ public class SiddhiTemplate {
 
     public void setFreqEnabled(boolean isFreqEnabled) {
         this.isFreqEnabled = isFreqEnabled;
+    }
+
+    public String getFromFrequency() {
+        return fromFrequency;
+    }
+
+    public void setFromFrequency(String fromFrequency) {
+        this.fromFrequency = fromFrequency;
+    }
+
+    public String getLabelFreqlbName() {
+        return labelFreqlbName;
+    }
+
+    public void setLabelFreqlbName(String labelFreqlbName) {
+        this.labelFreqlbName = labelFreqlbName;
     }
 }
