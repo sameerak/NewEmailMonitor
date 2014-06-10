@@ -172,6 +172,6 @@ public interface EmailMonitorServiceInterface {
      * @return
      * @throws EmailMonitorServiceException
      */
-    public boolean createEmailSenderOutputStreamFormatter(String mailBody, String mailAddress, String mailSubject, AxisConfiguration axisConfiguration) throws EmailMonitorServiceException ;
+    public boolean createEmailSenderOutputStreamFormatter(String mailAddress,AxisConfiguration axisConfiguration) throws EmailMonitorServiceException ;
 
     }

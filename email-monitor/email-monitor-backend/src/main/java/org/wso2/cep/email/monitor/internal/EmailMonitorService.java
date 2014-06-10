@@ -220,10 +220,10 @@ public class EmailMonitorService implements EmailMonitorServiceInterface {
     }
 
     @Override
-    public boolean createEmailSenderOutputStreamFormatter(String mailBody, String mailAddress, String mailSubject, AxisConfiguration axisConfiguration) throws EmailMonitorServiceException {
+    public boolean createEmailSenderOutputStreamFormatter(String mailAddress, AxisConfiguration axisConfiguration) throws EmailMonitorServiceException {
         try {
             EventFormatterDeployer eventFormatterDeployer = new EventFormatterDeployer();
-            eventFormatterDeployer.createEmailSenderOutputStreamFormatter(mailBody,mailAddress,mailSubject,axisConfiguration);
+            eventFormatterDeployer.createEmailSenderOutputStreamFormatter(mailAddress,axisConfiguration);
             return true;
         } catch (EmailMonitorServiceException e) {
             logger.error(e.getMessage());
