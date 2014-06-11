@@ -5798,3 +5798,8 @@ button.close {
 .required{
   content:"*";color:red;
 }
+
+.queryArea {
+	width: 100%;
+	max-width: 100%;
+}

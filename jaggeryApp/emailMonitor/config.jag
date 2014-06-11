@@ -44,10 +44,10 @@ if(verb == "DELETE" || verb == "PUT" || verb == "GET") {
 						
 						var emailMonitorAdminServiceStub = Packages.org.wso2.cep.email.monitor.stub.admin.EmailMonitorAdminServiceStub;
 						var myEmailMonitorAdminServiceStub = new emailMonitorAdminServiceStub(serverUrl);
-						myEmailMonitorAdminServiceStub.createMailInputStream();
-						myEmailMonitorAdminServiceStub.createMailOutputStream();
-						myEmailMonitorAdminServiceStub.addESBConfigurations(esbIP, esbPort, esbUserName, esbPassword, 
-							cepUserName, cepPassword, emailAddress, emailPassword, cepIP, cepPort);
+						
+						myEmailMonitorAdminServiceStub.addCEPConfigurations(esbIP, esbPort, esbUserName, esbPassword, emailAddress);
+// 						myEmailMonitorAdminServiceStub.addESBConfigurations(esbIP, esbPort, esbUserName, esbPassword, 
+// 							cepUserName, cepPassword, emailAddress, emailPassword, cepIP, cepPort);
 						response.status = 200;
 						print("CEP and ESB configured successfully.");
 					}
