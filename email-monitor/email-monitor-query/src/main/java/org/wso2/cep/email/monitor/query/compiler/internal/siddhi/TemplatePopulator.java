@@ -137,7 +137,7 @@ public class TemplatePopulator {
         StringBuffer bf = new StringBuffer();
         if (labelSet instanceof LabelSet) {
             LabelSet labelSet1 = (LabelSet) labelSet;
-            bf.append("label contains ");
+            bf.append("labels contains ");
             bf.append('"');
             bf.append(((Label) labelSet1.getConditionAttribute()).toString());
             bf.append('"');
@@ -146,7 +146,7 @@ public class TemplatePopulator {
         } else if (labelSet instanceof AndCondition) {
             AndCondition andCondition = (AndCondition) labelSet;
             Label lb = (Label) andCondition.getLeft();
-            bf.append("label contains ");
+            bf.append("labels contains ");
             bf.append('"');
             bf.append(lb.toString());
             bf.append('"');
@@ -158,7 +158,7 @@ public class TemplatePopulator {
         } else if (labelSet instanceof ORCondition) {
             ORCondition orCondition = (ORCondition) labelSet;
             Label lb = (Label) orCondition.getLeft();
-            bf.append("label contains ");
+            bf.append("labels contains ");
             bf.append('"');
             bf.append(lb.toString());
             bf.append('"');
