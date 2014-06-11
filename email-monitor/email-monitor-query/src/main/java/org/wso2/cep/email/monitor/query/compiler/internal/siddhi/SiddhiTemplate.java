@@ -11,6 +11,7 @@ public class SiddhiTemplate {
     private String fromFrequency;
     private boolean isThreadFre;
     private boolean isFreqEnabled;
+    private boolean isLabelCount;
     private String timeExpr;
     private int countValue;
     private String cmpAction;
@@ -159,5 +160,13 @@ public class SiddhiTemplate {
 
     public void setLabelFreqlbName(String labelFreqlbName) {
         this.labelFreqlbName = labelFreqlbName;
+    }
+
+    public boolean isLabelCount() {
+        return isLabelCount;
+    }
+
+    public void setLabelCount(boolean isLabelCount) {
+        this.isLabelCount = isLabelCount;
     }
 }

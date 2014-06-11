@@ -78,6 +78,12 @@ public class TemplatePopulator {
         } else {
             siddhiTemplate.setThreadFre(false);
         }
+        if(Constants.COUNT == conditionAttribute.getType()){
+            siddhiTemplate.setLabelCount(true);
+            siddhiTemplate.setThreadFre(false);
+        }else{
+            siddhiTemplate.setLabelCount(false);
+        }
         Operator operator = conditionAttribute.getOperator();
         if (operator instanceof EqualOP) {
             siddhiTemplate.setCmpAction(Constants.EQUAL);
@@ -94,7 +100,9 @@ public class TemplatePopulator {
         }
         siddhiTemplate.setCountValue(((CompareVal) operator.getRight()).getValue());
         TimeExpr timeExpr = ((TimeExpr) operator.getLeft());
-        siddhiTemplate.setTimeExpr(timeExpr.toString());
+        if(timeExpr!=null) {
+            siddhiTemplate.setTimeExpr(timeExpr.toString());
+        }
         return siddhiTemplate;
     }
 
