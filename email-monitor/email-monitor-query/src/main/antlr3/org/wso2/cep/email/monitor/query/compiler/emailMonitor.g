@@ -39,7 +39,7 @@ import java.util.HashMap;
 HashMap memory = new HashMap();
 }
 
-prog:   'if'    conditions   'then' action  ->^(EMAIL_PRO conditions action);
+prog:       conditions   '->' action  ->^(EMAIL_PRO conditions action);
                 
 conditions:   frequencyCondition
      | labelFromToCondition  'and'  frequencyCondition
@@ -83,7 +83,8 @@ labelCondition
       	;
       	
  frequencyCondition
- 	:	('thread')?  'frequency' 'per' timeExpr compareOperation intVal  -> ^(FREQ_COND 'thread'? timeExpr compareOperation intVal);
+ 	:	('thread')?  'frequency' 'per' timeExpr compareOperation intVal  -> ^(FREQ_COND 'thread'? timeExpr compareOperation intVal)
+ 	|   'count' compareOperation intVal 'd' ;
  	
  timeExpr 
  	:(yearValue)? (monthValue)? (weekValue)? (dayValue)? (hourValue)? (minuteValue)? (secondValue)?  (milliSecondValue)?	
