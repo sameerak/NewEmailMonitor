@@ -189,6 +189,9 @@ public class StreamDeployer {
         Attribute payloadThreadID = new Attribute("threadID", AttributeType.LONG);
         payloadData.add(payloadThreadID);
 
+        Attribute payloadLabels = new Attribute("labels", AttributeType.LONG);
+        payloadData.add(payloadLabels);
+
         Attribute payloadEmailCount = new Attribute("emailCount", AttributeType.LONG);
         payloadData.add(payloadEmailCount);
 
@@ -294,6 +297,9 @@ public class StreamDeployer {
 
         Attribute payloadThreadID = new Attribute("threadID", AttributeType.LONG);
         payloadData.add(payloadThreadID);
+
+        Attribute payloadLabels = new Attribute("labels", AttributeType.LONG);
+        payloadData.add(payloadLabels);
 
         Attribute payloadTo = new Attribute("to", AttributeType.STRING);
         payloadData.add(payloadTo);
