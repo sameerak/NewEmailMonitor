@@ -81,6 +81,7 @@ $(document).ready(function() {
 		 // callback handler that will be called on success
 		 request.done(function (response, textStatus, jqXHR){
 		     // log a message to the console
+			 $('#cepQueries').val('');
 			 bootbox.alert(response);
 //		     console.log("Hooray, it worked!");
 		 });
