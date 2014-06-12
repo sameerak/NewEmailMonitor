@@ -2,9 +2,9 @@
     <log/>
     <payloadFactory media-type="xml">
         <format>
-            <ser:details xmlns:ser="http://thread.details">
+            <ser:details xmlns:ser="urn:wso2.connector.gmail.passwordauthentication">
                 <ser:email>$1</ser:email>
-                <ser:pw>$2</ser:pw>
+                <ser:password>$2</ser:password>
                 <ser:threadID>$3</ser:threadID>
                 <ser:label>$4</ser:label>
             </ser:details>
@@ -17,16 +17,16 @@
         </args>
     </payloadFactory>
     <class name="org.wso2.carbon.gmail.mediator.util.PasswordDecryptor"/>
-    <property xmlns:ser="http://thread.details"
+    <property xmlns:ser="urn:wso2.connector.gmail.passwordauthentication"
               name="username"
               expression="//ser:email/text()"/>
-    <property xmlns:ser="http://thread.details"
+    <property xmlns:ser="urn:wso2.connector.gmail.passwordauthentication"
               name="password"
-              expression="//ser:pw/text()"/>
-    <property xmlns:ser="http://thread.details"
+              expression="//ser:password/text()"/>
+    <property xmlns:ser="urn:wso2.connector.gmail.passwordauthentication"
               name="threadID"
               expression="//ser:threadID/text()"/>
-    <property xmlns:ser="http://thread.details"
+    <property xmlns:ser="urn:wso2.connector.gmail.passwordauthentication"
               name="label"
               expression="//ser:label/text()"/>
     <gmail.passwordLogin>
