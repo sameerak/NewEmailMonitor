@@ -23,17 +23,20 @@ public class SiddhiQueryWriter {
                 return writeQueryWithFrequencyWithoutLabel(siddhiTemplate);
             } else if (siddhiTemplate.isThreadFre()) {
                 return writeQueryWithFrequencyWithLabelFrequency(siddhiTemplate);
-            } else {
+            }else if(siddhiTemplate.isLabelCount()) {
                 return writeQueryWithFrequencyWithLabel(siddhiTemplate);
             }
+        }
 
-        } else {
+
+         else {
             if (siddhiTemplate.getLabelMails() != null) {
                 return writeQueryWithoutFrequencyWithLabel(siddhiTemplate);
             } else if (siddhiTemplate.getLabelMails() == null) {
                 return writeQueryWithoutFrequencyWithoutLabel(siddhiTemplate);
             }
         }
+
         return new String[2];
     }
 
@@ -173,8 +176,7 @@ public class SiddhiQueryWriter {
         if (!siddhiTemplate.isSendMailEnabled()) {
 
 
-            stringBuffer1.append("#window.externalTime(sentDate,");
-            stringBuffer1.append(siddhiTemplate.getTimeExpr());
+            stringBuffer1.append("#window.externalTime(sentDate,30 days");
             stringBuffer1.append(")");
             stringBuffer1.append("select  threadID, count(messageID) as emailCount, email:getAll(to) as to ,email:getAll(sender) as senders,");
             stringBuffer1.append(" " + '"' + siddhiTemplate.getLabelName() + '"' + " ");
@@ -227,51 +229,20 @@ public class SiddhiQueryWriter {
         stringBuffer1.append("#window.externalTime(sentDate,");
         stringBuffer1.append(siddhiTemplate.getTimeExpr());
         stringBuffer1.append(")");
-        stringBuffer1.append("select  email:countUnique(threadID) as threadCount, email:getAll(to) as to ,email:getAll(sender) as senders,");
+        stringBuffer1.append("select  ");
         String re = siddhiTemplate.getLabelMails();
         re = re.substring(re.indexOf('"') + 1, re.length() - 1);
         stringBuffer1.append(" " + '"' + re + '"' + " ");
-        stringBuffer1.append("as relevantLabel ");
-        stringBuffer1.append(" insert into " + ConstantsUtils.LABELSTREAM);
+        stringBuffer1.append("as relevantLabel, email:countUnique(threadID) as threadCount, insert into ");
+        stringBuffer1.append(ConstantsUtils.EMAIL_SENDER_OUTPUTSTREAM);
+        stringBuffer1.append(" having threadCount ");
+        stringBuffer1.append(siddhiTemplate.getCmpAction());
+        stringBuffer1.append(" " + siddhiTemplate.getCountValue());
         stringBuffer1.append(";");
 
         str[0] = stringBuffer1.toString();
 
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append("from " + ConstantsUtils.LABELSTREAM);
-        stringBuffer.append("[");
-        if (siddhiTemplate.getToMails() != null) {
-            stringBuffer.append("(");
-            stringBuffer.append(siddhiTemplate.getToMails());
-            stringBuffer.append(")");
 
-        }
-        if (siddhiTemplate.getFromMails() != null) {
-            stringBuffer.append(siddhiTemplate.getLabelFrom());
-            stringBuffer.append("(");
-            stringBuffer.append(siddhiTemplate.getFromMails());
-            stringBuffer.append(")");
-        }
-        if (siddhiTemplate.getFromFrequency() == ConstantsUtils.AND || siddhiTemplate.getFromFrequency() == ConstantsUtils.OR) {
-            stringBuffer.append(siddhiTemplate.getFromFrequency());
-            stringBuffer.append("(");
-            stringBuffer.append("threadCount ");
-            stringBuffer.append(siddhiTemplate.getCmpAction());
-            stringBuffer.append(" " + siddhiTemplate.getCountValue());
-            stringBuffer.append(")");
-        } else {
-            stringBuffer.append("(");
-            stringBuffer.append("threadCount ");
-            stringBuffer.append(siddhiTemplate.getCmpAction());
-            stringBuffer.append(" " + siddhiTemplate.getCountValue());
-            stringBuffer.append(")");
-        }
-        stringBuffer.append("]");
-
-        stringBuffer.append("select relevantLabel as label, threadCount insert into " + ConstantsUtils.EMAIL_SENDER_OUTPUTSTREAM);
-        stringBuffer.append(";");
-
-        str[1] = stringBuffer.toString();
         return str;
 
 

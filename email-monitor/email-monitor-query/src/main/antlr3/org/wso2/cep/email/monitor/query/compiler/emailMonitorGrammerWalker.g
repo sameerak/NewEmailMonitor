@@ -202,7 +202,13 @@ labelCondition returns [ConditionAttribute lbCondition]
  	   operator= $compareOperation.oper;
  	   operator.setLeft($timeExpr.timeEx);
  	$freqCond.setOperator(operator);
- 	} intVal{operator.setRight(new CompareVal(Integer.parseInt($intVal.val)));});
+ 	} intVal{operator.setRight(new CompareVal(Integer.parseInt($intVal.val)));})
+ 	|   'count' compareOperation{$freqCond.setType(Constants.COUNT);
+                                 	   operator= $compareOperation.oper;
+
+                                 	    	$freqCond.setOperator(operator);}
+                                 	    	intVal{operator.setRight(new CompareVal(Integer.parseInt($intVal.val)));} 'days'
+ 	;
 
 
 
