@@ -46,8 +46,8 @@ if(verb == "DELETE" || verb == "PUT" || verb == "GET") {
 						var myEmailMonitorAdminServiceStub = new emailMonitorAdminServiceStub(serverUrl);
 						
 						myEmailMonitorAdminServiceStub.addCEPConfigurations(esbIP, esbPort, esbUserName, esbPassword, emailAddress);
-// 						myEmailMonitorAdminServiceStub.addESBConfigurations(esbIP, esbPort, esbUserName, esbPassword, 
-// 							cepUserName, cepPassword, emailAddress, emailPassword, cepIP, cepPort);
+						myEmailMonitorAdminServiceStub.addESBConfigurations(esbIP, esbPort, esbUserName, esbPassword, 
+							cepUserName, cepPassword, emailAddress, emailPassword, cepIP, cepPort);
 						response.status = 200;
 						print("CEP and ESB configured successfully.");
 					}
