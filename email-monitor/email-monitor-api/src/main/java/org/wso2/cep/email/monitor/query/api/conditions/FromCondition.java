@@ -13,6 +13,6 @@ public class FromCondition extends Condition {
 
     @Override
     public String toString() {
-        return "from = " +getEmailAddressSet().toString();
+        return "senders = " +getEmailAddressSet().toString();
     }
 }
