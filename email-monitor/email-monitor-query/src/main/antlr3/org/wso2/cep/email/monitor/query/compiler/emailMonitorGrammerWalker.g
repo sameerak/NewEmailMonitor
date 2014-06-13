@@ -155,9 +155,7 @@ labelFromToCondition returns [ConditionAttribute labelFromTo]
     
 action returns [Action act]
     : ^(LBL stringVal{$act = new AddLabel($stringVal.val);})
-    | 'send' 'mail' '(' 'to' ':' emailAddr{$act= new SendMail($emailAddr.email);
-
-    } 'subject' ':'subject{$act.setSubject($subject.sub);} 'body' ':' emailBody{$act.setBody($emailBody.body);} ')'
+    | 'send' 'mail' {$act = new SendMail();}
     ;
 
 
@@ -197,17 +195,19 @@ labelCondition returns [ConditionAttribute lbCondition]
  @init{
      $freqCond= new FrequencyCondition();
      Operator operator=null;
+     TimeExpr timeEx=null;
  }
- 	:	 ^(FREQ_COND ('thread'{$freqCond.setType(Constants.THREAD);})? timeExpr compareOperation{
+ 	:	 ^(FREQ_COND ('thread'{$freqCond.setType(Constants.THREAD);})?  compareOperation{
  	   operator= $compareOperation.oper;
- 	   operator.setLeft($timeExpr.timeEx);
+ 	   timeEx= new TimeExpr();
+ 	   operator.setLeft(timeEx);
  	$freqCond.setOperator(operator);
- 	} intVal{operator.setRight(new CompareVal(Integer.parseInt($intVal.val)));})
+ 	} intVal{operator.setRight(new CompareVal(Integer.parseInt($intVal.val)));} ('/d'{ timeEx.setDay(1);})? ('/h'{timeEx.setHour(1);})? )
  	|   'count' compareOperation{$freqCond.setType(Constants.COUNT);
                                  	   operator= $compareOperation.oper;
 
                                  	    	$freqCond.setOperator(operator);}
-                                 	    	intVal{operator.setRight(new CompareVal(Integer.parseInt($intVal.val)));} 'days'
+                                 	    	intVal{operator.setRight(new CompareVal(Integer.parseInt($intVal.val)));}
  	;
 
 
@@ -369,7 +369,15 @@ emailAddr returns [EmailAddress email]
 
 stringVal returns [String val]
 
-: ID{$val = $ID.text;} ;
+:(INT_VAL{$val=$INT_VAL.text;})? (ID{
+if($val != null){
+$val = $val+$ID.text;
+}else{
+$val = $ID.text;
+}
+
+})
+ ;
 
 
 
