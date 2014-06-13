@@ -134,7 +134,7 @@ public class SiddhiQueryWriter {
             stringBuffer1.append("#window.externalTime(sentDate,");
             stringBuffer1.append(siddhiTemplate.getTimeExpr());
             stringBuffer1.append(")");
-            stringBuffer1.append("select  threadID, count(messageID) as emailCount, email:getAll(to) as to ,email:getAll(sender) as senders,");
+            stringBuffer1.append("select  threadID, labels,count(messageID) as emailCount, email:getAll(to) as to ,email:getAll(sender) as senders,");
             stringBuffer1.append(" " + '"' + siddhiTemplate.getLabelName() + '"' + " ");
             stringBuffer1.append("as newLabel group by threadID  having emailcount ");
             stringBuffer1.append(siddhiTemplate.getCmpAction());
