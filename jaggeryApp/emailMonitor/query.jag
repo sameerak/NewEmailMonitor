@@ -41,7 +41,7 @@ if(verb == "DELETE" || verb == "PUT" || verb == "GET") {
 			            }
 						
 						response.status = 200;
-						print("CEP quer added successfully.");
+						print("CEP query added successfully.");
 					}
 					catch(error){
 						response.status = 500;
