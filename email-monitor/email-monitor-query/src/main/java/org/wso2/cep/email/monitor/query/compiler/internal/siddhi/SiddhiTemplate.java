@@ -1,15 +1,17 @@
-package org.wso2.cep.email.monitor.query.compiler.siddhi;
+package org.wso2.cep.email.monitor.query.compiler.internal.siddhi;
 
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class SiddhiTemplate {
 
     private String toMails;
     private String fromMails;
     private String labelMails;
+    private String tolabel;
+    private String labelFrom;
+    private String fromFrequency;
     private boolean isThreadFre;
+    private boolean isFreqEnabled;
+    private boolean isLabelCount;
     private String timeExpr;
     private int countValue;
     private String cmpAction;
@@ -18,6 +20,8 @@ public class SiddhiTemplate {
     private String to;
     private String subject;
     private String body;
+    private String labelFreqlbName;
+
 
     public String getLabelMails() {
         return labelMails;
@@ -30,8 +34,6 @@ public class SiddhiTemplate {
     public void setThreadFre(boolean isThreadFre) {
         this.isThreadFre = isThreadFre;
     }
-
-
 
 
     public void setTimeExpr(String timeExpr) {
@@ -84,7 +86,6 @@ public class SiddhiTemplate {
     }
 
 
-
     public String getTimeExpr() {
         return timeExpr;
     }
@@ -121,5 +122,51 @@ public class SiddhiTemplate {
         return body;
     }
 
+    public String getLabelFrom() {
+        return labelFrom;
+    }
 
+    public void setLabelFrom(String labelFrom) {
+        this.labelFrom = labelFrom;
+    }
+
+    public String getTolabel() {
+        return tolabel;
+    }
+
+    public void setTolabel(String tolabel) {
+        this.tolabel = tolabel;
+    }
+
+    public boolean isFreqEnabled() {
+        return isFreqEnabled;
+    }
+
+    public void setFreqEnabled(boolean isFreqEnabled) {
+        this.isFreqEnabled = isFreqEnabled;
+    }
+
+    public String getFromFrequency() {
+        return fromFrequency;
+    }
+
+    public void setFromFrequency(String fromFrequency) {
+        this.fromFrequency = fromFrequency;
+    }
+
+    public String getLabelFreqlbName() {
+        return labelFreqlbName;
+    }
+
+    public void setLabelFreqlbName(String labelFreqlbName) {
+        this.labelFreqlbName = labelFreqlbName;
+    }
+
+    public boolean isLabelCount() {
+        return isLabelCount;
+    }
+
+    public void setLabelCount(boolean isLabelCount) {
+        this.isLabelCount = isLabelCount;
+    }
 }

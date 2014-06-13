@@ -20,8 +20,5 @@ public abstract class Condition extends ConditionAttribute {
         this.conditionAttribute = conditionAttribute;
     }
 
-    @Override
-    public String toString() {
-        return super.toString();
-    }
+
 }

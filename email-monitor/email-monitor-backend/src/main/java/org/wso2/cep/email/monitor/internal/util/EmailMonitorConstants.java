@@ -18,6 +18,20 @@ public class EmailMonitorConstants {
 
     public static final String MAIL_READER_PROXY_PATH = "/config/insequence.xml";
     public static final String LABEL_ADDER_PROXY_PATH = "/config/labelAdderProxyInsequence.xml";
+    public static final String GMAIL_OUT_STREAM_CONFIGURATION_PATH = "/config/gmailoutstreamFormatter.xml";
+    public static final String MAIL_SENDER_OUT_STREAM_CONFIGURATION_PATH = "/config/emailSenderStreamFormatter.xml";
+
+    public static final String EXECUTION_PLAN_TEMPLATE = "/config/executionPlanTemplate.xml";
+    public static final String ADD_EXECUTION_PLAN_NAME = "executionPlan_";
+    public static final String EXECUTION_PLAN_NAME = "EXECUTIONPLANNAME";
+    public static final String INPUT_STREAM_NAME = "INPUTSTREAMNAME";
+    public static final String OUTPUT_STREAM_NAME = "OUTPUTSTREAMNAME";
+    public static final String ADD_QUERY = "ADDQUERYHERE";
+
+    public static final String SOAP_OUTPUT_ADAPTER_NAME = "SOAP_output_Adaptor";
+    public static final String EMAIL_OUTPUT_ADAPTER_NAME = "EMAIL_output_Adaptor";
+    public static final String ADAPTER_TYPE_SOAP = "soap";
+    public static final String ADAPTER_TYPE_EMAIL = "email";
 
     public static final String TASK_ADMIN_SERVICE = "TaskAdmin";
     public static final String TASK_CONFIGURATION_FILE_PATH = "/config/taskConfig.xml";
@@ -27,8 +41,14 @@ public class EmailMonitorConstants {
     public static final String CEP_SERVER_IP = "CEPSERVERIP";
     public static final String CEP_SERVER_PORT = "CEPSERVERPORT";
     public static final String CEP_SERVER_ENCRYPTED_PASSWORD = "CEPSERVERENCRYPTEDPASSWORD";
+    public static final String ESB_SERVER_USER_NAME = "ESBSERVERUSERNAME";
+    public static final String ESB_SERVER_PASSWORD= "ESBSERVERPASSWORD";
+    public static final String ESB_SERVER_IP = "ESBSERVERIPADDRESS";
+    public static final String ESB_SERVER_ENDPOINT_PORT= "ESBENDPOINTPORT";
     public static final String GMAIL_USERNAME = "GMAILUSERNAME";
     public static final String GMAIL_PASSWORD = "GMAILPASSWORD";
+    public static final String MAIL_BODY = "EMAILBODY";
+    public static final String MAIL_SUBJECT = "EMAILSUBJECT";
 
 
 }

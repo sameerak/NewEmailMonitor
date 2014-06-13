@@ -2,28 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>emailMonitoringSystem</artifactId>
+        <groupId>org.wso2.cep.email.monitor</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
     <modelVersion>4.0.0</modelVersion>
-
-    <groupId>org.wso2.carbon.gmail.mediator</groupId>
     <artifactId>gmail-mediator</artifactId>
-    <version>1.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
-    <repositories>
-        <repository>
-            <id>wso2-maven2-repository</id>
-            <url>http://dist.wso2.org/maven2</url>
-        </repository>
-        <repository>
-            <id>apache-Incubating-repo</id>
-            <name>Maven Incubating Repository</name>
-            <url>http://people.apache.org/repo/m2-incubating-repository</url>
-        </repository>
-        <repository>
-            <id>apache-maven2-repo</id>
-            <name>Apache Maven2 Repository</name>
-            <url>http://repo1.maven.org/maven2/</url>
-        </repository>
-    </repositories>
 
     <build>
         <plugins>

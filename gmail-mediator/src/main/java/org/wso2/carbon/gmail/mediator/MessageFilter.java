@@ -10,6 +10,7 @@ import org.wso2.carbon.gmail.mediator.util.MailSessionInfoStore;
 import org.wso2.carbon.gmail.mediator.util.MediatorConstants;
 
 
+import javax.xml.namespace.QName;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -62,6 +63,14 @@ public class MessageFilter extends AbstractMediator {
 
         }
         mailfirst.detach();
+
+        Iterator iterator1 = selectedMails.getChildren();
+        while (iterator1.hasNext()) {
+            OMElement omElement = (OMElement) iterator1.next();
+            long time = getTimeStamp(omElement);
+            OMElement omElement1 = (OMElement) omElement.getFirstChildWithName(new QName("","sentDate"));
+            omElement1.setText(String.valueOf(time));
+        }
         mailOM.addChild(selectedMails);
         return true;
     }

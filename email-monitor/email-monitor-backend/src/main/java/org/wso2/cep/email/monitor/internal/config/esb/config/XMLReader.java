@@ -9,7 +9,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 /**
- * Created by sachini on 6/9/14.
+ * Read content from xml files
  */
 public class XMLReader {
 
@@ -17,10 +17,10 @@ public class XMLReader {
 
 
     public String readXML(String path) throws EmailMonitorServiceException {
-        InputStream is = null;
-        BufferedReader br = null;
+        InputStream is;
+        BufferedReader br;
         String line;
-        String content= "";
+        String content = "";
         is = ProxyDeployer.class.getResourceAsStream(path);
         br = new BufferedReader(new InputStreamReader(is));
         try {
@@ -29,7 +29,7 @@ public class XMLReader {
             }
         } catch (IOException e) {
             logger.error(e.getMessage());
-            throw new EmailMonitorServiceException("Error when adding Mail Proxy", e);
+            throw new EmailMonitorServiceException("Error when reading form xml file", e);
         }
 
         return content;

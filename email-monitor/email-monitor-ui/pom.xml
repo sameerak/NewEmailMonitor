@@ -48,9 +48,7 @@
                         <Bundle-SymbolicName>${pom.groupId}.${pom.artifactId}</Bundle-SymbolicName>
                         <Bundle-Name>${pom.name}</Bundle-Name>
                         <Bundle-Version>${pom.version}</Bundle-Version>
-                        <Bundle-Activator>main.java.Activator</Bundle-Activator>
-                        <!-- <Private-Package>main.java</Private-Package>-->
-                        <Export-Package>main.java.*,org.wso2.cep.email.ui</Export-Package>
+                        <Export-Package>org.wso2.cep.email.ui</Export-Package>
                         <Import-Package>
                             *;resolution:=optional
                         </Import-Package>

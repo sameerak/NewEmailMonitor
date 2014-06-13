@@ -1,5 +1,5 @@
 <task:task xmlns:task="http://www.wso2.org/products/wso2commons/tasks" name="getMail" class="org.apache.synapse.startup.tasks.MessageInjector" group="synapse.simple.quartz">
-    <task:trigger interval="30">
+    <task:trigger interval="3600">
 
     </task:trigger>
     <task:property name="soapAction" value="root">

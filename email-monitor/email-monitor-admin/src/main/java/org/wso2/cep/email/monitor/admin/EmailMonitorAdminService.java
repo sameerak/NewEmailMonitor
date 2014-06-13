@@ -9,6 +9,8 @@ import org.wso2.cep.email.monitor.EmailMonitorServiceInterface;
 import org.wso2.cep.email.monitor.admin.exception.EmailMonitorAdminException;
 import org.wso2.cep.email.monitor.admin.internal.EmailMonitorAdminValueHolder;
 import org.wso2.cep.email.monitor.exception.EmailMonitorServiceException;
+import org.wso2.cep.email.monitor.query.compiler.QueryManagerServiceInterface;
+import org.wso2.cep.email.monitor.query.compiler.exeception.EmailMonitorCompilerException;
 
 
 public class EmailMonitorAdminService extends AbstractAdmin {
@@ -48,11 +50,25 @@ public class EmailMonitorAdminService extends AbstractAdmin {
         }
     }
 
+    public String[] getSiddhiQuery(String query) throws EmailMonitorAdminException {
+        QueryManagerServiceInterface queryManagerServiceInterface = EmailMonitorAdminValueHolder.getInstance().getQueryManagerServiceInterface();
+        try {
+          return   queryManagerServiceInterface.getSiddhiQuery(query);
+        } catch (EmailMonitorCompilerException e) {
+            log.error(e.getMessage());
+            throw new EmailMonitorAdminException(e);
+        }
 
-    public boolean createExecutionPlan(String executionPlanXmlConfiguration) throws EmailMonitorAdminException {
+
+    }
+
+
+
+
+    public boolean createExecutionPlan(String query) throws EmailMonitorAdminException {
         EmailMonitorServiceInterface emailMonitorServiceInterface = EmailMonitorAdminValueHolder.getInstance().getEmailMonitorService();
         try {
-            return emailMonitorServiceInterface.createExecutionPlan(executionPlanXmlConfiguration, getAxisConfig());
+            return emailMonitorServiceInterface.createExecutionPlan(query, getAxisConfig());
         } catch (EmailMonitorServiceException e) {
             log.error(e.getMessage());
             throw new EmailMonitorAdminException(e);
@@ -149,6 +165,25 @@ public class EmailMonitorAdminService extends AbstractAdmin {
         }
     }
 
+    public boolean createFilteredEmailDetailsStream() throws EmailMonitorAdminException {
+        EmailMonitorServiceInterface emailMonitorServiceInterface = EmailMonitorAdminValueHolder.getInstance().getEmailMonitorService();
+
+        int tenantID = 0;
+        try {
+            tenantID = getUserRealm().getRealmConfiguration().getTenantId();
+        } catch (UserStoreException e) {
+            log.error(e.getMessage());
+            throw new EmailMonitorAdminException(e);
+        }
+        try {
+            return emailMonitorServiceInterface.createFilteredEmailDetailsStream(tenantID);
+        } catch (EmailMonitorServiceException e) {
+            log.error(e.getMessage());
+            throw new EmailMonitorAdminException(e);
+        }
+    }
+
+
     public boolean createSoapOutputAdapter() throws EmailMonitorAdminException {
         EmailMonitorServiceInterface emailMonitorServiceInterface = EmailMonitorAdminValueHolder.getInstance().getEmailMonitorService();
         try {
@@ -169,10 +204,20 @@ public class EmailMonitorAdminService extends AbstractAdmin {
         }
     }
 
-    public boolean createEventFormatter(String eventFormatterConfigurationXML) throws EmailMonitorAdminException {
+    public boolean createEventFormatter(String ESBServerIP, String ESBServerPort, String ESBServerUsername, String ESBServerPassword, String eventFormatterConfigurationXML) throws EmailMonitorAdminException {
         EmailMonitorServiceInterface emailMonitorServiceInterface = EmailMonitorAdminValueHolder.getInstance().getEmailMonitorService();
         try {
-            return emailMonitorServiceInterface.createEventFormatter(eventFormatterConfigurationXML, getAxisConfig());
+            return emailMonitorServiceInterface.createGmailOutStreamEventFormatter(ESBServerIP,ESBServerPort,ESBServerUsername,ESBServerPassword, getAxisConfig());
+        } catch (EmailMonitorServiceException e) {
+            log.error(e.getMessage());
+            throw new EmailMonitorAdminException(e);
+        }
+    }
+
+    public boolean createEmailSenderOutputStreamFormatter( String mailAddress) throws EmailMonitorAdminException {
+        EmailMonitorServiceInterface emailMonitorServiceInterface = EmailMonitorAdminValueHolder.getInstance().getEmailMonitorService();
+        try {
+            return emailMonitorServiceInterface.createEmailSenderOutputStreamFormatter(mailAddress,getAxisConfig());
         } catch (EmailMonitorServiceException e) {
             log.error(e.getMessage());
             throw new EmailMonitorAdminException(e);
@@ -180,7 +225,7 @@ public class EmailMonitorAdminService extends AbstractAdmin {
     }
 
 
-    public boolean addESBConfigurations(String ip, String port, String userName, String password, String CEPServerUserName, String CEPServerPassword, String mailUserNAme, String mailPassword, String CEPServerIP, String CEPServerPort) throws EmailMonitorAdminException {
+        public boolean addESBConfigurations(String ip, String port, String userName, String password, String CEPServerUserName, String CEPServerPassword, String mailUserNAme, String mailPassword, String CEPServerIP, String CEPServerPort) throws EmailMonitorAdminException {
         EmailMonitorServiceInterface emailMonitorServiceInterface = EmailMonitorAdminValueHolder.getInstance().getEmailMonitorService();
         try {
             return emailMonitorServiceInterface.addESBConfigurations(ip, port, userName, password, CEPServerUserName, CEPServerPassword, mailUserNAme, mailPassword, CEPServerIP, CEPServerPort);
@@ -191,4 +236,25 @@ public class EmailMonitorAdminService extends AbstractAdmin {
     }
 
 
-}
+    public boolean addCEPConfigurations(String ESBServerIP, String ESBServerPort, String ESBServerUsername, String ESBServerPassword, String mailAddress) throws EmailMonitorAdminException {
+
+        int tenantID = 0;
+        try {
+            tenantID = getUserRealm().getRealmConfiguration().getTenantId();
+        } catch (UserStoreException e) {
+            log.error(e.getMessage());
+            throw new EmailMonitorAdminException(e);
+        }
+
+
+        EmailMonitorServiceInterface emailMonitorServiceInterface = EmailMonitorAdminValueHolder.getInstance().getEmailMonitorService();
+        try {
+            return emailMonitorServiceInterface.addCEPConfigurations(ESBServerIP, ESBServerPort, ESBServerUsername, ESBServerPassword, mailAddress, tenantID, getAxisConfig());
+        } catch (EmailMonitorServiceException e) {
+            log.error(e.getMessage());
+            throw new EmailMonitorAdminException(e);
+        }
+    }
+
+
+    }

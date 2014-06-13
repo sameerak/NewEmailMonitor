@@ -1,4 +1,4 @@
-package org.wso2.cep.email.monitor.query.compiler.siddhi;
+package org.wso2.cep.email.monitor.query.compiler.internal.siddhi;
 
 
 import org.apache.log4j.Logger;
@@ -18,7 +18,7 @@ import org.wso2.cep.email.monitor.query.api.utils.Constants;
 
 
 public class TemplatePopulator {
-private static Logger logger = Logger.getLogger(TemplatePopulator.class);
+    private static Logger logger = Logger.getLogger(TemplatePopulator.class);
 
 
     public static SiddhiTemplate convert(Query query) {
@@ -51,18 +51,22 @@ private static Logger logger = Logger.getLogger(TemplatePopulator.class);
 
     public static SiddhiTemplate convertCondition(ConditionAttribute conditionAttribute, SiddhiTemplate siddhiTemplate) {
         if (conditionAttribute instanceof FrequencyCondition) {
-           convertFrequencyCondition((FrequencyCondition)conditionAttribute,siddhiTemplate);
+            siddhiTemplate.setFreqEnabled(true);
+            convertFrequencyCondition((FrequencyCondition) conditionAttribute, siddhiTemplate);
         } else if (conditionAttribute instanceof AndCondition && conditionAttribute.getRight() instanceof FrequencyCondition) {
-
-            AndCondition  andCondition = (AndCondition)conditionAttribute;
-            convertLabelFromToCondition(andCondition.getLeft(),siddhiTemplate);
-            convertFrequencyCondition((FrequencyCondition)andCondition.getRight(),siddhiTemplate);
+            siddhiTemplate.setFromFrequency("and");
+            siddhiTemplate.setFreqEnabled(true);
+            AndCondition andCondition = (AndCondition) conditionAttribute;
+            convertLabelFromToCondition(andCondition.getLeft(), siddhiTemplate);
+            convertFrequencyCondition((FrequencyCondition) andCondition.getRight(), siddhiTemplate);
         } else if (conditionAttribute instanceof ORCondition && conditionAttribute.getRight() instanceof FrequencyCondition) {
-            ORCondition orCondition = (ORCondition)conditionAttribute;
-            convertLabelFromToCondition(orCondition.getLeft(),siddhiTemplate);
-            convertFrequencyCondition((FrequencyCondition)orCondition.getRight(),siddhiTemplate);
+            siddhiTemplate.setFromFrequency("or");
+            siddhiTemplate.setFreqEnabled(true);
+            ORCondition orCondition = (ORCondition) conditionAttribute;
+            convertLabelFromToCondition(orCondition.getLeft(), siddhiTemplate);
+            convertFrequencyCondition((FrequencyCondition) orCondition.getRight(), siddhiTemplate);
         } else {
-            convertLabelFromToCondition(conditionAttribute,siddhiTemplate);
+            convertLabelFromToCondition(conditionAttribute, siddhiTemplate);
         }
         return siddhiTemplate;
     }
@@ -73,6 +77,12 @@ private static Logger logger = Logger.getLogger(TemplatePopulator.class);
             siddhiTemplate.setThreadFre(true);
         } else {
             siddhiTemplate.setThreadFre(false);
+        }
+        if(Constants.COUNT == conditionAttribute.getType()){
+            siddhiTemplate.setLabelCount(true);
+            siddhiTemplate.setThreadFre(false);
+        }else{
+            siddhiTemplate.setLabelCount(false);
         }
         Operator operator = conditionAttribute.getOperator();
         if (operator instanceof EqualOP) {
@@ -90,7 +100,9 @@ private static Logger logger = Logger.getLogger(TemplatePopulator.class);
         }
         siddhiTemplate.setCountValue(((CompareVal) operator.getRight()).getValue());
         TimeExpr timeExpr = ((TimeExpr) operator.getLeft());
-        siddhiTemplate.setTimeExpr(timeExpr.toString());
+        if(timeExpr!=null) {
+            siddhiTemplate.setTimeExpr(timeExpr.toString());
+        }
         return siddhiTemplate;
     }
 
@@ -99,18 +111,18 @@ private static Logger logger = Logger.getLogger(TemplatePopulator.class);
         if (emailAddressSet instanceof EmailAddressSet) {
             EmailAddressSet emailAddressSet1 = (EmailAddressSet) emailAddressSet;
             bf.append(key + " " + "contains ");
-             bf.append('"');
+            bf.append('"');
             bf.append(((EmailAddress) emailAddressSet1.getConditionAttribute()).toString());
-              bf.append('"');
+            bf.append('"');
         } else if (emailAddressSet instanceof AndCondition) {
             AndCondition andCondition = (AndCondition) emailAddressSet;
             EmailAddress emailAddress = (EmailAddress) andCondition.getLeft();
             bf.append(key + " " + "contains ");
             bf.append('"');
             bf.append(emailAddress.toString());
-             bf.append('"');
+            bf.append('"');
             bf.append(" and ");
-            ConditionAttribute emailAddressSet1 =  andCondition.getRight();
+            ConditionAttribute emailAddressSet1 = andCondition.getRight();
             String result = convertEmailAddressSet(emailAddressSet1, key);
             bf.append(result);
 
@@ -118,48 +130,49 @@ private static Logger logger = Logger.getLogger(TemplatePopulator.class);
             ORCondition orCondition = (ORCondition) emailAddressSet;
             EmailAddress emailAddress = (EmailAddress) orCondition.getLeft();
             bf.append(key + " " + "contains ");
-             bf.append('"');
+            bf.append('"');
             bf.append(emailAddress.toString());
-             bf.append('"');
+            bf.append('"');
             bf.append(" or ");
-            ConditionAttribute emailAddressSet1 =  orCondition.getRight();
+            ConditionAttribute emailAddressSet1 = orCondition.getRight();
             String result = convertEmailAddressSet(emailAddressSet1, key);
             bf.append(result);
         }
         return bf.toString();
     }
 
-    public static String convertLabelSet(ConditionAttribute labelSet) {
+    public static String convertLabelSet(ConditionAttribute labelSet, SiddhiTemplate siddhiTemplate) {
         StringBuffer bf = new StringBuffer();
         if (labelSet instanceof LabelSet) {
             LabelSet labelSet1 = (LabelSet) labelSet;
-            bf.append("label contains ");
-             bf.append('"');
+            bf.append("labels contains ");
+            bf.append('"');
             bf.append(((Label) labelSet1.getConditionAttribute()).toString());
-             bf.append('"');
+            bf.append('"');
+
 
         } else if (labelSet instanceof AndCondition) {
             AndCondition andCondition = (AndCondition) labelSet;
             Label lb = (Label) andCondition.getLeft();
-            bf.append("label contains ");
-             bf.append('"');
+            bf.append("labels contains ");
+            bf.append('"');
             bf.append(lb.toString());
-             bf.append('"');
+            bf.append('"');
             bf.append(" and ");
-            ConditionAttribute lbSet =  andCondition.getRight();
-            String result = convertLabelSet(lbSet);
+            ConditionAttribute lbSet = andCondition.getRight();
+            String result = convertLabelSet(lbSet, siddhiTemplate);
             bf.append(result);
 
         } else if (labelSet instanceof ORCondition) {
             ORCondition orCondition = (ORCondition) labelSet;
             Label lb = (Label) orCondition.getLeft();
-            bf.append("label contains ");
-             bf.append('"');
+            bf.append("labels contains ");
+            bf.append('"');
             bf.append(lb.toString());
-             bf.append('"');
+            bf.append('"');
             bf.append(" or ");
-             ConditionAttribute lbSet =  orCondition.getRight();
-            String result = convertLabelSet(lbSet);
+            ConditionAttribute lbSet = orCondition.getRight();
+            String result = convertLabelSet(lbSet, siddhiTemplate);
             bf.append(result);
         }
         return bf.toString();
@@ -189,7 +202,7 @@ private static Logger logger = Logger.getLogger(TemplatePopulator.class);
         if (conditionAttribute instanceof LabelCondition) {
             LabelCondition labelCondition = (LabelCondition) conditionAttribute;
             ConditionAttribute conditionAttribute1 = labelCondition.getLabelSet();
-            String result = convertLabelSet(conditionAttribute1);
+            String result = convertLabelSet(conditionAttribute1, siddhiTemplate);
             siddhiTemplate.setLabelMails(result);
         }
         return siddhiTemplate;
@@ -200,10 +213,12 @@ private static Logger logger = Logger.getLogger(TemplatePopulator.class);
         if (conditionAttribute instanceof LabelCondition) {
             convertLabelCondition(conditionAttribute, siddhiTemplate);
         } else if (conditionAttribute instanceof AndCondition) {
+            siddhiTemplate.setTolabel("and");
             AndCondition andCondition = (AndCondition) conditionAttribute;
             convertToCondition(andCondition.getLeft(), siddhiTemplate);
             convertLabelCondition(andCondition.getRight(), siddhiTemplate);
         } else if (conditionAttribute instanceof ORCondition) {
+            siddhiTemplate.setTolabel("or");
             ORCondition orCondition = (ORCondition) conditionAttribute;
             convertToCondition(orCondition.getLeft(), siddhiTemplate);
             convertLabelCondition(orCondition.getRight(), siddhiTemplate);
@@ -218,10 +233,12 @@ private static Logger logger = Logger.getLogger(TemplatePopulator.class);
         if (conditionAttribute instanceof FromCondition) {
             convertFromCondition(conditionAttribute, siddhiTemplate);
         } else if (conditionAttribute instanceof AndCondition && conditionAttribute.getRight() instanceof FromCondition) {
+            siddhiTemplate.setLabelFrom("and");
             AndCondition andCondition = (AndCondition) conditionAttribute;
             convertLabelToCondition(andCondition.getLeft(), siddhiTemplate);
             convertFromCondition(andCondition.getRight(), siddhiTemplate);
         } else if (conditionAttribute instanceof ORCondition && conditionAttribute.getRight() instanceof FromCondition) {
+            siddhiTemplate.setLabelFrom("or");
             ORCondition orCondition = (ORCondition) conditionAttribute;
             convertLabelToCondition(orCondition.getLeft(), siddhiTemplate);
             convertFromCondition(orCondition.getRight(), siddhiTemplate);
