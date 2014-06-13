@@ -53,11 +53,7 @@ if (!user) {
                             </thead>
                             <tbody>
                                     <tr>
-<<<<<<< HEAD:jaggeryApp/emailMonitor/index.jag
-                                        <td style="width:15%">CEP Queries:<span class="required">*</span></td> <td><textarea name="cepQueries" rows="8" class="queryArea"></textarea></td>
-=======
                                         <td style="width:18%">CEP Queries:<span class="required">*</span></td> <td><textarea id="cepQueries" name="cepQueries" rows="8" class="queryArea"></textarea></td>
->>>>>>> master:jaggeryApp/emailMonitor/index.html
                                     </tr>
                             </tbody>
                         </table>
