@@ -9,7 +9,7 @@ var log = new Log();
  }
  */
 
-var configs = require('./config.json');
+var configs = require('../config.json');
 
 var samlResponse = request.getParameter("SAMLResponse");
 var sessionId = session.getId();

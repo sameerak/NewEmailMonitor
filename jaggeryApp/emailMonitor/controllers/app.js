@@ -1,4 +1,4 @@
-var configs = require('./config.json');
+var configs = require('../config.json');
 
 
 var store = require('store');

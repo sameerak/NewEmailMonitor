@@ -40,7 +40,7 @@ $(document).ready(function() {
 		         "The following error occured: "+
 		         textStatus, errorThrown
 		     );
-		     bootbox.alert("Please fill all parameters!");
+		     bootbox.alert("Please check values provided for input parameters!");
 		 });
 		
 		 // callback handler that will be called regardless
@@ -81,6 +81,7 @@ $(document).ready(function() {
 		 // callback handler that will be called on success
 		 request.done(function (response, textStatus, jqXHR){
 		     // log a message to the console
+			 $('#cepQueries').val('');
 			 bootbox.alert(response);
 //		     console.log("Hooray, it worked!");
 		 });
@@ -92,7 +93,7 @@ $(document).ready(function() {
 		         "The following error occured: "+
 		         textStatus, errorThrown
 		     );
-		     bootbox.alert("Please configure email monitor with correct details!");
+		     bootbox.alert("Please check query for correct sysntax and check whether email monitor is configured with correct details!");
 		 });
 		
 		 // callback handler that will be called regardless
