@@ -66,7 +66,7 @@ labelToCondition
     
 action 
     :   'add' 'label' stringVal -> ^(LBL stringVal)
-    | 'send' 'mail' '(' 'to' ':' emailAddr 'subject' ':' subject 'body' ':' emailBody')'
+    | 'send' 'mail'
     ;
 
 
@@ -83,8 +83,8 @@ labelCondition
       	;
       	
  frequencyCondition
- 	:	('thread')?  'frequency' 'per' timeExpr compareOperation intVal  -> ^(FREQ_COND 'thread'? timeExpr compareOperation intVal)
- 	|   'count' compareOperation intVal 'days'
+ 	:	('thread')?  'frequency'  compareOperation intVal ('/d')? ('/h')? -> ^(FREQ_COND 'thread'?  compareOperation intVal ('/d')? ('/h')?)
+ 	|   'count' compareOperation intVal
  	;
  	
  timeExpr 
@@ -161,12 +161,12 @@ emailAddr
    :  stringVal
    ;
 
-stringVal: ID ;
+stringVal:INT_VAL? ID ;
 
 
 intVal 	:	INT_VAL;
 
-ID  :   ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_'|'@'|'.')* ;
+ID  :  ('a'..'z'|'A'..'Z'|'_')  ('a'..'z'|'A'..'Z'|'0'..'9'|'_'|'@'|'.')* ;
 
 STRING_VAL
 	:'\'' ( ~('\u0000'..'\u001f' | '\\' | '\''| '\"' ) )* '\'' {setText(getText().substring(1, getText().length()-1));}

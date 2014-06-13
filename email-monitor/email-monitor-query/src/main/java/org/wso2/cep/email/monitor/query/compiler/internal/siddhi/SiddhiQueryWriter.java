@@ -25,6 +25,8 @@ public class SiddhiQueryWriter {
                 return writeQueryWithFrequencyWithLabelFrequency(siddhiTemplate);
             }else if(siddhiTemplate.isLabelCount()) {
                 return writeQueryWithFrequencyWithLabel(siddhiTemplate);
+            }else{
+                return writeQueryWithFrequencyWithLabel(siddhiTemplate);
             }
         }
 
@@ -47,10 +49,7 @@ public class SiddhiQueryWriter {
 
         stringBuffer.append("from " + ConstantsUtils.INPUTSTREAM);
         if (siddhiTemplate.getLabelMails() != null) {
-            stringBuffer.append("[");
-            stringBuffer.append(siddhiTemplate.getLabelMails());
-            stringBuffer.append("]");
-            stringBuffer.append("select  threadID, email:getAll(to) as to ,email:getAll(sender) as senders,");
+            stringBuffer.append("select  threadID,labels, email:getAll(to) as to ,email:getAll(sender) as senders,");
             if (!siddhiTemplate.isSendMailEnabled()) {
                 stringBuffer.append(" " + '"' + siddhiTemplate.getLabelName() + '"' + " ");
                 stringBuffer.append("as newLabel insert into ");
@@ -65,6 +64,15 @@ public class SiddhiQueryWriter {
         if (siddhiTemplate.getToMails() != null) {
             stringBuffer1.append("(");
             stringBuffer1.append(siddhiTemplate.getToMails());
+            stringBuffer1.append(")");
+
+        }
+        if (siddhiTemplate.getLabelMails() != null) {
+            if(siddhiTemplate.getToMails()!= null) {
+                stringBuffer1.append(" " + siddhiTemplate.getTolabel() + " ");
+            }
+            stringBuffer1.append("(");
+            stringBuffer1.append(siddhiTemplate.getLabelMails());
             stringBuffer1.append(")");
 
         }
@@ -98,7 +106,9 @@ public class SiddhiQueryWriter {
         }
 
         if (siddhiTemplate.getFromMails() != null) {
-            stringBuffer1.append(siddhiTemplate.getLabelFrom());
+            if(siddhiTemplate.getToMails()!= null) {
+                stringBuffer1.append(siddhiTemplate.getLabelFrom());
+            }
             stringBuffer1.append("(");
             stringBuffer1.append(siddhiTemplate.getFromMails());
             stringBuffer1.append(")");
@@ -136,7 +146,11 @@ public class SiddhiQueryWriter {
 
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("from " + ConstantsUtils.THREADSTREAM);
-        stringBuffer.append("[");
+        if((siddhiTemplate.getToMails()==null) && (siddhiTemplate.getLabelMails()==null) &&(siddhiTemplate.getFromMails()==null)) {
+
+        }else{
+            stringBuffer.append("[");
+        }
         if (siddhiTemplate.getToMails() != null) {
             stringBuffer.append("(");
             stringBuffer.append(siddhiTemplate.getToMails());
@@ -144,12 +158,18 @@ public class SiddhiQueryWriter {
 
         }
         if (siddhiTemplate.getFromMails() != null) {
-            stringBuffer.append(siddhiTemplate.getLabelFrom());
+            if(siddhiTemplate.getToMails()!=null) {
+                stringBuffer.append(siddhiTemplate.getLabelFrom());
+            }
             stringBuffer.append("(");
             stringBuffer.append(siddhiTemplate.getFromMails());
             stringBuffer.append(")");
         }
-        stringBuffer.append("]");
+        if((siddhiTemplate.getToMails()==null) && (siddhiTemplate.getLabelMails()==null) &&(siddhiTemplate.getFromMails()==null)) {
+
+        }else{
+            stringBuffer.append("]");
+        }
         if (!siddhiTemplate.isSendMailEnabled()) {
             stringBuffer.append("select threadID, newLabel as label insert into " + ConstantsUtils.OUTPUTSTREAM);
             stringBuffer.append(";");
@@ -166,19 +186,14 @@ public class SiddhiQueryWriter {
         String[] str = new String[2];
 
         stringBuffer1.append("from " + ConstantsUtils.INPUTSTREAM);
-        stringBuffer1.append("[");
-        if (siddhiTemplate.getLabelMails() != null) {
-            stringBuffer1.append("(");
-            stringBuffer1.append(siddhiTemplate.getLabelMails());
-            stringBuffer1.append(")");
 
-        }
+
         if (!siddhiTemplate.isSendMailEnabled()) {
 
 
             stringBuffer1.append("#window.externalTime(sentDate,30 days");
             stringBuffer1.append(")");
-            stringBuffer1.append("select  threadID, count(messageID) as emailCount, email:getAll(to) as to ,email:getAll(sender) as senders,");
+            stringBuffer1.append("select  threadID,labels, count(messageID) as emailCount, email:getAll(to) as to ,email:getAll(sender) as senders,");
             stringBuffer1.append(" " + '"' + siddhiTemplate.getLabelName() + '"' + " ");
             stringBuffer1.append("as newLabel group by threadID  having emailcount ");
             stringBuffer1.append(siddhiTemplate.getCmpAction());
@@ -191,13 +206,28 @@ public class SiddhiQueryWriter {
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("from " + ConstantsUtils.THREADSTREAM);
         stringBuffer.append("[");
+
+
+
+
+
         if (siddhiTemplate.getToMails() != null) {
             stringBuffer.append("(");
             stringBuffer.append(siddhiTemplate.getToMails());
             stringBuffer.append(")");
 
         }
+        if (siddhiTemplate.getLabelMails() != null) {
+            if(siddhiTemplate.getToMails()!= null) {
+                stringBuffer.append(" " + siddhiTemplate.getTolabel() + " ");
+            }
+            stringBuffer.append("(");
+            stringBuffer.append(siddhiTemplate.getLabelMails());
+            stringBuffer.append(")");
+
+        }
         if (siddhiTemplate.getFromMails() != null) {
+
             stringBuffer.append(siddhiTemplate.getLabelFrom());
             stringBuffer.append("(");
             stringBuffer.append(siddhiTemplate.getFromMails());
@@ -223,9 +253,7 @@ public class SiddhiQueryWriter {
             stringBuffer1.append("(");
             stringBuffer1.append(siddhiTemplate.getLabelMails());
             stringBuffer1.append(")");
-
         }
-
         stringBuffer1.append("#window.externalTime(sentDate,");
         stringBuffer1.append(siddhiTemplate.getTimeExpr());
         stringBuffer1.append(")");
