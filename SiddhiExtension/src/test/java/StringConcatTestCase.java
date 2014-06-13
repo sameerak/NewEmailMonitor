@@ -36,6 +36,9 @@ public class StringConcatTestCase {
         List<Class> classList = new ArrayList<Class>();
         classList.add(StringConcatAggregatorFactory.class);
         classList.add(StringConcatAggregatorString.class);
+        classList.add(UniqueCountAggregatorFactory.class);
+        classList.add(UniqueCountAggregatorLong.class);
+
         conf.setSiddhiExtensions(classList);
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -93,6 +96,7 @@ public class StringConcatTestCase {
         classList.add(StringConcatAggregatorString.class);
         classList.add(UniqueCountAggregatorFactory.class);
         classList.add(UniqueCountAggregatorLong.class);
+
         conf.setSiddhiExtensions(classList);
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -136,4 +140,6 @@ public class StringConcatTestCase {
         siddhiManager.shutdown();
 
     }
+
+
 }

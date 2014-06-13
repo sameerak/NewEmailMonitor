@@ -40,12 +40,17 @@ public class UniqueCountTestCase {
 
         SiddhiConfiguration conf = new SiddhiConfiguration();
         List<Class> classList = new ArrayList<Class>();
+        classList.add(StringConcatAggregatorFactory.class);
+        classList.add(StringConcatAggregatorString.class);
         classList.add(UniqueCountAggregatorFactory.class);
         classList.add(UniqueCountAggregatorLong.class);
+
         conf.setSiddhiExtensions(classList);
 
         SiddhiManager siddhiManager = new SiddhiManager();
         siddhiManager.getSiddhiContext().setSiddhiExtensions(classList);
+
+
 
         siddhiManager.defineStream("define stream emailStream (label string, to string, threadID long, messageID long) ");
 
@@ -53,6 +58,9 @@ public class UniqueCountTestCase {
                 "select threadID , email:getUniqueCount(messageID) as messageCount " +
                 "group by threadID " +
                 "insert into mailOutput;");
+
+
+
 
         siddhiManager.addCallback(queryReference, new QueryCallback() {
             @Override
@@ -85,8 +93,6 @@ public class UniqueCountTestCase {
 
         SiddhiConfiguration conf = new SiddhiConfiguration();
         List<Class> classList = new ArrayList<Class>();
-        classList.add(StringConcatAggregatorFactory.class);
-        classList.add(StringConcatAggregatorString.class);
         classList.add(UniqueCountAggregatorFactory.class);
         classList.add(UniqueCountAggregatorLong.class);
         conf.setSiddhiExtensions(classList);
