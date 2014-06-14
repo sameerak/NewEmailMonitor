@@ -60,7 +60,8 @@ if (!user) {
                     </td>
                 </tr>
                 <tr>
-                    <td class="row"><input class="col-md-offset-2" type="submit" value="Save Query"></td>
+                    <td class="row"><input class="col-md-offset-2" type="submit" value="Save Query">
+                    <input type="checkbox" name="isConfigured" value="true" checked> e-mail monitoring system is configured</td>
                 </tr>
             </tbody>
         </table>

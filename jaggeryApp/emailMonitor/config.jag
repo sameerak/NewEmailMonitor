@@ -26,18 +26,6 @@ if(verb == "DELETE" || verb == "PUT" || verb == "GET") {
                  util.isNotNullOrEmpty(cepUserName) && util.isNotNullOrEmpty(cepPassword)){
 					try{
 						
-						application.put('emailMon_emailAddress', emailAddress);
-						application.put('emailMon_emailPassword', emailPassword);
-						application.put('emailMon_esbIP', esbIP);
-						application.put('emailMon_esbPort', esbPort);
-						application.put('emailMon_esbUserName', esbUserName);
-						application.put('emailMon_esbPassword', esbPassword);
-						application.put('emailMon_cepIP', cepIP);
-						application.put('emailMon_cepPort', cepPort);
-						application.put('emailMon_cepUserName', cepUserName);
-						application.put('emailMon_cepPassword', cepPassword);
-				
-				
 						var log = new Log();
 						var serverUrl = util.getServiceUrl();
 						serverUrl = serverUrl + "EmailMonitorAdminService";
@@ -48,6 +36,9 @@ if(verb == "DELETE" || verb == "PUT" || verb == "GET") {
 						myEmailMonitorAdminServiceStub.addCEPConfigurations(esbIP, esbPort, esbUserName, esbPassword, emailAddress);
 						myEmailMonitorAdminServiceStub.addESBConfigurations(esbIP, esbPort, esbUserName, esbPassword, 
 							cepUserName, cepPassword, emailAddress, emailPassword, cepIP, cepPort);
+						
+						application.put('emailMon_isConfigured', true);
+						
 						response.status = 200;
 						print("CEP and ESB configured successfully.");
 					}
