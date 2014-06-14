@@ -189,7 +189,7 @@ public class TemplatePopulator {
         if (conditionAttribute instanceof FromCondition) {
             FromCondition fromCondition = (FromCondition) conditionAttribute;
             ConditionAttribute conditionAttribute1 = fromCondition.getEmailAddressSet();
-            String result = convertEmailAddressSet(conditionAttribute1, "from");
+            String result = convertEmailAddressSet(conditionAttribute1, "senders");
             siddhiTemplate.setFromMails(result);
         }
         return siddhiTemplate;
