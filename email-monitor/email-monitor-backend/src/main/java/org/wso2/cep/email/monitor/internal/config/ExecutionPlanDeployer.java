@@ -45,7 +45,12 @@ public class ExecutionPlanDeployer {
     private String getExecutionPlanConfiguration(String query) throws EmailMonitorServiceException {
         String[] queryInfo = query.split("\\s+|\\[|#|;");
         String inputStream = queryInfo[1];
-        String outputStream = queryInfo[queryInfo.length - 1];
+
+
+
+        String queryOutputPart =  query.substring(query.indexOf("insert into"));
+        String[] arry = queryOutputPart.split("\\s+|\\[|#|;");
+        String outputStream = arry[2];
 
         String content = xmlReader.readXML(EmailMonitorConstants.EXECUTION_PLAN_TEMPLATE);
         content = content.replace(EmailMonitorConstants.EXECUTION_PLAN_NAME, EmailMonitorConstants.ADD_EXECUTION_PLAN_NAME + queryCount);
