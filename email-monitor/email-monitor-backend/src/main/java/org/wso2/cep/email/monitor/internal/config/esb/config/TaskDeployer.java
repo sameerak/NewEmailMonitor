@@ -38,31 +38,45 @@ public class TaskDeployer {
     public void addScheduledTask(String userName, String password, String mailUserName, String mailPassword) throws EmailMonitorServiceException {
         CarbonUtils.setBasicAccessSecurityHeaders(userName, password, stub._getServiceClient());
 
-        String content = xmlReader.readXML(EmailMonitorConstants.TASK_CONFIGURATION_FILE_PATH);
-
-        content = content.replace(EmailMonitorConstants.GMAIL_USERNAME, mailUserName);
-
-        CryptographyManager cryptographyManager = new CryptographyManager();
-        content = content.replace(EmailMonitorConstants.GMAIL_PASSWORD, cryptographyManager.encryptAndBase64Encode(mailPassword));
-
-
-        OMElement omElementTask = null;
+        boolean isTaskExist = false;
         try {
-            omElementTask = AXIOMUtil.stringToOM(content);
-        } catch (XMLStreamException e) {
-            logger.error(e.getMessage());
-            throw new EmailMonitorServiceException("Error when creating OMElement in Task", e);
-        }
-
-        try {
-            stub.addTaskDescription(omElementTask);
+            isTaskExist = stub.isContains(EmailMonitorConstants.TASK_NAME, EmailMonitorConstants.TASK_GROUP);
         } catch (RemoteException e) {
             logger.error(e.getMessage());
-            throw new EmailMonitorServiceException("Error when adding Tasks to Stub", e);
+            throw new EmailMonitorServiceException("Error when searching for task 'getmail' ", e);
         } catch (TaskManagementException e) {
             logger.error(e.getMessage());
-            throw new EmailMonitorServiceException("Error when adding Tasks to Stub", e);
+            throw new EmailMonitorServiceException("Error when searching for task 'getmail' ", e);
         }
 
+
+        if(!isTaskExist) {
+            String content = xmlReader.readXML(EmailMonitorConstants.TASK_CONFIGURATION_FILE_PATH);
+
+            content = content.replace(EmailMonitorConstants.GMAIL_USERNAME, mailUserName);
+
+            CryptographyManager cryptographyManager = new CryptographyManager();
+            content = content.replace(EmailMonitorConstants.GMAIL_PASSWORD, cryptographyManager.encryptAndBase64Encode(mailPassword));
+
+
+            OMElement omElementTask = null;
+            try {
+                omElementTask = AXIOMUtil.stringToOM(content);
+            } catch (XMLStreamException e) {
+                logger.error(e.getMessage());
+                throw new EmailMonitorServiceException("Error when creating OMElement in Task", e);
+            }
+
+            try {
+                stub.addTaskDescription(omElementTask);
+            } catch (RemoteException e) {
+                logger.error(e.getMessage());
+                throw new EmailMonitorServiceException("Error when adding Tasks to Stub", e);
+            } catch (TaskManagementException e) {
+                logger.error(e.getMessage());
+                throw new EmailMonitorServiceException("Error when adding Tasks to Stub", e);
+            }
+
+        }
     }
 }
