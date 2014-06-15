@@ -54,7 +54,7 @@ public class UniqueCountTestCase {
 
         siddhiManager.defineStream("define stream emailStream (label string, to string, threadID long, messageID long) ");
 
-        String queryReference = siddhiManager.addQuery("from emailStream#window.timeBatch(1 hour) " +
+        String queryReference = siddhiManager.addQuery("from emailStream#window.time(1 hour) " +
                 "select threadID , email:getUniqueCount(messageID) as messageCount " +
                 "group by threadID " +
                 "insert into mailOutput;");
