@@ -1,14 +1,6 @@
 <%
-var emailAddress = application.get("emailMon_emailAddress");
-var emailPassword = application.get("emailMon_emailPassword");
-var esbIP = application.get("emailMon_esbIP");
-var esbPort = application.get("emailMon_esbPort");
-var esbUserName = application.get("emailMon_esbUserName");
-var esbPassword = application.get("emailMon_esbPassword");
-var cepIP = application.get("emailMon_cepIP");
-var cepPort = application.get("emailMon_cepPort");
-var cepUserName = application.get("emailMon_cepUserName");
-var cepPassword = application.get("emailMon_cepPassword");
+var isConfigured = application.get("emailMon_isConfigured");
+var ui_isConfigured = request.getParameter("isConfigured");
 var cepQuery = request.getParameter("cepQueries");
 var verb = request.getMethod();
 response.contentType = 'text/plain';
@@ -20,11 +12,7 @@ if(verb == "DELETE" || verb == "PUT" || verb == "GET") {
 } else if(verb == "POST") {
 		var util = require("util/utility.jag");
 	
-            if(util.isNotNullOrEmpty(emailAddress) && util.isNotNullOrEmpty(emailPassword) &&
-                 util.isNotNullOrEmpty(esbIP) && util.isNotNullOrEmpty(esbPort) &&
-                 util.isNotNullOrEmpty(esbUserName) && util.isNotNullOrEmpty(esbPassword) &&
-                 util.isNotNullOrEmpty(cepIP) && util.isNotNullOrEmpty(cepPort) &&
-                 util.isNotNullOrEmpty(cepUserName) && util.isNotNullOrEmpty(cepPassword) && util.isNotNullOrEmpty(cepQuery)){
+            if((ui_isConfigured || isConfigured) && util.isNotNullOrEmpty(cepQuery)){
 					try{
 				
 				

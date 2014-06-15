@@ -2,6 +2,7 @@ package org.wso2.cep.email.monitor.query.compiler.internal.siddhi;
 
 
 import org.wso2.cep.email.monitor.query.api.Query;
+import org.wso2.cep.email.monitor.query.api.utils.Constants;
 import org.wso2.cep.email.monitor.query.compiler.internal.siddhi.utils.ConstantsUtils;
 
 
@@ -49,7 +50,7 @@ public class SiddhiQueryWriter {
 
         stringBuffer.append("from " + ConstantsUtils.INPUTSTREAM);
         if (siddhiTemplate.getLabelMails() != null) {
-            stringBuffer.append("select  threadID,labels, email:getAll(to) as to ,email:getAll(sender) as senders,");
+            stringBuffer.append(" select  threadID,labels, email:getAll(to) as to ,email:getAll(sender) as senders,");
             if (!siddhiTemplate.isSendMailEnabled()) {
                 stringBuffer.append(" " + '"' + siddhiTemplate.getLabelName() + '"' + " ");
                 stringBuffer.append("as newLabel insert into ");
@@ -84,7 +85,7 @@ public class SiddhiQueryWriter {
         }
         stringBuffer1.append("]");
         if (!siddhiTemplate.isSendMailEnabled()) {
-            stringBuffer1.append("select threadID, newLabel as label insert into " + ConstantsUtils.OUTPUTSTREAM);
+            stringBuffer1.append(" select threadID, newLabel as label insert into " + ConstantsUtils.OUTPUTSTREAM);
             stringBuffer1.append(";");
         }
         result[1] = stringBuffer1.toString();
@@ -115,7 +116,7 @@ public class SiddhiQueryWriter {
         }
         stringBuffer1.append("]");
         if (!siddhiTemplate.isSendMailEnabled()) {
-            stringBuffer1.append("select threadID, ");
+            stringBuffer1.append(" select threadID, ");
             stringBuffer1.append(" " + '"' + siddhiTemplate.getLabelName() + '"' + " ");
             stringBuffer1.append(" as label insert into " + ConstantsUtils.OUTPUTSTREAM);
             stringBuffer1.append(";");
@@ -134,9 +135,9 @@ public class SiddhiQueryWriter {
             stringBuffer1.append("#window.externalTime(sentDate,");
             stringBuffer1.append(siddhiTemplate.getTimeExpr());
             stringBuffer1.append(")");
-            stringBuffer1.append("select  threadID, labels,count(messageID) as emailCount, email:getAll(to) as to ,email:getAll(sender) as senders,");
+            stringBuffer1.append(" select  threadID, labels,count(messageID) as emailCount, email:getAll(to) as to ,email:getAll(sender) as senders,");
             stringBuffer1.append(" " + '"' + siddhiTemplate.getLabelName() + '"' + " ");
-            stringBuffer1.append("as newLabel group by threadID  having emailcount ");
+            stringBuffer1.append("as newLabel group by threadID  having emailCount ");
             stringBuffer1.append(siddhiTemplate.getCmpAction());
             stringBuffer1.append(" " + siddhiTemplate.getCountValue());
             stringBuffer1.append(" insert into " + ConstantsUtils.THREADSTREAM);
@@ -171,7 +172,7 @@ public class SiddhiQueryWriter {
             stringBuffer.append("]");
         }
         if (!siddhiTemplate.isSendMailEnabled()) {
-            stringBuffer.append("select threadID, newLabel as label insert into " + ConstantsUtils.OUTPUTSTREAM);
+            stringBuffer.append(" select threadID, newLabel as label insert into " + ConstantsUtils.OUTPUTSTREAM);
             stringBuffer.append(";");
         }
 
@@ -190,12 +191,16 @@ public class SiddhiQueryWriter {
 
         if (!siddhiTemplate.isSendMailEnabled()) {
 
-
-            stringBuffer1.append("#window.externalTime(sentDate,30 days");
+            if(siddhiTemplate.isLabelCount()) {
+                stringBuffer1.append("#window.externalTime(sentDate,30 days");
+            }else {
+                stringBuffer1.append("#window.externalTime(sentDate,");
+                stringBuffer1.append(siddhiTemplate.getTimeExpr());
+            }
             stringBuffer1.append(")");
-            stringBuffer1.append("select  threadID,labels, count(messageID) as emailCount, email:getAll(to) as to ,email:getAll(sender) as senders,");
+            stringBuffer1.append(" select  threadID,labels, count(messageID) as emailCount, email:getAll(to) as to ,email:getAll(sender) as senders,");
             stringBuffer1.append(" " + '"' + siddhiTemplate.getLabelName() + '"' + " ");
-            stringBuffer1.append("as newLabel group by threadID  having emailcount ");
+            stringBuffer1.append("as newLabel group by threadID  having emailCount ");
             stringBuffer1.append(siddhiTemplate.getCmpAction());
             stringBuffer1.append(" " + siddhiTemplate.getCountValue());
             stringBuffer1.append(" insert into " + ConstantsUtils.THREADSTREAM);
@@ -235,7 +240,7 @@ public class SiddhiQueryWriter {
         }
         stringBuffer.append("]");
         if (!siddhiTemplate.isSendMailEnabled()) {
-            stringBuffer.append("select threadID, newLabel as label insert into " + ConstantsUtils.OUTPUTSTREAM);
+            stringBuffer.append(" select threadID, newLabel as label insert into " + ConstantsUtils.OUTPUTSTREAM);
             stringBuffer.append(";");
         }
         str[1] = stringBuffer.toString();
@@ -254,22 +259,33 @@ public class SiddhiQueryWriter {
             stringBuffer1.append(siddhiTemplate.getLabelMails());
             stringBuffer1.append(")");
         }
+        stringBuffer1.append("]");
         stringBuffer1.append("#window.externalTime(sentDate,");
         stringBuffer1.append(siddhiTemplate.getTimeExpr());
         stringBuffer1.append(")");
-        stringBuffer1.append("select  ");
+        stringBuffer1.append(" select  ");
         String re = siddhiTemplate.getLabelMails();
         re = re.substring(re.indexOf('"') + 1, re.length() - 1);
         stringBuffer1.append(" " + '"' + re + '"' + " ");
-        stringBuffer1.append("as relevantLabel, email:countUnique(threadID) as threadCount, insert into ");
-        stringBuffer1.append(ConstantsUtils.EMAIL_SENDER_OUTPUTSTREAM);
-        stringBuffer1.append(" having threadCount ");
-        stringBuffer1.append(siddhiTemplate.getCmpAction());
-        stringBuffer1.append(" " + siddhiTemplate.getCountValue());
+        stringBuffer1.append("as label, email:getUniqueCount(threadID) as threadCount insert into ");
+        stringBuffer1.append(ConstantsUtils.LABELSTREAM);
         stringBuffer1.append(";");
 
         str[0] = stringBuffer1.toString();
+        StringBuffer stringBuffer = new StringBuffer();
 
+        stringBuffer.append("from "+ ConstantsUtils.LABELSTREAM);
+        stringBuffer.append(" [");
+        stringBuffer.append("(");
+        stringBuffer.append("threadCount ");
+        stringBuffer.append(siddhiTemplate.getCmpAction());
+        stringBuffer.append(" " + siddhiTemplate.getCountValue());
+        stringBuffer.append(" )");
+        stringBuffer.append("]");
+        stringBuffer.append("select  * insert into ");
+        stringBuffer.append(ConstantsUtils.EMAIL_SENDER_OUTPUTSTREAM);
+        stringBuffer.append(";");
+        str[1] = stringBuffer.toString();
 
         return str;
 
