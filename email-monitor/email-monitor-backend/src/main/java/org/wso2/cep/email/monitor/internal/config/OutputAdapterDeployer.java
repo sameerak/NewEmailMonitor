@@ -29,27 +29,38 @@ public class OutputAdapterDeployer {
     }
 
     public void createSoapOutputAdapter(AxisConfiguration axisConfiguration) throws EmailMonitorServiceException {
-        OutputEventAdaptorConfiguration outputEventAdaptorConfiguration = new OutputEventAdaptorConfiguration();
-        outputEventAdaptorConfiguration.setName(EmailMonitorConstants.SOAP_OUTPUT_ADAPTER_NAME);
-        outputEventAdaptorConfiguration.setType(EmailMonitorConstants.ADAPTER_TYPE_SOAP);
         try {
-            outputEventAdaptorManagerService.deployOutputEventAdaptorConfiguration(outputEventAdaptorConfiguration, axisConfiguration);
+            outputEventAdaptorManagerService.getActiveOutputEventAdaptorConfigurationContent(EmailMonitorConstants.SOAP_OUTPUT_ADAPTER_NAME,axisConfiguration);
         } catch (OutputEventAdaptorManagerConfigurationException e) {
-            logger.error(e.getMessage());
-            throw new EmailMonitorServiceException("Error when adding output adapter", e);
+            OutputEventAdaptorConfiguration outputEventAdaptorConfiguration = new OutputEventAdaptorConfiguration();
+            outputEventAdaptorConfiguration.setName(EmailMonitorConstants.SOAP_OUTPUT_ADAPTER_NAME);
+            outputEventAdaptorConfiguration.setType(EmailMonitorConstants.ADAPTER_TYPE_SOAP);
+            try {
+                outputEventAdaptorManagerService.deployOutputEventAdaptorConfiguration(outputEventAdaptorConfiguration, axisConfiguration);
+            } catch (OutputEventAdaptorManagerConfigurationException ex) {
+                logger.error(ex.getMessage());
+                throw new EmailMonitorServiceException("Error when adding output adapter", ex);
+            }
         }
+
     }
 
     public void createEmailOutputAdapter(AxisConfiguration axisConfiguration) throws EmailMonitorServiceException {
-        OutputEventAdaptorConfiguration outputEventAdaptorConfiguration = new OutputEventAdaptorConfiguration();
-        outputEventAdaptorConfiguration.setName(EmailMonitorConstants.EMAIL_OUTPUT_ADAPTER_NAME);
-        outputEventAdaptorConfiguration.setType(EmailMonitorConstants.ADAPTER_TYPE_EMAIL);
+
         try {
-            outputEventAdaptorManagerService.deployOutputEventAdaptorConfiguration(outputEventAdaptorConfiguration, axisConfiguration);
+            outputEventAdaptorManagerService.getActiveOutputEventAdaptorConfigurationContent(EmailMonitorConstants.EMAIL_OUTPUT_ADAPTER_NAME,axisConfiguration);
         } catch (OutputEventAdaptorManagerConfigurationException e) {
-            logger.error(e.getMessage());
-            throw new EmailMonitorServiceException("Error when adding output adapter", e);
+            OutputEventAdaptorConfiguration outputEventAdaptorConfiguration = new OutputEventAdaptorConfiguration();
+            outputEventAdaptorConfiguration.setName(EmailMonitorConstants.EMAIL_OUTPUT_ADAPTER_NAME);
+            outputEventAdaptorConfiguration.setType(EmailMonitorConstants.ADAPTER_TYPE_EMAIL);
+            try {
+                outputEventAdaptorManagerService.deployOutputEventAdaptorConfiguration(outputEventAdaptorConfiguration, axisConfiguration);
+            } catch (OutputEventAdaptorManagerConfigurationException ex) {
+                logger.error(ex.getMessage());
+                throw new EmailMonitorServiceException("Error when adding output adapter", ex);
+            }
         }
+
     }
 }
 

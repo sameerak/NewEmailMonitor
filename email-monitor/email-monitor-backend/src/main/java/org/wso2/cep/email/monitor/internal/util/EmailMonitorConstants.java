@@ -19,7 +19,9 @@ public class EmailMonitorConstants {
     public static final String MAIL_READER_PROXY_PATH = "/config/insequence.xml";
     public static final String LABEL_ADDER_PROXY_PATH = "/config/labelAdderProxyInsequence.xml";
     public static final String GMAIL_OUT_STREAM_CONFIGURATION_PATH = "/config/gmailoutstreamFormatter.xml";
+    public static final String GMAIL_OUT_STREAM_FORMATTER_NAME = "gmailOutputStream_formatter";
     public static final String MAIL_SENDER_OUT_STREAM_CONFIGURATION_PATH = "/config/emailSenderStreamFormatter.xml";
+    public static final String MAIL_SENDER_OUT_STREAM_FORMATTER_NAME= "emailSenderOutputStream_formatter";
 
     public static final String EXECUTION_PLAN_TEMPLATE = "/config/executionPlanTemplate.xml";
     public static final String ADD_EXECUTION_PLAN_NAME = "executionPlan_";
@@ -36,6 +38,8 @@ public class EmailMonitorConstants {
     public static final String TASK_ADMIN_SERVICE = "TaskAdmin";
     public static final String TASK_CONFIGURATION_FILE_PATH = "/config/taskConfig.xml";
     public static final String EVENT_STREAM_ADMIN_SERVICE = "EventStreamAdminService";
+    public static final String TASK_NAME = "getMail";
+    public static final String TASK_GROUP = "synapse.simple.quartz";
 
     public static final String CEP_SERVER_USER_NAME = "CEPSERVERUSERNAME";
     public static final String CEP_SERVER_IP = "CEPSERVERIP";

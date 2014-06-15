@@ -40,38 +40,49 @@ public class BAMMediatorDeployer {
 
         CarbonUtils.setBasicAccessSecurityHeaders(userName, password, stub._getServiceClient());
 
-        String content = xmlReader.readXML(EmailMonitorConstants.BAM_SERVER_PROFILE_CONFIGURATION_PATH);
-
-        content.replace("CEPServerUserName", CEPServerUserName);
-        content.replace("CEPServerIP", CEPServerIP);
-        content.replace("CEPServerPort", CEPServerPort);
-
-        content.replace("CEPServerPassword", CEPServerPassword);
-
-        content = content.replace(EmailMonitorConstants.CEP_SERVER_USER_NAME, CEPServerUserName);
-        content = content.replace(EmailMonitorConstants.CEP_SERVER_IP, CEPServerIP);
-        content = content.replace(EmailMonitorConstants.CEP_SERVER_PORT, CEPServerPort);
-
-        String encryptedPassword = "";
+        boolean isServerProfileCreated = false;
 
         try {
-
-             encryptedPassword = stub.encryptAndBase64Encode(CEPServerPassword);
+            stub.bamServerConfigExists(EmailMonitorConstants.BAM_SERVER_PROFILE_NAME);
         } catch (RemoteException e) {
-
-            logger.error(e.getMessage());
-            throw new EmailMonitorServiceException(e);
-        }
-        content = content.replace(EmailMonitorConstants.CEP_SERVER_ENCRYPTED_PASSWORD, encryptedPassword);
-
-        try {
-            stub.saveResourceString(content, EmailMonitorConstants.BAM_SERVER_PROFILE_NAME);
-        } catch (RemoteException e) {
-            logger.error(e.getMessage());
             throw new EmailMonitorServiceException("Error when adding BAM Server Profiles and adding to  Stub", e);
         }
 
+        if (!isServerProfileCreated) {
 
+            String content = xmlReader.readXML(EmailMonitorConstants.BAM_SERVER_PROFILE_CONFIGURATION_PATH);
+
+            content.replace("CEPServerUserName", CEPServerUserName);
+            content.replace("CEPServerIP", CEPServerIP);
+            content.replace("CEPServerPort", CEPServerPort);
+
+            content.replace("CEPServerPassword", CEPServerPassword);
+
+            content = content.replace(EmailMonitorConstants.CEP_SERVER_USER_NAME, CEPServerUserName);
+            content = content.replace(EmailMonitorConstants.CEP_SERVER_IP, CEPServerIP);
+            content = content.replace(EmailMonitorConstants.CEP_SERVER_PORT, CEPServerPort);
+
+            String encryptedPassword = "";
+
+            try {
+
+                encryptedPassword = stub.encryptAndBase64Encode(CEPServerPassword);
+            } catch (RemoteException e) {
+
+                logger.error(e.getMessage());
+                throw new EmailMonitorServiceException(e);
+            }
+            content = content.replace(EmailMonitorConstants.CEP_SERVER_ENCRYPTED_PASSWORD, encryptedPassword);
+
+            try {
+                stub.saveResourceString(content, EmailMonitorConstants.BAM_SERVER_PROFILE_NAME);
+            } catch (RemoteException e) {
+                logger.error(e.getMessage());
+                throw new EmailMonitorServiceException("Error when adding BAM Server Profiles and adding to  Stub", e);
+            }
+
+
+        }
     }
 
 

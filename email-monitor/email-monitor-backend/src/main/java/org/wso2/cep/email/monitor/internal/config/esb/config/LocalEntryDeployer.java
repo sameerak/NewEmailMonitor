@@ -34,11 +34,29 @@ public class LocalEntryDeployer {
 
     public void addLocalEntry(String userName, String password, String mailUserNAme, String mailPassword) throws EmailMonitorServiceException {
         CarbonUtils.setBasicAccessSecurityHeaders(userName, password, stub._getServiceClient());
+
+        boolean isEmailEntryExist = false;
+        boolean isPasswordEntryExist = false;
+        try {
+            String entrySet = stub.getEntryNamesString();
+            isEmailEntryExist = entrySet.contains("[Entry]-email");
+            isPasswordEntryExist = entrySet.contains("[Entry]-password");
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (LocalEntryAdminException e) {
+            e.printStackTrace();
+        }
+
         CryptographyManager cryptographyManager = new CryptographyManager();
 
-           try {
-            stub.addEntry("<localEntry key=\"email\"><email>"+mailUserNAme+"</email><description/></localEntry>");
-            stub.addEntry("<localEntry key=\"password\"><password>"+cryptographyManager.encryptAndBase64Encode(mailPassword)+"</password><description/></localEntry>");
+        try {
+
+            if(!isEmailEntryExist) {
+                stub.addEntry("<localEntry key=\"email\"><email>" + mailUserNAme + "</email><description/></localEntry>");
+            }
+            if(!isPasswordEntryExist) {
+                stub.addEntry("<localEntry key=\"password\"><password>" + cryptographyManager.encryptAndBase64Encode(mailPassword) + "</password><description/></localEntry>");
+            }
         } catch (RemoteException e) {
             e.printStackTrace();
         } catch (LocalEntryAdminException e) {
