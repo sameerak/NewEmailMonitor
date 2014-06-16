@@ -25,7 +25,7 @@ public class CEPConfigUtils {
 
             String[] siddhiQueries = emailMonitorAdminServiceStub.getSiddhiQuery(mailquery);
             for (String siddhiquery: siddhiQueries){
-                emailMonitorAdminServiceStub.createExecutionPlan(siddhiquery);
+                String planName = emailMonitorAdminServiceStub.createExecutionPlan(siddhiquery);
             }
 
         } catch (AxisFault axisFault) {

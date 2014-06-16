@@ -62,12 +62,12 @@ public class EmailMonitorService implements EmailMonitorServiceInterface {
     }
 
     @Override
-    public boolean createExecutionPlan( String query,AxisConfiguration axisConfiguration) throws EmailMonitorServiceException {
+    public String createExecutionPlan( String query,AxisConfiguration axisConfiguration) throws EmailMonitorServiceException {
 
         try {
             ExecutionPlanDeployer executionPlanDeployer = new ExecutionPlanDeployer();
-            executionPlanDeployer.createExecutionPlan(query,axisConfiguration);
-            return true;
+            return executionPlanDeployer.createExecutionPlan(query,axisConfiguration);
+
         } catch (EmailMonitorServiceException e) {
             logger.error(e.getMessage());
             throw new EmailMonitorServiceException(e);

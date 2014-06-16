@@ -17,7 +17,7 @@ public class ExecutionPlanDeployer {
     private static Logger logger = Logger.getLogger(ExecutionPlanDeployer.class);
     private EventProcessorService eventProcessorService;
     private XMLReader xmlReader;
-    private static int queryCount = 0;
+    private static int queryCount = 1;
 
     public ExecutionPlanDeployer() {
 
@@ -27,7 +27,7 @@ public class ExecutionPlanDeployer {
     }
 
 
-    public void createExecutionPlan(String query, AxisConfiguration axisConfiguration) throws EmailMonitorServiceException {
+    public String createExecutionPlan(String query, AxisConfiguration axisConfiguration) throws EmailMonitorServiceException {
         String executionPlanXmlConfiguration = this.getExecutionPlanConfiguration(query);
         try {
 
@@ -39,6 +39,7 @@ public class ExecutionPlanDeployer {
             logger.error(e.getMessage());
             throw new EmailMonitorServiceException("Error when adding execution plan", e);
         }
+        return EmailMonitorConstants.ADD_EXECUTION_PLAN_NAME + (queryCount-1);
     }
 
 
