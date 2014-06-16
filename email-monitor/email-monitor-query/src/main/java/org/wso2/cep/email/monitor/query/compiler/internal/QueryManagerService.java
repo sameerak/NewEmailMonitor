@@ -4,10 +4,12 @@ package org.wso2.cep.email.monitor.query.compiler.internal;
 import org.wso2.cep.email.monitor.query.api.Query;
 import org.wso2.cep.email.monitor.query.compiler.QueryManagerServiceInterface;
 import org.wso2.cep.email.monitor.query.compiler.exeception.EmailMonitorCompilerException;
-import org.wso2.cep.email.monitor.query.compiler.internal.EmailMonitorCompiler;
 import org.wso2.cep.email.monitor.query.compiler.internal.siddhi.SiddhiQueryWriter;
 
 public class QueryManagerService implements QueryManagerServiceInterface {
+
+
+
 
 
     public String[] getSiddhiQuery(String query) throws EmailMonitorCompilerException {

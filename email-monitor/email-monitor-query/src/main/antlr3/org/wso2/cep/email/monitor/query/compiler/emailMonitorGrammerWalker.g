@@ -166,7 +166,7 @@ toCondition returns [ConditionAttribute to]
 @init{
 $to= new ToCondition();
 }
-    :   'to' '='	'('emailAddrSet{$to.setEmailAddressSet($emailAddrSet.emailSet);} ')';
+    :   'to' ':'	'('emailAddrSet{$to.setEmailAddressSet($emailAddrSet.emailSet);} ')';
 
 
 
@@ -175,7 +175,7 @@ labelCondition returns [ConditionAttribute lbCondition]
 @init{
    $lbCondition=new LabelCondition();
 }
- 	: 'label' '=' '(' labelSet{$lbCondition.setLabelSet($labelSet.lbSet);} ')'
+ 	: 'label' ':' '(' labelSet{$lbCondition.setLabelSet($labelSet.lbSet);} ')'
  	;
 
 
@@ -185,7 +185,7 @@ labelCondition returns [ConditionAttribute lbCondition]
  @init{
     $fromCond= new FromCondition();
  }
-      :	'from' '=' '('emailAddrSet{$fromCond.setEmailAddressSet($emailAddrSet.emailSet);} ')'
+      :	'from' ':' '('emailAddrSet{$fromCond.setEmailAddressSet($emailAddrSet.emailSet);} ')'
       	;
 
 
