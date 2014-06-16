@@ -39,7 +39,7 @@ import java.util.HashMap;
 HashMap memory = new HashMap();
 }
 
-prog:       conditions   '->' action  ->^(EMAIL_PRO conditions action);
+prog:       conditions    action  ->^(EMAIL_PRO conditions action);
                 
 conditions:   frequencyCondition
      | labelFromToCondition  'and'  frequencyCondition
@@ -72,14 +72,14 @@ action
 
     
 toCondition 
-    :   'to'  '='	'('emailAddrSet ')';
+    :   'to'  ':'	'('emailAddrSet ')';
     
 labelCondition
- 	: 'label' '='  '('labelSet')'
+ 	: 'label' ':'  '('labelSet')'
  	;
  	
  fromCondition
-      :	'from' '=' '('emailAddrSet')'
+      :	'from' ':' '('emailAddrSet')'
       	;
       	
  frequencyCondition
