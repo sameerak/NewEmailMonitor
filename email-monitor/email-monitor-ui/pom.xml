@@ -45,10 +45,10 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                        <Bundle-SymbolicName>${pom.groupId}.${pom.artifactId}</Bundle-SymbolicName>
-                        <Bundle-Name>${pom.name}</Bundle-Name>
+                        <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
+                        <Bundle-Name>${project.artifactId}</Bundle-Name>
                         <Bundle-Version>${pom.version}</Bundle-Version>
-                        <Export-Package>org.wso2.cep.email.ui</Export-Package>
+                        <Export-Package>org.wso2.cep.email.monitor.*</Export-Package>
                         <Import-Package>
                             *;resolution:=optional
                         </Import-Package>
