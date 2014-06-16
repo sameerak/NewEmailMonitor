@@ -48,7 +48,7 @@
                         <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
                         <Bundle-Name>${project.artifactId}</Bundle-Name>
                         <Bundle-Version>${pom.version}</Bundle-Version>
-                        <Export-Package>org.wso2.cep.email.monitor.*</Export-Package>
+                        <Export-Package>org.wso2.cep.email.monitor.ui.*</Export-Package>
                         <Import-Package>
                             *;resolution:=optional
                         </Import-Package>
