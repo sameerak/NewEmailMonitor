@@ -8,6 +8,7 @@ import org.wso2.carbon.event.formatter.core.EventFormatterService;
 import org.wso2.carbon.event.output.adaptor.manager.core.OutputEventAdaptorManagerService;
 import org.wso2.carbon.event.processor.core.EventProcessorService;
 import org.wso2.carbon.event.stream.manager.core.EventStreamService;
+import org.wso2.carbon.registry.core.service.RegistryService;
 import org.wso2.carbon.utils.Axis2ConfigurationContextObserver;
 import org.wso2.carbon.utils.ConfigurationContextService;
 import org.wso2.cep.email.monitor.EmailMonitorServiceInterface;
@@ -26,7 +27,10 @@ import org.wso2.cep.email.monitor.internal.EmailMonitorService;
  * policy="dynamic" bind="setEventFormatterService" unbind="unsetEventFormatterService"
  * @scr.reference name="outputeventadaptormanager.service"
  * interface="org.wso2.carbon.event.output.adaptor.manager.core.OutputEventAdaptorManagerService" cardinality="1..1"
- * policy="dynamic" bind="setOutputEventAdaptorManagerService" unbind="unsetOutputEventAdaptorManagerService"
+ * policy="dynamic" bind="setOutputEventAdaptorService" unbind="unsetOutputEventAdaptorService"
+ * @scr.reference name="registry.service"
+ * interface="org.wso2.carbon.registry.core.service.RegistryService" cardinality="1..1"
+ * policy="dynamic" bind="setRegistryService" unbind="unsetRegistryService"
  */
 public class EmailMonitorServiceDS {
     private static final Logger log = Logger.getLogger(EmailMonitorServiceDS.class);
@@ -59,26 +63,33 @@ public class EmailMonitorServiceDS {
     protected void unsetEventStreamService(EventStreamService eventStreamService){
        EmailMonitorValueHolder.getInstance().unsetEventStreamService();
     }
-    protected void setEventFormatterService(EventFormatterService eventProcessorService){
-        EmailMonitorValueHolder.getInstance().setEventFormatterService(eventProcessorService);
+    protected void setEventFormatterService(EventFormatterService eventFormatterService){
+        EmailMonitorValueHolder.getInstance().setEventFormatterService(eventFormatterService);
     }
 
-    protected void unsetEventFormatterService(EventFormatterService eventStreamService){
-        EmailMonitorValueHolder.getInstance().unsetEventFormatterService(eventStreamService);
+    protected void unsetEventFormatterService(EventFormatterService eventFormatterService){
+        EmailMonitorValueHolder.getInstance().unsetEventFormatterService(eventFormatterService);
     }
     protected void setEventProcessorService(EventProcessorService eventProcessorService){
         EmailMonitorValueHolder.getInstance().setEventProcessorService(eventProcessorService);
     }
 
-    protected void unsetEventProcessorService(EventProcessorService eventStreamService){
+    protected void unsetEventProcessorService(EventProcessorService eventProcessorService){
         EmailMonitorValueHolder.getInstance().unsetEventProcessorService();
     }
-    protected void setOutputEventAdaptorManagerService(OutputEventAdaptorManagerService eventProcessorService){
-        EmailMonitorValueHolder.getInstance().setOutputEventAdaptorManagerService(eventProcessorService);
+    protected void setOutputEventAdaptorService(OutputEventAdaptorManagerService outputEventAdaptorManagerService){
+        EmailMonitorValueHolder.getInstance().setOutputEventAdaptorManagerService(outputEventAdaptorManagerService);
     }
 
-    protected void unsetOutputEventAdaptorManagerService(OutputEventAdaptorManagerService eventStreamService){
-        EmailMonitorValueHolder.getInstance().unsetsetOutputEventAdaptorManagerService(eventStreamService);
+    protected void unsetOutputEventAdaptorService(OutputEventAdaptorManagerService outputEventAdaptorManagerService){
+        EmailMonitorValueHolder.getInstance().unsetsetOutputEventAdaptorManagerService(outputEventAdaptorManagerService);
+    }
+    protected void setRegistryService(RegistryService registryService) {
+        EmailMonitorValueHolder.getInstance().setRegistryService(registryService);
+    }
+
+    protected void unsetRegistryService(RegistryService registryService) {
+        EmailMonitorValueHolder.getInstance().unsetRegistryService();
     }
 
 
