@@ -5,7 +5,7 @@ var log = new Log();
  var isLogin = session.get("Loged");
 
  if (isLogin) {
- response.sendRedirect('/cep-dash');
+ response.sendRedirect('/emailMonitor-1.0.0');
  }
  */
 
@@ -55,7 +55,7 @@ if (samlResponse != null) {
         }
 
     } else {
-        log.debug('logout from cep-dash');
+        log.debug('logout from emailMonitor-1.0.0');
 // if the saml response is log out request from IDP, we log out from web app.
         ssoRelyingParty.invalidateSessionBySessionId(sessionId);
         session.invalidate();
