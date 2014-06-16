@@ -55,4 +55,7 @@ public class EmailMonitorConstants {
     public static final String MAIL_SUBJECT = "EMAILSUBJECT";
 
 
+    public static final String REGISTRY_COLLECTION_NAME = "emailMonitorCollection";
+    public static final String REGISTRY_QUERYCOUNT_RESOURCE_PATH = "emailMonitorCollection/queryCount";
+
 }
