@@ -117,17 +117,11 @@ public class SiddhiQueryWriter {
             stringBuffer1.append(")");
 
         }
-        if (siddhiTemplate.getLabelMails() != null) {
-            if(siddhiTemplate.getToMails()!= null) {
-                stringBuffer1.append(" " + siddhiTemplate.getTolabel() + " ");
-            }
-            stringBuffer1.append("(");
-            stringBuffer1.append(siddhiTemplate.getLabelMails());
-            stringBuffer1.append(")");
 
-        }
         if (siddhiTemplate.getFromMails() != null) {
-            stringBuffer1.append(siddhiTemplate.getLabelFrom());
+            if(siddhiTemplate.getToMails()!= null) {
+                stringBuffer1.append(siddhiTemplate.getToMails());
+            }
             stringBuffer1.append("(");
             stringBuffer1.append(siddhiTemplate.getFromMails());
             stringBuffer1.append(")");
