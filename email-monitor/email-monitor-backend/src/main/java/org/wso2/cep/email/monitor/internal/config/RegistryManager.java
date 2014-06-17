@@ -29,7 +29,7 @@ import org.wso2.cep.email.monitor.internal.ds.EmailMonitorValueHolder;
 import java.nio.charset.Charset;
 
 /**
- * Does Configuration Registry operations required to store/fetch BAM server configurations
+ * Does Configuration Registry operations required to store/fetch email monitor configurations
  */
 public class RegistryManager extends RegistryAbstractAdmin {
 
@@ -49,21 +49,21 @@ public class RegistryManager extends RegistryAbstractAdmin {
 
     }
 
-    public void saveResourceString(String resourceString, String gadgetResourcePath){
+    public void saveResourceString(String resourceString, String resourcePath){
         try {
             resource = registry.newResource();
             resource.setContent(resourceString);
             resource.setMediaType("application/xml");
-            registry.put(gadgetResourcePath, resource);
+            registry.put(resourcePath, resource);
         } catch (RegistryException e) {
             String errorMsg = "Error while saving resource string from Registry. " + e.getMessage();
             log.error(errorMsg, e);
         }
     }
     
-    public boolean resourceAlreadyExists(String bamServerProfileLocation){
+    public boolean resourceAlreadyExists(String path){
         try {
-            return registry.resourceExists(bamServerProfileLocation);
+            return registry.resourceExists(path);
         } catch (RegistryException e) {
             String errorMsg = "Error while checking resource string from Registry. " + e.getMessage();
             log.error(errorMsg, e);
@@ -82,9 +82,9 @@ public class RegistryManager extends RegistryAbstractAdmin {
         return false;
     }
 
-    public String getResourceString(String bamServerProfileLocation){
+    public String getResourceString(String path){
         try {
-            resource = registry.get(bamServerProfileLocation);
+            resource = registry.get(path);
             return new String((byte[])resource.getContent(), Charset.forName("UTF-8"));
         } catch (RegistryException e) {
             String errorMsg = "Error while getting the resource from Registry. " + e.getMessage();
@@ -93,26 +93,16 @@ public class RegistryManager extends RegistryAbstractAdmin {
         return null;
     }
     
-    public boolean addCollection(String bamServerProfileCollectionLocation){
+    public boolean addCollection(String collectionPath){
         try {
             resource = registry.newCollection();
-            registry.put(bamServerProfileCollectionLocation, resource);
+            registry.put(collectionPath, resource);
             return true;
         } catch (RegistryException e) {
             String errorMsg = "Error while adding the collection to the Registry. " + e.getMessage();
             log.error(errorMsg, e);
         }
         return false;
-    }
-    
-    public String[] getServerProfileNameList(String bamServerProfileCollectionLocation){
-        try {
-            return ((String[])registry.get(bamServerProfileCollectionLocation).getContent());
-        } catch (RegistryException e) {
-            String errorMsg = "Error while getting the Server Profile Name List from the Registry. " + e.getMessage();
-            log.error(errorMsg, e);
-        }
-        return new String[0];
     }
 
 
