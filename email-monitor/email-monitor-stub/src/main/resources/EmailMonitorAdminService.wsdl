@@ -8,6 +8,49 @@
         </xs:schema>
         <xs:schema xmlns:ax2584="http://exception.admin.monitor.email.cep.wso2.org/xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://wso2.org/cep/email/monitor/admin/xsd">
             <xs:import namespace="http://exception.admin.monitor.email.cep.wso2.org/xsd"></xs:import>
+            <xs:element name="saveResourceString">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="resourceString" nillable="true" type="xs:string"></xs:element>
+                        <xs:element minOccurs="0" name="resourcePath" nillable="true" type="xs:string"></xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="saveResourceStringResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" type="xs:boolean"></xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="resourceAlreadyExists">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="path" nillable="true" type="xs:string"></xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="resourceAlreadyExistsResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" type="xs:boolean"></xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="removeResource">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="path" nillable="true" type="xs:string"></xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="removeResourceResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" type="xs:boolean"></xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
             <xs:element name="EmailMonitorAdminServiceEmailMonitorAdminException">
                 <xs:complexType>
                     <xs:sequence>
@@ -26,6 +69,20 @@
                 <xs:complexType>
                     <xs:sequence>
                         <xs:element maxOccurs="unbounded" minOccurs="0" name="return" nillable="true" type="xs:string"></xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getResourceString">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="path" nillable="true" type="xs:string"></xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getResourceStringResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:string"></xs:element>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
@@ -230,6 +287,20 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
+            <xs:element name="addCollection">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="collectionPath" nillable="true" type="xs:string"></xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="addCollectionResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" type="xs:boolean"></xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
             <xs:element name="addCEPConfigurations">
                 <xs:complexType>
                     <xs:sequence>
@@ -298,6 +369,18 @@
     <wsdl:message name="createLabelDetailsStreamResponse">
         <wsdl:part name="parameters" element="ns:createLabelDetailsStreamResponse"></wsdl:part>
     </wsdl:message>
+    <wsdl:message name="removeResourceRequest">
+        <wsdl:part name="parameters" element="ns:removeResource"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="removeResourceResponse">
+        <wsdl:part name="parameters" element="ns:removeResourceResponse"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="saveResourceStringRequest">
+        <wsdl:part name="parameters" element="ns:saveResourceString"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="saveResourceStringResponse">
+        <wsdl:part name="parameters" element="ns:saveResourceStringResponse"></wsdl:part>
+    </wsdl:message>
     <wsdl:message name="addCEPConfigurationsRequest">
         <wsdl:part name="parameters" element="ns:addCEPConfigurations"></wsdl:part>
     </wsdl:message>
@@ -328,6 +411,18 @@
     <wsdl:message name="createEventFormatterResponse">
         <wsdl:part name="parameters" element="ns:createEventFormatterResponse"></wsdl:part>
     </wsdl:message>
+    <wsdl:message name="addCollectionRequest">
+        <wsdl:part name="parameters" element="ns:addCollection"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="addCollectionResponse">
+        <wsdl:part name="parameters" element="ns:addCollectionResponse"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="resourceAlreadyExistsRequest">
+        <wsdl:part name="parameters" element="ns:resourceAlreadyExists"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="resourceAlreadyExistsResponse">
+        <wsdl:part name="parameters" element="ns:resourceAlreadyExistsResponse"></wsdl:part>
+    </wsdl:message>
     <wsdl:message name="addESBConfigurationsRequest">
         <wsdl:part name="parameters" element="ns:addESBConfigurations"></wsdl:part>
     </wsdl:message>
@@ -357,6 +452,12 @@
     </wsdl:message>
     <wsdl:message name="createEmailSenderOutputStreamFormatterResponse">
         <wsdl:part name="parameters" element="ns:createEmailSenderOutputStreamFormatterResponse"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getResourceStringRequest">
+        <wsdl:part name="parameters" element="ns:getResourceString"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getResourceStringResponse">
+        <wsdl:part name="parameters" element="ns:getResourceStringResponse"></wsdl:part>
     </wsdl:message>
     <wsdl:message name="createEmailSenderOutputStreamRequest">
         <wsdl:part name="parameters" element="ns:createEmailSenderOutputStream"></wsdl:part>
@@ -397,6 +498,14 @@
             <wsdl:output message="tns:createLabelDetailsStreamResponse" wsaw:Action="urn:createLabelDetailsStreamResponse"></wsdl:output>
             <wsdl:fault message="tns:EmailMonitorAdminServiceEmailMonitorAdminException" name="EmailMonitorAdminServiceEmailMonitorAdminException" wsaw:Action="urn:createLabelDetailsStreamEmailMonitorAdminServiceEmailMonitorAdminException"></wsdl:fault>
         </wsdl:operation>
+        <wsdl:operation name="removeResource">
+            <wsdl:input message="tns:removeResourceRequest" wsaw:Action="urn:removeResource"></wsdl:input>
+            <wsdl:output message="tns:removeResourceResponse" wsaw:Action="urn:removeResourceResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="saveResourceString">
+            <wsdl:input message="tns:saveResourceStringRequest" wsaw:Action="urn:saveResourceString"></wsdl:input>
+            <wsdl:output message="tns:saveResourceStringResponse" wsaw:Action="urn:saveResourceStringResponse"></wsdl:output>
+        </wsdl:operation>
         <wsdl:operation name="addCEPConfigurations">
             <wsdl:input message="tns:addCEPConfigurationsRequest" wsaw:Action="urn:addCEPConfigurations"></wsdl:input>
             <wsdl:output message="tns:addCEPConfigurationsResponse" wsaw:Action="urn:addCEPConfigurationsResponse"></wsdl:output>
@@ -422,6 +531,14 @@
             <wsdl:output message="tns:createEventFormatterResponse" wsaw:Action="urn:createEventFormatterResponse"></wsdl:output>
             <wsdl:fault message="tns:EmailMonitorAdminServiceEmailMonitorAdminException" name="EmailMonitorAdminServiceEmailMonitorAdminException" wsaw:Action="urn:createEventFormatterEmailMonitorAdminServiceEmailMonitorAdminException"></wsdl:fault>
         </wsdl:operation>
+        <wsdl:operation name="addCollection">
+            <wsdl:input message="tns:addCollectionRequest" wsaw:Action="urn:addCollection"></wsdl:input>
+            <wsdl:output message="tns:addCollectionResponse" wsaw:Action="urn:addCollectionResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="resourceAlreadyExists">
+            <wsdl:input message="tns:resourceAlreadyExistsRequest" wsaw:Action="urn:resourceAlreadyExists"></wsdl:input>
+            <wsdl:output message="tns:resourceAlreadyExistsResponse" wsaw:Action="urn:resourceAlreadyExistsResponse"></wsdl:output>
+        </wsdl:operation>
         <wsdl:operation name="addESBConfigurations">
             <wsdl:input message="tns:addESBConfigurationsRequest" wsaw:Action="urn:addESBConfigurations"></wsdl:input>
             <wsdl:output message="tns:addESBConfigurationsResponse" wsaw:Action="urn:addESBConfigurationsResponse"></wsdl:output>
@@ -446,6 +563,10 @@
             <wsdl:input message="tns:createEmailSenderOutputStreamFormatterRequest" wsaw:Action="urn:createEmailSenderOutputStreamFormatter"></wsdl:input>
             <wsdl:output message="tns:createEmailSenderOutputStreamFormatterResponse" wsaw:Action="urn:createEmailSenderOutputStreamFormatterResponse"></wsdl:output>
             <wsdl:fault message="tns:EmailMonitorAdminServiceEmailMonitorAdminException" name="EmailMonitorAdminServiceEmailMonitorAdminException" wsaw:Action="urn:createEmailSenderOutputStreamFormatterEmailMonitorAdminServiceEmailMonitorAdminException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getResourceString">
+            <wsdl:input message="tns:getResourceStringRequest" wsaw:Action="urn:getResourceString"></wsdl:input>
+            <wsdl:output message="tns:getResourceStringResponse" wsaw:Action="urn:getResourceStringResponse"></wsdl:output>
         </wsdl:operation>
         <wsdl:operation name="createEmailSenderOutputStream">
             <wsdl:input message="tns:createEmailSenderOutputStreamRequest" wsaw:Action="urn:createEmailSenderOutputStream"></wsdl:input>
@@ -501,6 +622,15 @@
                 <soap:fault use="literal" name="EmailMonitorAdminServiceEmailMonitorAdminException"></soap:fault>
             </wsdl:fault>
         </wsdl:operation>
+        <wsdl:operation name="removeResource">
+            <soap:operation soapAction="urn:removeResource" style="document"></soap:operation>
+            <wsdl:input>
+                <soap:body use="literal"></soap:body>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"></soap:body>
+            </wsdl:output>
+        </wsdl:operation>
         <wsdl:operation name="createLabelDetailsStream">
             <soap:operation soapAction="urn:createLabelDetailsStream" style="document"></soap:operation>
             <wsdl:input>
@@ -512,6 +642,15 @@
             <wsdl:fault name="EmailMonitorAdminServiceEmailMonitorAdminException">
                 <soap:fault use="literal" name="EmailMonitorAdminServiceEmailMonitorAdminException"></soap:fault>
             </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="saveResourceString">
+            <soap:operation soapAction="urn:saveResourceString" style="document"></soap:operation>
+            <wsdl:input>
+                <soap:body use="literal"></soap:body>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"></soap:body>
+            </wsdl:output>
         </wsdl:operation>
         <wsdl:operation name="addCEPConfigurations">
             <soap:operation soapAction="urn:addCEPConfigurations" style="document"></soap:operation>
@@ -573,6 +712,24 @@
                 <soap:fault use="literal" name="EmailMonitorAdminServiceEmailMonitorAdminException"></soap:fault>
             </wsdl:fault>
         </wsdl:operation>
+        <wsdl:operation name="resourceAlreadyExists">
+            <soap:operation soapAction="urn:resourceAlreadyExists" style="document"></soap:operation>
+            <wsdl:input>
+                <soap:body use="literal"></soap:body>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"></soap:body>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="addCollection">
+            <soap:operation soapAction="urn:addCollection" style="document"></soap:operation>
+            <wsdl:input>
+                <soap:body use="literal"></soap:body>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"></soap:body>
+            </wsdl:output>
+        </wsdl:operation>
         <wsdl:operation name="createExecutionPlan">
             <soap:operation soapAction="urn:createExecutionPlan" style="document"></soap:operation>
             <wsdl:input>
@@ -609,6 +766,18 @@
                 <soap:fault use="literal" name="EmailMonitorAdminServiceEmailMonitorAdminException"></soap:fault>
             </wsdl:fault>
         </wsdl:operation>
+        <wsdl:operation name="addMailProxy">
+            <soap:operation soapAction="urn:addMailProxy" style="document"></soap:operation>
+            <wsdl:input>
+                <soap:body use="literal"></soap:body>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"></soap:body>
+            </wsdl:output>
+            <wsdl:fault name="EmailMonitorAdminServiceEmailMonitorAdminException">
+                <soap:fault use="literal" name="EmailMonitorAdminServiceEmailMonitorAdminException"></soap:fault>
+            </wsdl:fault>
+        </wsdl:operation>
         <wsdl:operation name="createEmailSenderOutputStreamFormatter">
             <soap:operation soapAction="urn:createEmailSenderOutputStreamFormatter" style="document"></soap:operation>
             <wsdl:input>
@@ -621,17 +790,14 @@
                 <soap:fault use="literal" name="EmailMonitorAdminServiceEmailMonitorAdminException"></soap:fault>
             </wsdl:fault>
         </wsdl:operation>
-        <wsdl:operation name="addMailProxy">
-            <soap:operation soapAction="urn:addMailProxy" style="document"></soap:operation>
+        <wsdl:operation name="getResourceString">
+            <soap:operation soapAction="urn:getResourceString" style="document"></soap:operation>
             <wsdl:input>
                 <soap:body use="literal"></soap:body>
             </wsdl:input>
             <wsdl:output>
                 <soap:body use="literal"></soap:body>
             </wsdl:output>
-            <wsdl:fault name="EmailMonitorAdminServiceEmailMonitorAdminException">
-                <soap:fault use="literal" name="EmailMonitorAdminServiceEmailMonitorAdminException"></soap:fault>
-            </wsdl:fault>
         </wsdl:operation>
         <wsdl:operation name="createEmailSenderOutputStream">
             <soap:operation soapAction="urn:createEmailSenderOutputStream" style="document"></soap:operation>
@@ -708,6 +874,15 @@
                 <soap12:fault use="literal" name="EmailMonitorAdminServiceEmailMonitorAdminException"></soap12:fault>
             </wsdl:fault>
         </wsdl:operation>
+        <wsdl:operation name="removeResource">
+            <soap12:operation soapAction="urn:removeResource" style="document"></soap12:operation>
+            <wsdl:input>
+                <soap12:body use="literal"></soap12:body>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"></soap12:body>
+            </wsdl:output>
+        </wsdl:operation>
         <wsdl:operation name="createLabelDetailsStream">
             <soap12:operation soapAction="urn:createLabelDetailsStream" style="document"></soap12:operation>
             <wsdl:input>
@@ -719,6 +894,15 @@
             <wsdl:fault name="EmailMonitorAdminServiceEmailMonitorAdminException">
                 <soap12:fault use="literal" name="EmailMonitorAdminServiceEmailMonitorAdminException"></soap12:fault>
             </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="saveResourceString">
+            <soap12:operation soapAction="urn:saveResourceString" style="document"></soap12:operation>
+            <wsdl:input>
+                <soap12:body use="literal"></soap12:body>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"></soap12:body>
+            </wsdl:output>
         </wsdl:operation>
         <wsdl:operation name="addCEPConfigurations">
             <soap12:operation soapAction="urn:addCEPConfigurations" style="document"></soap12:operation>
@@ -780,6 +964,24 @@
                 <soap12:fault use="literal" name="EmailMonitorAdminServiceEmailMonitorAdminException"></soap12:fault>
             </wsdl:fault>
         </wsdl:operation>
+        <wsdl:operation name="resourceAlreadyExists">
+            <soap12:operation soapAction="urn:resourceAlreadyExists" style="document"></soap12:operation>
+            <wsdl:input>
+                <soap12:body use="literal"></soap12:body>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"></soap12:body>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="addCollection">
+            <soap12:operation soapAction="urn:addCollection" style="document"></soap12:operation>
+            <wsdl:input>
+                <soap12:body use="literal"></soap12:body>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"></soap12:body>
+            </wsdl:output>
+        </wsdl:operation>
         <wsdl:operation name="createExecutionPlan">
             <soap12:operation soapAction="urn:createExecutionPlan" style="document"></soap12:operation>
             <wsdl:input>
@@ -816,6 +1018,18 @@
                 <soap12:fault use="literal" name="EmailMonitorAdminServiceEmailMonitorAdminException"></soap12:fault>
             </wsdl:fault>
         </wsdl:operation>
+        <wsdl:operation name="addMailProxy">
+            <soap12:operation soapAction="urn:addMailProxy" style="document"></soap12:operation>
+            <wsdl:input>
+                <soap12:body use="literal"></soap12:body>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"></soap12:body>
+            </wsdl:output>
+            <wsdl:fault name="EmailMonitorAdminServiceEmailMonitorAdminException">
+                <soap12:fault use="literal" name="EmailMonitorAdminServiceEmailMonitorAdminException"></soap12:fault>
+            </wsdl:fault>
+        </wsdl:operation>
         <wsdl:operation name="createEmailSenderOutputStreamFormatter">
             <soap12:operation soapAction="urn:createEmailSenderOutputStreamFormatter" style="document"></soap12:operation>
             <wsdl:input>
@@ -828,17 +1042,14 @@
                 <soap12:fault use="literal" name="EmailMonitorAdminServiceEmailMonitorAdminException"></soap12:fault>
             </wsdl:fault>
         </wsdl:operation>
-        <wsdl:operation name="addMailProxy">
-            <soap12:operation soapAction="urn:addMailProxy" style="document"></soap12:operation>
+        <wsdl:operation name="getResourceString">
+            <soap12:operation soapAction="urn:getResourceString" style="document"></soap12:operation>
             <wsdl:input>
                 <soap12:body use="literal"></soap12:body>
             </wsdl:input>
             <wsdl:output>
                 <soap12:body use="literal"></soap12:body>
             </wsdl:output>
-            <wsdl:fault name="EmailMonitorAdminServiceEmailMonitorAdminException">
-                <soap12:fault use="literal" name="EmailMonitorAdminServiceEmailMonitorAdminException"></soap12:fault>
-            </wsdl:fault>
         </wsdl:operation>
         <wsdl:operation name="createEmailSenderOutputStream">
             <soap12:operation soapAction="urn:createEmailSenderOutputStream" style="document"></soap12:operation>
@@ -906,8 +1117,26 @@
                 <mime:content type="text/xml" part="parameters"></mime:content>
             </wsdl:output>
         </wsdl:operation>
+        <wsdl:operation name="removeResource">
+            <http:operation location="removeResource"></http:operation>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"></mime:content>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"></mime:content>
+            </wsdl:output>
+        </wsdl:operation>
         <wsdl:operation name="createLabelDetailsStream">
             <http:operation location="createLabelDetailsStream"></http:operation>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"></mime:content>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"></mime:content>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="saveResourceString">
+            <http:operation location="saveResourceString"></http:operation>
             <wsdl:input>
                 <mime:content type="text/xml" part="parameters"></mime:content>
             </wsdl:input>
@@ -960,6 +1189,24 @@
                 <mime:content type="text/xml" part="parameters"></mime:content>
             </wsdl:output>
         </wsdl:operation>
+        <wsdl:operation name="resourceAlreadyExists">
+            <http:operation location="resourceAlreadyExists"></http:operation>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"></mime:content>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"></mime:content>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="addCollection">
+            <http:operation location="addCollection"></http:operation>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"></mime:content>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"></mime:content>
+            </wsdl:output>
+        </wsdl:operation>
         <wsdl:operation name="createExecutionPlan">
             <http:operation location="createExecutionPlan"></http:operation>
             <wsdl:input>
@@ -987,6 +1234,15 @@
                 <mime:content type="text/xml" part="parameters"></mime:content>
             </wsdl:output>
         </wsdl:operation>
+        <wsdl:operation name="addMailProxy">
+            <http:operation location="addMailProxy"></http:operation>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"></mime:content>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"></mime:content>
+            </wsdl:output>
+        </wsdl:operation>
         <wsdl:operation name="createEmailSenderOutputStreamFormatter">
             <http:operation location="createEmailSenderOutputStreamFormatter"></http:operation>
             <wsdl:input>
@@ -996,8 +1252,8 @@
                 <mime:content type="text/xml" part="parameters"></mime:content>
             </wsdl:output>
         </wsdl:operation>
-        <wsdl:operation name="addMailProxy">
-            <http:operation location="addMailProxy"></http:operation>
+        <wsdl:operation name="getResourceString">
+            <http:operation location="getResourceString"></http:operation>
             <wsdl:input>
                 <mime:content type="text/xml" part="parameters"></mime:content>
             </wsdl:input>

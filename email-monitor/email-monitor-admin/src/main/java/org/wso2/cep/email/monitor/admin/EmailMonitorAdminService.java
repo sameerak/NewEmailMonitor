@@ -257,4 +257,32 @@ public class EmailMonitorAdminService extends AbstractAdmin {
     }
 
 
+    public boolean saveResourceString(String resourceString, String resourcePath){
+        EmailMonitorServiceInterface emailMonitorServiceInterface = EmailMonitorAdminValueHolder.getInstance().getEmailMonitorService();
+        return emailMonitorServiceInterface.saveResourceString(resourceString, resourcePath);
     }
+
+    public boolean resourceAlreadyExists(String path){
+        EmailMonitorServiceInterface emailMonitorServiceInterface = EmailMonitorAdminValueHolder.getInstance().getEmailMonitorService();
+        return emailMonitorServiceInterface.resourceAlreadyExists(path);
+    }
+
+    public boolean removeResource(String path) {
+        EmailMonitorServiceInterface emailMonitorServiceInterface = EmailMonitorAdminValueHolder.getInstance().getEmailMonitorService();
+        return emailMonitorServiceInterface.removeResource(path);
+    }
+
+    public String getResourceString(String path){
+        EmailMonitorServiceInterface emailMonitorServiceInterface = EmailMonitorAdminValueHolder.getInstance().getEmailMonitorService();
+        return emailMonitorServiceInterface.getResourceString(path);
+    }
+
+    public boolean addCollection(String collectionPath){
+        EmailMonitorServiceInterface emailMonitorServiceInterface = EmailMonitorAdminValueHolder.getInstance().getEmailMonitorService();
+        return emailMonitorServiceInterface.addCollection(collectionPath);
+    }
+
+
+
+
+}

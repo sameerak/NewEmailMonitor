@@ -165,13 +165,50 @@ public interface EmailMonitorServiceInterface {
 
     /**
      *
-     * @param mailBody
      * @param mailAddress
-     * @param mailSubject
      * @param axisConfiguration
      * @return
      * @throws EmailMonitorServiceException
      */
     public boolean createEmailSenderOutputStreamFormatter(String mailAddress,AxisConfiguration axisConfiguration) throws EmailMonitorServiceException ;
 
+    /**
+     *
+     * @param resourceString
+     * @param resourcePath
+     * @return
+     */
+    public boolean saveResourceString(String resourceString, String resourcePath);
+
+    /**
+     *
+     * @param path
+     * @return
+     */
+    public boolean resourceAlreadyExists(String path);
+
+    /**
+     *
+     * @param path
+     * @return
+     */
+    public boolean removeResource(String path) ;
+
+    /**
+     *
+     * @param path
+     * @return
+     */
+    public String getResourceString(String path);
+
+    /**
+     *
+     * @param collectionPath
+     * @return
+     */
+    public boolean addCollection(String collectionPath);
+
     }
+
+
+
