@@ -37,7 +37,7 @@ public class QueryManagerServiceTest {
         String[] result = queryManagerService.getSiddhiQuery(" from : (abc@wso2.com ) add label importnant" );
         Assert.assertEquals(2,result.length);
         Assert.assertEquals("from gmailInputStream select  threadID,labels, email:getAll(to) as to ,email:getAll(sender) as senders, \"importnant\" as newLabel insert into filteredEmailDetails;",result[0]);
-        Assert.assertEquals("from filteredEmailDetails[null(senders contains \"abc@wso2.com\")] select threadID, newLabel as label insert into gmailOutputStream;",result[1]);
+        Assert.assertEquals("from filteredEmailDetails[(senders contains \"abc@wso2.com\")] select threadID, newLabel as label insert into gmailOutputStream;",result[1]);
     }
 
     @Test
@@ -71,6 +71,14 @@ public class QueryManagerServiceTest {
     }
 
 
+    @Test
+    public  void testfilterQuerywithToFrom() throws EmailMonitorCompilerException {
+        queryManagerService = new QueryManagerService();
+        String[] result = queryManagerService.getSiddhiQuery(" to : (abc@wso2.com ) and from:(def@wso2.com) add label importnant" );
+        Assert.assertEquals(2,result.length);
+        Assert.assertEquals("from gmailInputStream select  threadID,labels, email:getAll(to) as to ,email:getAll(sender) as senders, \"importnant\" as newLabel insert into filteredEmailDetails;",result[0]);
+        Assert.assertEquals("from filteredEmailDetails[(to contains \"abc@wso2.com\")and(senders contains \"def@wso2.com\")] select threadID, newLabel as label insert into gmailOutputStream;",result[1]);
+    }
 
 
 
