@@ -82,7 +82,8 @@ $(document).ready(function() {
 		 request.done(function (response, textStatus, jqXHR){
 		     // log a message to the console
 			 $('#cepQueries').val('');
-			 bootbox.alert(response);
+			 var jsonresponse = JSON.parse(response);
+			 bootbox.alert(jsonresponse.message);
 //		     console.log("Hooray, it worked!");
 		 });
 		

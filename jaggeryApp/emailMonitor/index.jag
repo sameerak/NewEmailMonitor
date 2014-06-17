@@ -66,6 +66,36 @@ if (!user) {
             </tbody>
         </table>
         </form>
+        <table class="table table-no-border text-left" style="width:100%" id="storedQueries">
+        	<tbody>
+        	<%
+        		var util = require("util/utility.jag");
+        		var serverUrl = util.getServiceUrl();
+        		serverUrl = serverUrl + "EmailMonitorAdminService";
+        							
+        		var emailMonitorAdminServiceStub = Packages.org.wso2.cep.email.monitor.stub.admin.EmailMonitorAdminServiceStub;
+        		var myEmailMonitorAdminServiceStub = new emailMonitorAdminServiceStub(serverUrl);
+        		
+        		var storedQueries = myEmailMonitorAdminServiceStub.getEmailMonitorResources("emailMonitorCollection/queryCollection");
+        		
+        		if (storedQueries != null && storedQueries.length > 0){
+					for (var i = 0; i < storedQueries.length; i++) { 
+					var storedString = myEmailMonitorAdminServiceStub.getResourceString(storedQueries[i]);
+					var content = parse(String(storedString));
+        	%>
+					<tr>
+						<td>
+							<%print(content.query);%>
+						</td>
+ 						<td> 
+							<%print(content.planNames.toString());%>
+						</td>
+					</tr>
+        	<%
+			        }
+				}%>
+        	</tbody>
+        </table>
 </div>
 <div class="tab-pane fade" id="configure">
 <form id="emailMonitorConfigForm">
