@@ -282,7 +282,9 @@ public class EmailMonitorAdminService extends AbstractAdmin {
         return emailMonitorServiceInterface.addCollection(collectionPath);
     }
 
+    public String[] getEmailMonitorResources(String emailMonitorCollectionLocation) {
+        EmailMonitorServiceInterface emailMonitorServiceInterface = EmailMonitorAdminValueHolder.getInstance().getEmailMonitorService();
+        return emailMonitorServiceInterface.getEmailMonitorResources(emailMonitorCollectionLocation);
+    }
 
-
-
-}
+    }

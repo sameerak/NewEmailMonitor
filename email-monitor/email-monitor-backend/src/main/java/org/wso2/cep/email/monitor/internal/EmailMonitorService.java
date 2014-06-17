@@ -266,5 +266,11 @@ public class EmailMonitorService implements EmailMonitorServiceInterface {
         return true;
     }
 
+    @Override
+    public String[] getEmailMonitorResources(String emailMonitorCollectionLocation) {
+        RegistryManager registryManager = new RegistryManager();
+        return registryManager.getEmailMonitorResources(emailMonitorCollectionLocation);
+    }
+
 
 }

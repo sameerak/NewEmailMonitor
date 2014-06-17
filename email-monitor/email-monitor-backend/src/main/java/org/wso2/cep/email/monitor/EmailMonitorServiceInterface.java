@@ -208,7 +208,17 @@ public interface EmailMonitorServiceInterface {
      */
     public boolean addCollection(String collectionPath);
 
+    /**
+     *
+     * @param emailMonitorCollectionLocation
+     * @return
+     */
+    public String[] getEmailMonitorResources(String emailMonitorCollectionLocation);
+
+
     }
+
+
 
 
 

@@ -105,6 +105,15 @@ public class RegistryManager extends RegistryAbstractAdmin {
         return false;
     }
 
+    public String[] getEmailMonitorResources(String emailMonitorCollectionLocation){
+        try {
+            return ((String[])registry.get(emailMonitorCollectionLocation).getContent());
+        } catch (RegistryException e) {
+            String errorMsg = "Error while getting resources from the Registry. " + e.getMessage();
+            log.error(errorMsg, e);
+        }
+        return new String[0];
+    }
 
 
 }

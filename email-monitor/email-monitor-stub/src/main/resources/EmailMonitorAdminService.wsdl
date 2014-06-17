@@ -86,6 +86,20 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
+            <xs:element name="getEmailMonitorResources">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="emailMonitorCollectionLocation" nillable="true" type="xs:string"></xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getEmailMonitorResourcesResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="return" nillable="true" type="xs:string"></xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
             <xs:element name="createThreadDetailsStream">
                 <xs:complexType>
                     <xs:sequence></xs:sequence>
@@ -465,6 +479,12 @@
     <wsdl:message name="createEmailSenderOutputStreamResponse">
         <wsdl:part name="parameters" element="ns:createEmailSenderOutputStreamResponse"></wsdl:part>
     </wsdl:message>
+    <wsdl:message name="getEmailMonitorResourcesRequest">
+        <wsdl:part name="parameters" element="ns:getEmailMonitorResources"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getEmailMonitorResourcesResponse">
+        <wsdl:part name="parameters" element="ns:getEmailMonitorResourcesResponse"></wsdl:part>
+    </wsdl:message>
     <wsdl:message name="createMailOutputStreamRequest">
         <wsdl:part name="parameters" element="ns:createMailOutputStream"></wsdl:part>
     </wsdl:message>
@@ -572,6 +592,10 @@
             <wsdl:input message="tns:createEmailSenderOutputStreamRequest" wsaw:Action="urn:createEmailSenderOutputStream"></wsdl:input>
             <wsdl:output message="tns:createEmailSenderOutputStreamResponse" wsaw:Action="urn:createEmailSenderOutputStreamResponse"></wsdl:output>
             <wsdl:fault message="tns:EmailMonitorAdminServiceEmailMonitorAdminException" name="EmailMonitorAdminServiceEmailMonitorAdminException" wsaw:Action="urn:createEmailSenderOutputStreamEmailMonitorAdminServiceEmailMonitorAdminException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getEmailMonitorResources">
+            <wsdl:input message="tns:getEmailMonitorResourcesRequest" wsaw:Action="urn:getEmailMonitorResources"></wsdl:input>
+            <wsdl:output message="tns:getEmailMonitorResourcesResponse" wsaw:Action="urn:getEmailMonitorResourcesResponse"></wsdl:output>
         </wsdl:operation>
         <wsdl:operation name="createMailOutputStream">
             <wsdl:input message="tns:createMailOutputStreamRequest" wsaw:Action="urn:createMailOutputStream"></wsdl:input>
@@ -792,6 +816,15 @@
         </wsdl:operation>
         <wsdl:operation name="getResourceString">
             <soap:operation soapAction="urn:getResourceString" style="document"></soap:operation>
+            <wsdl:input>
+                <soap:body use="literal"></soap:body>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"></soap:body>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getEmailMonitorResources">
+            <soap:operation soapAction="urn:getEmailMonitorResources" style="document"></soap:operation>
             <wsdl:input>
                 <soap:body use="literal"></soap:body>
             </wsdl:input>
@@ -1051,6 +1084,15 @@
                 <soap12:body use="literal"></soap12:body>
             </wsdl:output>
         </wsdl:operation>
+        <wsdl:operation name="getEmailMonitorResources">
+            <soap12:operation soapAction="urn:getEmailMonitorResources" style="document"></soap12:operation>
+            <wsdl:input>
+                <soap12:body use="literal"></soap12:body>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"></soap12:body>
+            </wsdl:output>
+        </wsdl:operation>
         <wsdl:operation name="createEmailSenderOutputStream">
             <soap12:operation soapAction="urn:createEmailSenderOutputStream" style="document"></soap12:operation>
             <wsdl:input>
@@ -1254,6 +1296,15 @@
         </wsdl:operation>
         <wsdl:operation name="getResourceString">
             <http:operation location="getResourceString"></http:operation>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"></mime:content>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"></mime:content>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getEmailMonitorResources">
+            <http:operation location="getEmailMonitorResources"></http:operation>
             <wsdl:input>
                 <mime:content type="text/xml" part="parameters"></mime:content>
             </wsdl:input>
