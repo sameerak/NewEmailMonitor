@@ -3,7 +3,6 @@ package org.wso2.siddhi.extension;
 
 import org.apache.log4j.Logger;
 import org.wso2.siddhi.core.config.SiddhiContext;
-import org.wso2.siddhi.core.event.AtomicEvent;
 import org.wso2.siddhi.core.event.StreamEvent;
 import org.wso2.siddhi.core.event.in.InEvent;
 import org.wso2.siddhi.core.event.in.InListEvent;
@@ -11,11 +10,8 @@ import org.wso2.siddhi.core.event.remove.RemoveEvent;
 import org.wso2.siddhi.core.event.remove.RemoveListEvent;
 import org.wso2.siddhi.core.query.QueryPostProcessingElement;
 import org.wso2.siddhi.core.query.processor.window.WindowProcessor;
-import org.wso2.siddhi.core.util.EventConverter;
 import org.wso2.siddhi.core.util.collection.queue.SiddhiQueue;
 import org.wso2.siddhi.core.util.collection.queue.SiddhiQueueGrid;
-import org.wso2.siddhi.core.util.collection.queue.scheduler.SchedulerSiddhiQueue;
-import org.wso2.siddhi.core.util.collection.queue.scheduler.SchedulerSiddhiQueueGrid;
 import org.wso2.siddhi.query.api.definition.AbstractDefinition;
 import org.wso2.siddhi.query.api.expression.Expression;
 import org.wso2.siddhi.query.api.expression.Variable;
@@ -26,9 +22,10 @@ import org.wso2.siddhi.query.api.extension.annotation.SiddhiExtension;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.*;
 
 @SiddhiExtension(namespace = "custom", function = "externalTimeBatch")
-public class ExternalTimeBatchWindow extends WindowProcessor{
+public class ExternalTimeBatchWindow extends WindowProcessor {
     static final Logger log = Logger.getLogger(ExternalTimeBatchWindow.class);
     private List<InEvent> newEventList;
     private List<RemoveEvent> oldEventList;
@@ -36,49 +33,41 @@ public class ExternalTimeBatchWindow extends WindowProcessor{
     private SiddhiQueue<StreamEvent> window;
     private String timeStampAttributeName;
     private int timeStampAttributePosition;
-    private long scheduledTime ;
+    private long scheduledTime;
+    private  Long lastrecivedevent;
+
+
 
     @Override
-    protected void processEvent(InEvent inEvent) {
+    protected void processEvent(InEvent inEvent){
         acquireLock();
         try {
-            long currentTime = (Long) inEvent.getData(timeStampAttributePosition);
-            removeExpiredEventBatch(currentTime);
+            long lastrecivedevent = (Long) inEvent.getData(timeStampAttributePosition);
+            removeExpiredEventBatch();
             newEventList.add(inEvent);
+            }finally{
+            releaseLock();
+            }
+    }
 
-            removeExpiredEvent(currentTime);
-
-        } finally {
+    @Override
+    protected void processEvent(InListEvent inListEvent){
+        acquireLock();
+        try {
+            long currentTime = (Long) inListEvent.getEvent(inListEvent.getActiveEvents() - 1).getData(timeStampAttributePosition);
+            for (int i = 0, activeEvents = inListEvent.getActiveEvents(); i < activeEvents; i++){
+                newEventList.add((InEvent)inListEvent.getEvent(i));
+            }
+            removeExpiredEventBatch();
+            nextProcessor.process(inListEvent);
+        }finally{
             releaseLock();
         }
     }
 
-    @Override
-    protected void processEvent(InListEvent inListEvent) {
-//        acquireLock();
-//        try {
-//            long currentTime = (Long) inListEvent.getEvent(inListEvent.getActiveEvents() - 1).getData(timeStampAttributePosition);
-//            removeExpiredEventBatch(currentTime);
-//
-//            removeExpiredEvent(currentTime);
-//            long expireTime = currentTime + timeToKeep;
-//            if (!async && siddhiContext.isDistributedProcessingEnabled()) {
-//                for (int i = 0, activeEvents = inListEvent.getActiveEvents(); i < activeEvents; i++) {
-//
-//
-//                    window.put(new RemoveEvent(inListEvent.getEvent(i), expireTime));
-//                }
-//            } else {
-//                window.put(new RemoveListEvent(EventConverter.toRemoveEventArray(inListEvent.getEvents(), inListEvent.getActiveEvents(), expireTime)));
-//            }
-//            nextProcessor.process(inListEvent);
-//        } finally {
-//            releaseLock();
-//        }
-    }
+    public void removeExpiredEventBatch() {
 
-    private void removeExpiredEventBatch(long currentTime) {
-       if(newEventList.size()==1){
+       if(newEventList.size()==0){
            scheduledTime = System.currentTimeMillis();
        }
         long diff = timeToKeep -(System.currentTimeMillis() -scheduledTime);
@@ -86,24 +75,31 @@ public class ExternalTimeBatchWindow extends WindowProcessor{
             if(diff>0){
                 break;
             }else{
-                if(newEventList.size()>0) {
+                if(newEventList.size()>0){
                     InEvent[] inEvents = newEventList.toArray(new InEvent[newEventList.size()]);
                     for (InEvent inEvent : inEvents) {
-                        window.put(new RemoveEvent(inEvent, currentTime + timeToKeep));
+
+                        window.put(new RemoveEvent(inEvent, (Long) inEvent.getData(timeStampAttributePosition) + timeToKeep));
                     }
                     nextProcessor.process(new InListEvent(inEvents));
+                    for (InEvent inEvent : inEvents){
+                        removeExpiredEvent( (Long) inEvent.getData(timeStampAttributePosition));
+
+                    }
                     newEventList.clear();
                     scheduledTime = System.currentTimeMillis();
                 }
+                break;
             }
         }
     }
 
     private void removeExpiredEvent(long currentTime) {
-        while (true) {
+        while (true){
             RemoveEvent expiredEvent = (RemoveEvent) window.peek();
             if (expiredEvent != null && expiredEvent.getExpiryTime() < currentTime) {
                 oldEventList.add(expiredEvent);
+                window.poll();
             } else {
                 if(oldEventList.size()>0){
                     nextProcessor.process(new RemoveListEvent(oldEventList.toArray(new RemoveEvent[oldEventList.size()])));
@@ -157,10 +153,27 @@ public class ExternalTimeBatchWindow extends WindowProcessor{
         } else {
             window = new SiddhiQueue<StreamEvent>();
         }
-    }
 
+
+    }
     @Override
     public void destroy() {
 
     }
+
+
+    ScheduledExecutorService scheduledExecutorService =
+            Executors.newScheduledThreadPool(1);
+
+    ScheduledFuture scheduledFuture =
+            scheduledExecutorService.schedule(new Callable() {
+                                                  public Object call() throws Exception {
+                                                     removeExpiredEventBatch();
+                                                     return "Called!";
+                                                  }
+                                              },
+                    timeToKeep+10,
+                    TimeUnit.SECONDS
+            );
+
 }

@@ -17,10 +17,10 @@ public class QueryManagerServiceTest {
     @Test
    public  void testfilterQuerywithTo() throws EmailMonitorCompilerException {
      queryManagerService = new QueryManagerService();
-      String[] result = queryManagerService.getSiddhiQuery(" to : (abc@wso2.com) add label importnant" );
-        Assert.assertEquals(1,result.length);
-       Assert.assertEquals("from gmailInputStream[(to contains \"abc@wso2.com\")] select threadID,  \"importnant\"  as label insert into gmailOutputStream;",result[0]);
-
+      String[] result = queryManagerService.getSiddhiQuery(" to : (abc@wso2.com ) add label importnant" );
+        Assert.assertEquals(2,result.length);
+       Assert.assertEquals("from gmailInputStream select  threadID,labels, email:getAll(to) as to ,email:getAll(sender) as senders, \"importnant\" as newLabel insert into filteredEmailDetails;",result[0]);
+       Assert.assertEquals("from filteredEmailDetails[(to contains \"abc@wso2.com\")] select threadID, newLabel as label insert into gmailOutputStream;",result[1]);
    }
 
     @Test
@@ -34,20 +34,19 @@ public class QueryManagerServiceTest {
     @Test
     public  void testfilterQuerywithfrom() throws EmailMonitorCompilerException {
         queryManagerService = new QueryManagerService();
-        String[] result = queryManagerService.getSiddhiQuery(" from : (abc@wso2.com) add label importnant" );
-        Assert.assertEquals(1,result.length);
-        Assert.assertEquals("from gmailInputStream[(senders contains \"abc@wso2.com\")] select threadID,  \"importnant\"  as label insert into gmailOutputStream;",result[0]);
-
+        String[] result = queryManagerService.getSiddhiQuery(" from : (abc@wso2.com ) add label importnant" );
+        Assert.assertEquals(2,result.length);
+        Assert.assertEquals("from gmailInputStream select  threadID,labels, email:getAll(to) as to ,email:getAll(sender) as senders, \"importnant\" as newLabel insert into filteredEmailDetails;",result[0]);
+        Assert.assertEquals("from filteredEmailDetails[null(senders contains \"abc@wso2.com\")] select threadID, newLabel as label insert into gmailOutputStream;",result[1]);
     }
 
     @Test
-    public  void testfilterQuerywithfrequency() throws EmailMonitorCompilerException {
+    public  void testfilterQuerywithfrequency() throws EmailMonitorCompilerException{
         queryManagerService = new QueryManagerService();
         String[] result = queryManagerService.getSiddhiQuery("frequency >3/d add  label important" );
         Assert.assertEquals(2,result.length);
         Assert.assertEquals("from gmailInputStream#window.externalTime(sentDate,1 days) select  threadID, labels,count(messageID) as emailCount, email:getAll(to) as to ,email:getAll(sender) as senders, \"important\" as newLabel group by threadID  having emailCount > 3 insert into threadDetails;",result[0]);
         Assert.assertEquals("from threadDetails select threadID, newLabel as label insert into gmailOutputStream;",result[1]);
-
     }
 
     @Test

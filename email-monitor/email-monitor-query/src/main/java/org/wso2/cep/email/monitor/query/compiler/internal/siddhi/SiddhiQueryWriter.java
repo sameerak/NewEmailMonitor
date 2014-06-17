@@ -94,10 +94,22 @@ public class SiddhiQueryWriter {
     }
 
     public String[] writeQueryWithoutFrequencyWithoutLabel(SiddhiTemplate siddhiTemplate) {
-        StringBuffer stringBuffer1 = new StringBuffer();
-        String[] str = new String[1];
+        String[] result = new String[2];
+        StringBuffer stringBuffer = new StringBuffer();
 
-        stringBuffer1.append("from " + ConstantsUtils.INPUTSTREAM);
+        stringBuffer.append("from " + ConstantsUtils.INPUTSTREAM);
+
+            stringBuffer.append(" select  threadID,labels, email:getAll(to) as to ,email:getAll(sender) as senders,");
+            if (!siddhiTemplate.isSendMailEnabled()) {
+                stringBuffer.append(" " + '"' + siddhiTemplate.getLabelName() + '"' + " ");
+                stringBuffer.append("as newLabel insert into ");
+                stringBuffer.append(ConstantsUtils.FILTERED_EMAIL_DETAILS);
+                stringBuffer.append(";");
+            }
+
+        result[0] = stringBuffer.toString();
+        StringBuffer stringBuffer1 = new StringBuffer();
+        stringBuffer1.append("from " + ConstantsUtils.FILTERED_EMAIL_DETAILS);
         stringBuffer1.append("[");
         if (siddhiTemplate.getToMails() != null) {
             stringBuffer1.append("(");
@@ -105,24 +117,29 @@ public class SiddhiQueryWriter {
             stringBuffer1.append(")");
 
         }
-
-        if (siddhiTemplate.getFromMails() != null) {
+        if (siddhiTemplate.getLabelMails() != null) {
             if(siddhiTemplate.getToMails()!= null) {
-                stringBuffer1.append(siddhiTemplate.getLabelFrom());
+                stringBuffer1.append(" " + siddhiTemplate.getTolabel() + " ");
             }
+            stringBuffer1.append("(");
+            stringBuffer1.append(siddhiTemplate.getLabelMails());
+            stringBuffer1.append(")");
+
+        }
+        if (siddhiTemplate.getFromMails() != null) {
+            stringBuffer1.append(siddhiTemplate.getLabelFrom());
             stringBuffer1.append("(");
             stringBuffer1.append(siddhiTemplate.getFromMails());
             stringBuffer1.append(")");
         }
         stringBuffer1.append("]");
         if (!siddhiTemplate.isSendMailEnabled()) {
-            stringBuffer1.append(" select threadID, ");
-            stringBuffer1.append(" " + '"' + siddhiTemplate.getLabelName() + '"' + " ");
-            stringBuffer1.append(" as label insert into " + ConstantsUtils.OUTPUTSTREAM);
+            stringBuffer1.append(" select threadID, newLabel as label insert into " + ConstantsUtils.OUTPUTSTREAM);
             stringBuffer1.append(";");
         }
-        str[0] = stringBuffer1.toString();
-        return str;
+        result[1] = stringBuffer1.toString();
+
+        return result;
     }
 
     public String[] writeQueryWithFrequencyWithoutLabel(SiddhiTemplate siddhiTemplate) {
