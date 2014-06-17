@@ -84,12 +84,8 @@ if (!user) {
 					var content = parse(String(storedString));
         	%>
 					<tr>
-						<td>
-							<%print(content.query);%>
-						</td>
- 						<td> 
-							<%print(content.planNames.toString());%>
-						</td>
+						<td><%print(content.query);%></td>
+ 						<td><%print(content.planNames.toString());%></td>
 					</tr>
         	<%
 			        }
