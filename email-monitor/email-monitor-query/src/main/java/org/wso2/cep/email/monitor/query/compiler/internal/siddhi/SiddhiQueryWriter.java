@@ -120,7 +120,7 @@ public class SiddhiQueryWriter {
 
         if (siddhiTemplate.getFromMails() != null) {
             if(siddhiTemplate.getToMails()!= null) {
-                stringBuffer1.append(siddhiTemplate.getToMails());
+                stringBuffer1.append(siddhiTemplate.getLabelFrom());
             }
             stringBuffer1.append("(");
             stringBuffer1.append(siddhiTemplate.getFromMails());
