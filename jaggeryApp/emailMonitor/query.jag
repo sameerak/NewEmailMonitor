@@ -24,12 +24,23 @@ if(verb == "DELETE" || verb == "PUT" || verb == "GET") {
 						var myEmailMonitorAdminServiceStub = new emailMonitorAdminServiceStub(serverUrl);
 						
 						var siddhiQueries = myEmailMonitorAdminServiceStub.getSiddhiQuery(cepQuery);
+						var planName = new Array();
 			            for (var i = 0; i < siddhiQueries.length; i++) { 
-			                myEmailMonitorAdminServiceStub.createExecutionPlan(siddhiQueries[i]);
+			                planName[i] = myEmailMonitorAdminServiceStub.createExecutionPlan(siddhiQueries[i]);
 			            }
-						
+			            var content = cepQuery + "~" + planName.toString();
+			            var path = "emailMonitorCollection/queryCollection/" + planName[0];
+			            
+			            var replyjson = {};
+			            replyjson.query = cepQuery;
+			            replyjson.planNames = planName;
+			            
+			            myEmailMonitorAdminServiceStub.saveResourceString(stringify(replyjson), path);
+			            
+			            replyjson.message = "CEP query added successfully.";
 						response.status = 200;
-						print("CEP query added successfully.");
+// 						return replyjson;
+						print(stringify(replyjson));
 					}
 					catch(error){
 						response.status = 500;
