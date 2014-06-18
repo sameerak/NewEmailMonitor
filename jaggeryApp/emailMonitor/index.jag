@@ -85,12 +85,18 @@ if (!user) {
 					for (var i = 0; i < storedQueries.length; i++) { 
 					var storedString = myEmailMonitorAdminServiceStub.getResourceString(storedQueries[i]);
 					var content = parse(String(storedString));
+					
+					var linkString = '<a href = "..//carbon/eventprocessor/execution_plan_details.jsp?ordinal=1&execPlan=' + content.planNames[0] + '"><span>' + content.planNames[0] + '</span></a>';
+								 
+					 for (var j = 1; j < content.planNames.length; j++){
+						 linkString = linkString + ',<a href = "..//carbon/eventprocessor/execution_plan_details.jsp?ordinal=1&execPlan=' + content.planNames[j] + '"><span>' + content.planNames[j] + '</span></a>';
+					 }
         		%>
 					<tr>
 					<td class="text-left row">
 					<div class="queryPlans col-md-offset-1 col-md-10 row">
 						<p class="text-left">Query : <%print(content.query);%></p>
-			        	<p class="text-left">Execution Plans : <span id="executionPlans"><%print(content.planNames.toString());%></span></p>
+			        	<p class="text-left">Execution Plans : <span id="executionPlans"><%print(linkString);%></span></p>
 			        	<p class="text-right col-md-11"><button type="button" class="btn btn-danger">Delete Query</button></p>
 			        </div>
 			        </td>
