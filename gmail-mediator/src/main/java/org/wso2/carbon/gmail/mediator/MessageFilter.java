@@ -70,7 +70,7 @@ public class MessageFilter extends AbstractMediator {
             omElement1.setText(String.valueOf(time));
             omElement1.detach();
             omElement.addChild(omElement1);
-            formattedMails.addChild(omElement1);
+            formattedMails.addChild(omElement);
         }
         mailOM.addChild(formattedMails);
         return true;
