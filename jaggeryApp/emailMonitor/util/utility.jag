@@ -79,11 +79,7 @@ var lg = new Log();
 	var serviceUrl = stringify(application.get('serviceUrl'));
 	if(serviceUrl === 'null' || serviceUrl == null || serviceUrl.length <= 0){
 		//Server URL is not specified in the jaggery.conf, therefore using the service url mentioned in the carbon.conf
-		lg.info("we are here 0");
 		var carbon = require('carbon');
-		lg.info("we are here 1");
-lg.info("carbon = " + carbon);
-lg.info(carbon);
 lg.info("carbon.server.ip = " + carbon.server.ip);
 
 serviceUrl = "https://" + carbon.server.ip + ":" + carbon.server.httpsPort + "/services/"
@@ -92,7 +88,7 @@ serviceUrl = "https://" + carbon.server.ip + ":" + carbon.server.httpsPort + "/s
 	//	application.put(SERVER_URL, serverUrl);
 application.put('serviceUrl', serviceUrl);
 	
-	log.info("connecting to " + serviceUrl);
+	log.info("serviceUrl = " + serviceUrl);
 
 	}
 		
