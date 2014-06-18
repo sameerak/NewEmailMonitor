@@ -40,19 +40,19 @@ public class MessageFilter extends AbstractMediator {
                 selectedMails.addChild(omelement);
 
             } else if (MailSessionInfoStore.getBundleCount() > MediatorConstants.MESSAGE_COUNT_STARTING_VALUE) {
-                if (MailSessionInfoStore.getBundleCount() > MediatorConstants.MESSAGE_COUNT_STARTING_VALUE) {
+
                     if (timeS <= MailSessionInfoStore.getPreviouseBundleFirstMailTS()) {
                         MailSessionInfoStore.setPreviouseMessageTS(timeS);
                         MailSessionInfoStore.setReadMailRecived(true);
                     } else {
                         selectedMails.addChild(omelement);
                     }
-                    if (MailSessionInfoStore.getPreviouseMessageTS() != MediatorConstants.DEFAULT_VALUE_ZERO && MailSessionInfoStore.isReadMailRecived()){
+                    if ( MailSessionInfoStore.isReadMailRecived()){
                         MailSessionInfoStore.setPreviouseBundleFirstMailTS(MailSessionInfoStore.getNextBundleFirstMailTs());
                         MailSessionInfoStore.setReadMailRecived(false);
                         break;
                     }
-                }
+
                 if (messageCount == MediatorConstants.MESSAGE_COUNT_STARTING_VALUE){
                     MailSessionInfoStore.setNextBundleFirstMailTs(timeS);
 
