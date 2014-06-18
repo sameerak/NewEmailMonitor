@@ -87,11 +87,18 @@ $(document).ready(function() {
 			 if (checkString === "There are no queries deployed to query the email account"){
 				 $('#storedQueries tbody tr:first-child').remove();
 			 }
+			 
+			 var linkString = '<a href = "..//carbon/eventprocessor/execution_plan_details.jsp?ordinal=1&execPlan=' + jsonresponse.planNames[0] + '"><span>' + jsonresponse.planNames[0] + '</span></a>';
+			 
+			 for (var i = 1; i < jsonresponse.planNames.length; i++){
+				 linkString = linkString + ',<a href = "..//carbon/eventprocessor/execution_plan_details.jsp?ordinal=1&execPlan=' + jsonresponse.planNames[i] + '"><span>' + jsonresponse.planNames[i] + '</span></a>';
+			 }
+			 
 			 $('#storedQueries tbody').append('<tr>'+
 						'<td class="text-left row">'+
 						'<div class="queryPlans col-md-offset-1 col-md-10 row">'+
 						'<p class="text-left">Query : '+ jsonresponse.query +'</p>'+
-						'<p class="text-left">Execution Plans : <span id="executionPlans">'+ jsonresponse.planNames.toString() +'</span></p>'+
+						'<p class="text-left">Execution Plans : <span id="executionPlans">'+ linkString +'</span></p>'+
 						'<p class="text-right col-md-11"><button type="button" class="btn btn-danger">Delete Query</button></p>'+
 						'</div>'+
 						'</td>'+
@@ -124,9 +131,15 @@ $(document).ready(function() {
 	
 	$('#storedQueries tbody').on('click', 'button', function() {
 		var row = $(this).parent().parent().parent().parent();
-		bootbox.confirm("Are you sure you want to delete execution plans " + row.find( "#executionPlans" ).text() + "?", function(result) {
+		var executionPlans = row.find( "#executionPlans a span");
+		var planNames = $(executionPlans[0]).text();
+		for (var i = 1; i < executionPlans.length; i++){
+			planNames = planNames + ',' + $(executionPlans[i]).text();
+		 }
+		
+		bootbox.confirm("Are you sure you want to delete execution plans " + planNames + "?", function(result) {
 			if (result){			  
-				var input = $("<input>").attr("type", "hidden").attr("name", "planNames").val(row.find( "#executionPlans" ).text());
+				var input = $("<input>").attr("type", "hidden").attr("name", "planNames").val(planNames);
 			    var form = $("<form>");
 			    form.append($(input));
 			    var serializedData = form.serialize();
