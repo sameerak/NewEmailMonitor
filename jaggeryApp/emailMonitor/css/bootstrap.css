@@ -5803,3 +5803,7 @@ button.close {
 	width: 100%;
 	max-width: 100%;
 }
+
+.queryPlans{
+    border: 1px solid #ddd;	
+}

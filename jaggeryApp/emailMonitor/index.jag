@@ -93,8 +93,7 @@ if (!user) {
         	<%
 			        }
 				}%>
-        	</tbody>
-        </table>
+        </div>
 </div>
 <div class="tab-pane fade" id="configure">
 <form id="emailMonitorConfigForm">
