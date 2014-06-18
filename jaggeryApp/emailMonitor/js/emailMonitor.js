@@ -83,8 +83,19 @@ $(document).ready(function() {
 		     // log a message to the console
 			 $('#cepQueries').val('');
 			 var jsonresponse = JSON.parse(response);
-//			 $('#storedQueries tbody').append('<tr><td>'+ jsonresponse.query +'</td><td>'+ jsonresponse.planNames.toString() +'</td></tr>');
-			 $('#storedQueries tbody').append('<tr><td class="text-left row"><div class="queryPlans col-md-offset-1 col-md-10 row"><p class="text-left">Query : '+ jsonresponse.query +'</p><p class="text-left">Execution Plans : <span id="executionPlans">'+ jsonresponse.planNames.toString() +'</span></p><p class="text-right col-md-11"><button type="button" class="btn btn-danger">Delete Query</button></p></div></td></tr>');
+			 var checkString = $('#storedQueries tbody tr:first-child td p:first-child').text();
+			 if (checkString === "There are no queries deployed to query the email account"){
+				 $('#storedQueries tbody tr:first-child').remove();
+			 }
+			 $('#storedQueries tbody').append('<tr>'+
+						'<td class="text-left row">'+
+						'<div class="queryPlans col-md-offset-1 col-md-10 row">'+
+						'<p class="text-left">Query : '+ jsonresponse.query +'</p>'+
+						'<p class="text-left">Execution Plans : <span id="executionPlans">'+ jsonresponse.planNames.toString() +'</span></p>'+
+						'<p class="text-right col-md-11"><button type="button" class="btn btn-danger">Delete Query</button></p>'+
+						'</div>'+
+						'</td>'+
+						'</tr>');
 			 bootbox.alert(jsonresponse.message);
 			 
 //		     console.log("Hooray, it worked!");
@@ -130,6 +141,14 @@ $(document).ready(function() {
 				 request.done(function (response, textStatus, jqXHR){
 				     // log a message to the console
 					 row.remove();
+					 var checkrow = $('#storedQueries tbody tr:first-child').text();
+					 if (checkrow == "" || checkrow === 'null' || checkrow == null || checkrow.length <= 0){
+						 $('#storedQueries tbody').append('<tr>'+
+									'<td class="text-left">'+
+										'<p class="text-center">There are no queries deployed to query the email account</p>'+
+							        '</td>'+
+									'</tr>');
+					 }
 					 bootbox.alert(response);
 		//		     console.log("Hooray, it worked!");
 				 });

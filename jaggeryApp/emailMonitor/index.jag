@@ -100,10 +100,8 @@ if (!user) {
 				}
 				else{%>
 					<tr>
-					<td class="text-left row">
-					<div class="queryPlans col-md-offset-1 col-md-10 row">
-						<p class="text-left">There are no queries deployed to query the email account</p>
-			        </div>
+					<td class="text-left">
+						<p class="text-center">There are no queries deployed to query the email account</p>
 			        </td>
 					</tr>
 				<%
