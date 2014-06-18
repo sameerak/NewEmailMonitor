@@ -112,33 +112,37 @@ $(document).ready(function() {
 	
 	$('#storedQueries tbody').on('click', 'tr', function() {
 		var row = $(this);
-		var input = $("<input>").attr("type", "hidden").attr("name", "planNames").val($(this).children(":nth-child(2)").text());
-	    var form = $("<form>");
-	    form.append($(input));
-	    var serializedData = form.serialize();
-	    
-	    request = $.ajax({
-		     url: "removeQuery",
-		     type: "post",
-		     data: serializedData
-		 });
-		
-		 // callback handler that will be called on success
-		 request.done(function (response, textStatus, jqXHR){
-		     // log a message to the console
-			 row.remove();
-			 bootbox.alert(response);
-//		     console.log("Hooray, it worked!");
-		 });
-		
-		 // callback handler that will be called on failure
-		 request.fail(function (jqXHR, textStatus, errorThrown){
-		     // log the error to the console
-		     console.error(
-		         "The following error occured: "+
-		         textStatus, errorThrown
-		     );
-		     bootbox.alert("Please check values provided for input parameters!");
-		 });
+		bootbox.confirm("Are you sure you want to delete execution plans " + row.children(":nth-child(2)").text() + "?", function(result) {
+			if (result){			  
+				var input = $("<input>").attr("type", "hidden").attr("name", "planNames").val(row.children(":nth-child(2)").text());
+			    var form = $("<form>");
+			    form.append($(input));
+			    var serializedData = form.serialize();
+			    
+			    request = $.ajax({
+				     url: "removeQuery",
+				     type: "post",
+				     data: serializedData
+				 });
+				
+				 // callback handler that will be called on success
+				 request.done(function (response, textStatus, jqXHR){
+				     // log a message to the console
+					 row.remove();
+					 bootbox.alert(response);
+		//		     console.log("Hooray, it worked!");
+				 });
+				
+				 // callback handler that will be called on failure
+				 request.fail(function (jqXHR, textStatus, errorThrown){
+				     // log the error to the console
+				     console.error(
+				         "The following error occured: "+
+				         textStatus, errorThrown
+				     );
+				     bootbox.alert("Please check values provided for input parameters!");
+				 });
+			 }
+		});
 	});
 });
