@@ -212,7 +212,11 @@ public class SiddhiQueryWriter {
             stringBuffer1.append(" select  threadID,labels, count(messageID) as emailCount, email:getAll(to) as to ,email:getAll(sender) as senders,");
             stringBuffer1.append(" " + '"' + siddhiTemplate.getLabelName() + '"' + " ");
             stringBuffer1.append("as newLabel group by threadID  having emailCount ");
-            stringBuffer1.append(siddhiTemplate.getCmpAction());
+            if(siddhiTemplate.getCmpAction().equals("=")){
+                stringBuffer1.append("==");
+            }else {
+                stringBuffer1.append(siddhiTemplate.getCmpAction());
+            }
             stringBuffer1.append(" " + siddhiTemplate.getCountValue());
             stringBuffer1.append(" insert into " + ConstantsUtils.THREADSTREAM);
             stringBuffer1.append(";");
