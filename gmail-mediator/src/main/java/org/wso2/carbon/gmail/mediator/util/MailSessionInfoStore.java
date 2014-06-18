@@ -8,7 +8,15 @@ public class MailSessionInfoStore {
     private static long previouseMessageTS;
     private static long nextBundleFirstMailTs;
     private static boolean bundleRecived;
+   private static boolean readMailRecived;
 
+    public static boolean isReadMailRecived() {
+        return readMailRecived;
+    }
+
+    public static void setReadMailRecived(boolean readMailRecived) {
+        MailSessionInfoStore.readMailRecived = readMailRecived;
+    }
 
     public static int getBundleCount() {
         return bundleCount;
@@ -45,6 +53,8 @@ public class MailSessionInfoStore {
     public static void setNextBundleFirstMailTs(long nextBundleFirstMailTs) {
         MailSessionInfoStore.nextBundleFirstMailTs = nextBundleFirstMailTs;
     }
+
+
 
     public static boolean isBundleRecived() {
         return bundleRecived;
