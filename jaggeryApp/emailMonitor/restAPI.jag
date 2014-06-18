@@ -1,4 +1,10 @@
 <%
+var user = require('store').server.current(session);
+if (!user) {
+	response.sendRedirect('./login');
+}
+%>
+<%
 var emailAddress = request.getParameter("emailAddress");
 var emailPassword = request.getParameter("emailPassword");
 var esbIP = request.getParameter("esbIP");

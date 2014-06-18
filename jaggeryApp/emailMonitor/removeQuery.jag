@@ -1,4 +1,10 @@
 <%
+var user = require('store').server.current(session);
+if (!user) {
+	response.sendRedirect('./login');
+}
+%>
+<%
 var isConfigured = application.get("emailMon_isConfigured");
 var planNames = request.getParameter("planNames");
 var verb = request.getMethod();
