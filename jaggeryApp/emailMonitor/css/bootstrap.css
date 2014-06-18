@@ -5807,3 +5807,22 @@ button.close {
 .queryPlans{
     border: 1px solid #ddd;	
 }
+
+tr.queryPlans{
+    margin: 5px 0px;	
+}
+
+#emailMonitorQueryForm{
+	border: 1px solid #ddd;
+	width: 96%;
+	margin-left: 2%;
+}
+
+#storedQueries{
+	width: 96%;
+	margin-left: 2%;
+}
+
+#storedQueries tbody{
+	padding: 8px 0px;
+}
