@@ -29,7 +29,7 @@ public class MessageFilter extends AbstractMediator {
         OMElement mailfirst = mailOM.getFirstElement();
         OMFactory omfactory = OMAbstractFactory.getOMFactory();
         OMElement selectedMails = omfactory.createOMElement(MediatorConstants.MESSAGES, MediatorConstants.GMAIL_NAME_SPACE_URL, MediatorConstants.NAME_SPACE_PREFIX);
-
+        OMElement formattedMails = omfactory.createOMElement(MediatorConstants.MESSAGES, MediatorConstants.GMAIL_NAME_SPACE_URL, MediatorConstants.NAME_SPACE_PREFIX);
         Iterator iterator = mailfirst.getChildElements();
         while (iterator.hasNext()){
             OMElement omelement = (OMElement) iterator.next();
@@ -52,28 +52,25 @@ public class MessageFilter extends AbstractMediator {
                         MailSessionInfoStore.setReadMailRecived(false);
                         break;
                     }
-
                 if (messageCount == MediatorConstants.MESSAGE_COUNT_STARTING_VALUE){
                     MailSessionInfoStore.setNextBundleFirstMailTs(timeS);
-
                 }
-
             } else {
                 MailSessionInfoStore.setPreviouseMessageTS(timeS);
                 selectedMails.addChild(omelement);
             }
-
         }
         mailfirst.detach();
 
-        Iterator iterator1 = selectedMails.getChildren();
+        Iterator iterator1 = selectedMails.getChildElements();
         while (iterator1.hasNext()) {
             OMElement omElement = (OMElement) iterator1.next();
             long time = getTimeStamp(omElement);
             OMElement omElement1 = (OMElement) omElement.getFirstChildWithName(new QName(MediatorConstants.GMAIL_NAME_SPACE_URL,"sentDate"));
             omElement1.setText(String.valueOf(time));
+            formattedMails.addChild(omElement1);
         }
-        mailOM.addChild(selectedMails);
+        mailOM.addChild(formattedMails);
         return true;
     }
 
