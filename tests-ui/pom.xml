@@ -10,11 +10,11 @@
         <relativePath>../pom.xml</relativePath>
     </parent-->
 
-    <groupId>org.wso2.appserver</groupId>
+    <groupId>org.wso2.cep</groupId>
     <modelVersion>4.0.0</modelVersion>
-    <name>WSO2 AppServer - Integration Test UI Module</name>
-    <artifactId>org.wso2.appserver.integration.test.ui</artifactId>
-    <version>5.2.1</version>
+    <name>WSO2 CEP email monitor - Integration Test UI Module</name>
+    <artifactId>org.wso2.cep.email.monitor.integration.test.ui</artifactId>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
 	<repositories>
@@ -53,12 +53,12 @@
                             <name>java.io.tmpdir</name>
                             <value>${basedir}/target/</value>
                         </property>
-                        <property>
+                        <!--<property>
                             <name>carbon.zip</name>
                             <value>
                                 ${basedir}/../../distribution/target/wso2as-${project.version}.zip
                             </value>
-                        </property>
+                        </property>-->
                         <property>
                             <name>framework.resource.location</name>
                             <value>
@@ -116,7 +116,7 @@
                         </configuration>
                     </execution>
 
-                    <execution>
+                    <!--<execution>
                         <id>unpack-mar-jks</id>
                         <phase>compile</phase>
                         <goals>
@@ -135,7 +135,7 @@
                                 </artifactItem>
                             </artifactItems>
                         </configuration>
-                    </execution>
+                    </execution>-->
                 </executions>
             </plugin>
             <plugin>

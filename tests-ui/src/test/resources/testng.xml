@@ -17,7 +17,8 @@
             <!--<class name="org.wso2.carbon.integration.test.ui.LoginTestCase"/>-->
             <!--<class name="org.wso2.cep.email.monitor.ui.test.emailMonitorTest"/>-->
             <!--<class name="org.wso2.cep.email.monitor.ui.test.SignInTest"/>-->
-            <class name="org.wso2.cep.email.monitor.ui.test.ConfigTest"/>
+            <!--<class name="org.wso2.cep.email.monitor.ui.test.ConfigTest"/>-->
+            <class name="org.wso2.cep.email.monitor.ui.test.QueryTest"/>
         </classes>
     </test>
 </suite>
