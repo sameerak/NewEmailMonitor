@@ -62,7 +62,7 @@ public class MessageFilter extends AbstractMediator {
         }
         mailfirst.detach();
 
-        Iterator iterator1 = selectedMails.getChildren();
+        Iterator iterator1 = selectedMails.getChildElements();
         while (iterator1.hasNext()) {
             OMElement omElement = (OMElement) iterator1.next();
             long time = getTimeStamp(omElement);
