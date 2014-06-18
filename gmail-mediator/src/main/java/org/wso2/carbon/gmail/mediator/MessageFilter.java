@@ -21,7 +21,7 @@ import java.util.Iterator;
 public class MessageFilter extends AbstractMediator {
 
 
-    public boolean mediate(MessageContext messageContext) {
+    public boolean mediate(MessageContext messageContext){
         int messageCount = MediatorConstants.DEFAULT_VALUE_ZERO;
         MailSessionInfoStore.incrementBundleCount();
         SOAPBody soapBody = messageContext.getEnvelope().getBody();
@@ -31,7 +31,7 @@ public class MessageFilter extends AbstractMediator {
         OMElement selectedMails = omfactory.createOMElement(MediatorConstants.MESSAGES, MediatorConstants.GMAIL_NAME_SPACE_URL, MediatorConstants.NAME_SPACE_PREFIX);
 
         Iterator iterator = mailfirst.getChildElements();
-        while (iterator.hasNext()) {
+        while (iterator.hasNext()){
             OMElement omelement = (OMElement) iterator.next();
             long timeS = getTimeStamp(omelement);
             messageCount++;
@@ -43,17 +43,19 @@ public class MessageFilter extends AbstractMediator {
                 if (MailSessionInfoStore.getBundleCount() > MediatorConstants.MESSAGE_COUNT_STARTING_VALUE) {
                     if (timeS <= MailSessionInfoStore.getPreviouseBundleFirstMailTS()) {
                         MailSessionInfoStore.setPreviouseMessageTS(timeS);
+                        MailSessionInfoStore.setReadMailRecived(true);
                     } else {
                         selectedMails.addChild(omelement);
                     }
-
-
-                    if (MailSessionInfoStore.getPreviouseMessageTS() != MediatorConstants.DEFAULT_VALUE_ZERO && MailSessionInfoStore.getPreviouseMessageTS() < timeS) {
+                    if (MailSessionInfoStore.getPreviouseMessageTS() != MediatorConstants.DEFAULT_VALUE_ZERO && MailSessionInfoStore.isReadMailRecived()){
                         MailSessionInfoStore.setPreviouseBundleFirstMailTS(MailSessionInfoStore.getNextBundleFirstMailTs());
+                        MailSessionInfoStore.setReadMailRecived(false);
+                        break;
                     }
                 }
-                if (messageCount == MediatorConstants.MESSAGE_COUNT_STARTING_VALUE) {
+                if (messageCount == MediatorConstants.MESSAGE_COUNT_STARTING_VALUE){
                     MailSessionInfoStore.setNextBundleFirstMailTs(timeS);
+
                 }
 
             } else {
@@ -68,7 +70,7 @@ public class MessageFilter extends AbstractMediator {
         while (iterator1.hasNext()) {
             OMElement omElement = (OMElement) iterator1.next();
             long time = getTimeStamp(omElement);
-            OMElement omElement1 = (OMElement) omElement.getFirstChildWithName(new QName("","sentDate"));
+            OMElement omElement1 = (OMElement) omElement.getFirstChildWithName(new QName(MediatorConstants.GMAIL_NAME_SPACE_URL,"sentDate"));
             omElement1.setText(String.valueOf(time));
         }
         mailOM.addChild(selectedMails);
