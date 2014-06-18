@@ -68,6 +68,8 @@ public class MessageFilter extends AbstractMediator {
             long time = getTimeStamp(omElement);
             OMElement omElement1 = (OMElement) omElement.getFirstChildWithName(new QName(MediatorConstants.GMAIL_NAME_SPACE_URL,"sentDate"));
             omElement1.setText(String.valueOf(time));
+            omElement1.detach();
+            omElement.addChild(omElement1);
             formattedMails.addChild(omElement1);
         }
         mailOM.addChild(formattedMails);
