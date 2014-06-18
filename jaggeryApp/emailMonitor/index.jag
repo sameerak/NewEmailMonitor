@@ -66,7 +66,7 @@ if (!user) {
             </tbody>
         </table>
         </form>
-        <table class="table table-no-border text-left" style="width:100%" id="storedQueries">
+        <table class="table table-no-border text-center" style="width:100%" id="storedQueries">
         	<tbody>
         	<%
         		var util = require("util/utility.jag");
@@ -83,9 +83,12 @@ if (!user) {
 					var storedString = myEmailMonitorAdminServiceStub.getResourceString(storedQueries[i]);
 					var content = parse(String(storedString));
         	%>
-					<tr>
-						<td><%print(content.query);%></td>
- 						<td><%print(content.planNames.toString());%></td>
+					<tr class="text-left queryPlans">
+					<td class="text-left row" style="width:95%">
+						<p class="col-md-offset-1 text-left">Query : <%print(content.query);%></p>
+			        	<p class="col-md-offset-1 text-left">Execution Plans : <span id="executionPlans"><%print(content.planNames.toString());%></span></p>
+			        	<p class="text-right col-md-offset-1 col-md-10"><button type="button" class="btn btn-danger">Delete Query</button></p>
+			        </td>
 					</tr>
         	<%
 			        }
