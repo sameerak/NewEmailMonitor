@@ -20,7 +20,7 @@ if (!user) {
 <div class="container">
 			<div class="row text-center">
 <div class="col-md-10 col-md-offset-1">
-	<div class="text-center">
+	<div class="clearfix">
 		<ul class="nav pull-right">
                     <li class="">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-user"></i> admin <b class="caret"></b></a>
@@ -31,6 +31,8 @@ if (!user) {
                         </ul>
                     </li>
                 </ul>
+	</div>
+	<div class="text-center">                
 		<h3>E-mail monitoring with <a href="http://wso2.com/products/enterprise-service-bus/"><img alt="WSO2ESB" src="./images/esb-logo-h42.png" width="290px" height="32px"></a></h3> 
 		<h3>and <a href="http://wso2.com/products/complex-event-processor/"><img alt="WSO2CEP" src="./images/cep-logo-h42.png" width="290px" height="32px"></a></h3>
 	</div>
