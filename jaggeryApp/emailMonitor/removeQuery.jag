@@ -40,11 +40,11 @@ if(verb == "DELETE" || verb == "PUT" || verb == "GET") {
 						
 						response.status = 200;
 // 						return replyjson;
-						print(stringify("Execution plans removed successfully." + plans[0]));
+						print(stringify("Email query removed successfully."));
 					}
 					catch(error){
 						response.status = 500;
-						print("Something went wrong!" + planNames);
+						print("Something went wrong!");
 						log.debug(error);
 				print(error);
 					}
