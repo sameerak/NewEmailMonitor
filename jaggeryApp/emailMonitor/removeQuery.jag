@@ -6,8 +6,7 @@ if (!user) {
 %>
 <%
 var isConfigured = application.get("emailMon_isConfigured");
-var ui_isConfigured = request.getParameter("isConfigured");
-var cepQuery = request.getParameter("cepQueries");
+var planNames = request.getParameter("planNames");
 var verb = request.getMethod();
 response.contentType = 'text/plain';
 
@@ -18,7 +17,7 @@ if(verb == "DELETE" || verb == "PUT" || verb == "GET") {
 } else if(verb == "POST") {
 		var util = require("util/utility.jag");
 	
-            if((ui_isConfigured || isConfigured) && util.isNotNullOrEmpty(cepQuery)){
+            if(util.isNotNullOrEmpty(planNames)){
 					try{
 				
 				
@@ -26,31 +25,26 @@ if(verb == "DELETE" || verb == "PUT" || verb == "GET") {
 						var serverUrl = util.getServiceUrl();
 						serverUrl = serverUrl + "EmailMonitorAdminService";
 						
+						var eventProcessorAdminService = Packages.org.wso2.carbon.event.processor.admin.EventProcessorAdminService;
+						var myEventProcessorAdminService = new eventProcessorAdminService();
+						
 						var emailMonitorAdminServiceStub = Packages.org.wso2.cep.email.monitor.stub.admin.EmailMonitorAdminServiceStub;
 						var myEmailMonitorAdminServiceStub = new emailMonitorAdminServiceStub(serverUrl);
 						
-						var siddhiQueries = myEmailMonitorAdminServiceStub.getSiddhiQuery(cepQuery);
-						var planName = new Array();
-			            for (var i = 0; i < siddhiQueries.length; i++) { 
-			                planName[i] = myEmailMonitorAdminServiceStub.createExecutionPlan(siddhiQueries[i]);
-			            }
-			            var content = cepQuery + "~" + planName.toString();
-			            var path = "emailMonitorCollection/queryCollection/" + planName[0];
-			            
-			            var replyjson = {};
-			            replyjson.query = cepQuery;
-			            replyjson.planNames = planName;
-			            
-			            myEmailMonitorAdminServiceStub.saveResourceString(stringify(replyjson), path);
-			            
-			            replyjson.message = "CEP query added successfully.";
+						var plans = planNames.split(",");
+						
+						for (var i = 0; i < plans.length; i++) {
+							myEventProcessorAdminService.undeployActiveExecutionPlanConfiguration(plans[i]);
+						} 
+						myEmailMonitorAdminServiceStub.removeResource("emailMonitorCollection/queryCollection/"+plans[0]);
+						
 						response.status = 200;
 // 						return replyjson;
-						print(stringify(replyjson));
+						print(stringify("Execution plans removed successfully." + plans[0]));
 					}
 					catch(error){
 						response.status = 500;
-						print("Something went wrong!");
+						print("Something went wrong!" + planNames);
 						log.debug(error);
 				print(error);
 					}

@@ -231,4 +231,46 @@ public class EmailMonitorService implements EmailMonitorServiceInterface {
 
         }
     }
+
+    @Override
+    public boolean saveResourceString(String resourceString, String resourcePath) {
+        RegistryManager registryManager = new RegistryManager();
+        registryManager.saveResourceString(resourceString, resourcePath);
+        return true;
+    }
+
+    @Override
+    public boolean resourceAlreadyExists(String path) {
+        RegistryManager registryManager = new RegistryManager();
+        registryManager.resourceAlreadyExists(path);
+        return true;
+    }
+
+    @Override
+    public boolean removeResource(String path) {
+        RegistryManager registryManager = new RegistryManager();
+        registryManager.removeResource(path);
+        return true;
+    }
+
+    @Override
+    public String getResourceString(String path) {
+        RegistryManager registryManager = new RegistryManager();
+        return registryManager.getResourceString(path);
+    }
+
+    @Override
+    public boolean addCollection(String collectionPath) {
+        RegistryManager registryManager = new RegistryManager();
+        registryManager.addCollection(collectionPath);
+        return true;
+    }
+
+    @Override
+    public String[] getEmailMonitorResources(String emailMonitorCollectionLocation) {
+        RegistryManager registryManager = new RegistryManager();
+        return registryManager.getEmailMonitorResources(emailMonitorCollectionLocation);
+    }
+
+
 }

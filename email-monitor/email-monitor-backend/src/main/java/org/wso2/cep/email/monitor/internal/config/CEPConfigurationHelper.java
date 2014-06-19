@@ -44,9 +44,10 @@ public class CEPConfigurationHelper {
         eventFormatterDeployer.createEmailSenderOutputStreamFormatter(mailAddress ,axisConfiguration);
 
         registryManager.addCollection(EmailMonitorConstants.REGISTRY_COLLECTION_NAME);
+        registryManager.addCollection(EmailMonitorConstants.REGISTRY_QUERY_COLLECTION_PATH);
         if(!registryManager.resourceAlreadyExists(EmailMonitorConstants.REGISTRY_QUERYCOUNT_RESOURCE_PATH)){
 
-            registryManager.saveResourceString("O", EmailMonitorConstants.REGISTRY_QUERYCOUNT_RESOURCE_PATH);
+            registryManager.saveResourceString("0", EmailMonitorConstants.REGISTRY_QUERYCOUNT_RESOURCE_PATH);
         }
 
         logger.info("Successfully completed adding CEP configurations");
