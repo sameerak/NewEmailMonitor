@@ -95,7 +95,7 @@ if (!user) {
 					<tr>
 					<td class="text-left row">
 					<div class="queryPlans col-md-offset-1 col-md-10 row">
-						<p class="text-left">Query : <%print(content.query);%></p>
+						<p class="text-left" id="queryName">Query : <%print(content.query);%></p>
 			        	<p class="text-left">Execution Plans : <span id="executionPlans"><%print(linkString);%></span></p>
 			        	<p class="text-right col-md-11"><button type="button" class="btn btn-danger">Delete Query</button></p>
 			        </div>

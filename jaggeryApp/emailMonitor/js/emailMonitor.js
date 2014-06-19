@@ -97,7 +97,7 @@ $(document).ready(function() {
 			 $('#storedQueries tbody').append('<tr>'+
 						'<td class="text-left row">'+
 						'<div class="queryPlans col-md-offset-1 col-md-10 row">'+
-						'<p class="text-left">Query : '+ jsonresponse.query +'</p>'+
+						'<p class="text-left" id="queryName">Query : '+ jsonresponse.query +'</p>'+
 						'<p class="text-left">Execution Plans : <span id="executionPlans">'+ linkString +'</span></p>'+
 						'<p class="text-right col-md-11"><button type="button" class="btn btn-danger">Delete Query</button></p>'+
 						'</div>'+
@@ -132,12 +132,13 @@ $(document).ready(function() {
 	$('#storedQueries tbody').on('click', 'button', function() {
 		var row = $(this).parent().parent().parent().parent();
 		var executionPlans = row.find( "#executionPlans a span");
+		var query = row.find( "#queryName").text();
 		var planNames = $(executionPlans[0]).text();
 		for (var i = 1; i < executionPlans.length; i++){
 			planNames = planNames + ',' + $(executionPlans[i]).text();
 		 }
 		
-		bootbox.confirm("Are you sure you want to delete execution plans " + planNames + "?", function(result) {
+		bootbox.confirm("Are you sure you want to delete " + query + "?", function(result) {
 			if (result){			  
 				var input = $("<input>").attr("type", "hidden").attr("name", "planNames").val(planNames);
 			    var form = $("<form>");
@@ -162,7 +163,7 @@ $(document).ready(function() {
 							        '</td>'+
 									'</tr>');
 					 }
-					 bootbox.alert(response);
+					 bootbox.alert(response + "<br>" + query);
 		//		     console.log("Hooray, it worked!");
 				 });
 				
