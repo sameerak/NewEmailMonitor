@@ -45,7 +45,7 @@ public class QueryManagerServiceTest {
         queryManagerService = new QueryManagerService();
         String[] result = queryManagerService.getSiddhiQuery("frequency >3/d add  label important" );
         Assert.assertEquals(2,result.length);
-        Assert.assertEquals("from gmailInputStream#window.externalTime(sentDate,1 days) select  threadID, labels,count(messageID) as emailCount, email:getAll(to) as to ,email:getAll(sender) as senders, \"important\" as newLabel group by threadID  having emailCount > 3 insert into threadDetails;",result[0]);
+        Assert.assertEquals("from gmailInputStream#window.externalTime(sentDate,1 days) select  threadID, labels,count(messageID) as emailCount, email:getAll(to) as to ,email:getAll(sender) as senders, \"important\" as newLabel group by threadID  having emailCount == 4 insert into threadDetails;",result[0]);
         Assert.assertEquals("from threadDetails select threadID, newLabel as label insert into gmailOutputStream;",result[1]);
     }
 
@@ -54,7 +54,7 @@ public class QueryManagerServiceTest {
         queryManagerService = new QueryManagerService();
         String[] result = queryManagerService.getSiddhiQuery("to:(abc@wso2.com and def@wso2.com or ghi@wso2.com) and label :(marketing) or from:(ijk@wso2.com) and frequency >3/d add  label important" );
         Assert.assertEquals(2,result.length);
-        Assert.assertEquals("from gmailInputStream#window.externalTime(sentDate,1 days) select  threadID,labels, count(messageID) as emailCount, email:getAll(to) as to ,email:getAll(sender) as senders, \"important\" as newLabel group by threadID  having emailCount > 3 insert into threadDetails;",result[0]);
+        Assert.assertEquals("from gmailInputStream#window.externalTime(sentDate,1 days) select  threadID,labels, count(messageID) as emailCount, email:getAll(to) as to ,email:getAll(sender) as senders, \"important\" as newLabel group by threadID  having emailCount == 4 insert into threadDetails;",result[0]);
         Assert.assertEquals("from threadDetails[(to contains \"abc@wso2.com\" and to contains \"def@wso2.com\" or to contains \"ghi@wso2.com\") and (labels contains \"marketing\")or(senders contains \"ijk@wso2.com\")] select threadID, newLabel as label insert into gmailOutputStream;",result[1]);
 
     }
@@ -66,7 +66,7 @@ public class QueryManagerServiceTest {
         String[] result = queryManagerService.getSiddhiQuery("to:(abc@wso2.com and def@wso2.com or ghi@wso2.com) and label :(marketing) or from:(ijk@wso2.com) and thread frequency >3/d send mail" );
         Assert.assertEquals(2,result.length);
         Assert.assertEquals("from gmailInputStream[(labels contains \"marketing\")]#window.externalTime(sentDate,1 days) select   \"marketing\" as label, email:getUniqueCount(threadID) as threadCount insert into labelDetails;",result[0]);
-        Assert.assertEquals("from labelDetails [(threadCount > 3 )]select  * insert into emailSenderOutputStream;",result[1]);
+        Assert.assertEquals("from labelDetails [(threadCount == 4 )]select  * insert into emailSenderOutputStream;",result[1]);
 
     }
 
@@ -80,7 +80,15 @@ public class QueryManagerServiceTest {
         Assert.assertEquals("from filteredEmailDetails[(to contains \"abc@wso2.com\")and(senders contains \"def@wso2.com\")] select threadID, newLabel as label insert into gmailOutputStream;",result[1]);
     }
 
+    @Test
+    public  void testfilterQuerywithfilteringandlabelfrequnecywithExternalTimeBatch() throws EmailMonitorCompilerException {
+        queryManagerService = new QueryManagerService();
+        String[] result = queryManagerService.getSiddhiQuery("to:(abc@wso2.com and def@wso2.com or ghi@wso2.com) and label :(marketing) or from:(ijk@wso2.com) and thread frequency < 3/d send mail" );
+        Assert.assertEquals(2,result.length);
+        Assert.assertEquals("from gmailInputStream[(labels contains \"marketing\")]#window.custom:externalTimeBatch(sentDate,1 days) select   \"marketing\" as label, email:getUniqueCount(threadID) as threadCount insert into labelDetails;",result[0]);
+        Assert.assertEquals("from labelDetails [(threadCount < 3 )]select  * insert into emailSenderOutputStream;",result[1]);
 
+    }
 
 
 
