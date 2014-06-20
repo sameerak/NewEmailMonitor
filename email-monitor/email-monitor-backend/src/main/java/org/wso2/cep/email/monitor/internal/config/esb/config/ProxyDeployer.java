@@ -94,6 +94,35 @@ public class ProxyDeployer {
     }
 
 
+    public void addMailSenderProxy(String userName, String password)throws EmailMonitorServiceException {
+
+        CarbonUtils.setBasicAccessSecurityHeaders(userName, password, stub._getServiceClient());
+
+        String proxyName = EmailMonitorConstants.MAIL_SENDER_PROXY_NAME;
+
+        //Set proxy configuration data
+        String[] transport = {"http", "https"};
+        ProxyData data = new ProxyData();
+        data.setName(proxyName);
+        data.setStartOnLoad(true);
+        data.setTransports(transport);
+        String content = xmlReader.readXML(EmailMonitorConstants.MAIL_SENDER_PROXY_PATH);
+
+        data.setInSeqXML(content);
+
+
+        try {
+            stub.addProxy(data);
+        } catch (RemoteException e) {
+            logger.error(e.getMessage());
+            throw new EmailMonitorServiceException("Error when adding proxy to Stub", e);
+        } catch (ProxyServiceAdminProxyAdminException e) {
+            logger.error(e.getMessage());
+            throw new EmailMonitorServiceException("Error when adding proxy to stub", e);
+        }
+    }
+
+
 }
 
 

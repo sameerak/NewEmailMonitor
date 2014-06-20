@@ -165,12 +165,15 @@ public interface EmailMonitorServiceInterface {
 
     /**
      *
-     * @param mailAddress
+     * @param ESBServerIP
+     * @param ESBServerPort
+     * @param ESBServerUsername
+     * @param ESBServerPassword
      * @param axisConfiguration
      * @return
      * @throws EmailMonitorServiceException
      */
-    public boolean createEmailSenderOutputStreamFormatter(String mailAddress,AxisConfiguration axisConfiguration) throws EmailMonitorServiceException ;
+    public boolean createEmailSenderOutputStreamFormatter(String ESBServerIP, String ESBServerPort, String ESBServerUsername, String ESBServerPassword, AxisConfiguration axisConfiguration)throws EmailMonitorServiceException;;
 
     /**
      *

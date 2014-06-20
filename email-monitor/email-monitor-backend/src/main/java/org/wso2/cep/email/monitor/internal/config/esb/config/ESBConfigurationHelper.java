@@ -40,6 +40,7 @@ public class ESBConfigurationHelper {
         bamMediatorDeployer.addBAMServerProfile(ESBUserName, ESBPassword, CEPServerUserName, CEPServerPassword , CEPServerIP ,CEPServerPort);
         proxyDeployer.addMailProxy(ESBUserName, ESBPassword);
         proxyDeployer.addLabelAdderProxy(ESBUserName,ESBPassword);
+        proxyDeployer.addMailSenderProxy(ESBUserName,ESBPassword);
         taskDeployer.addScheduledTask(ESBUserName, ESBPassword, mailUserNAme, mailPassword);
 
     }

@@ -15,9 +15,12 @@ public class EmailMonitorConstants {
     public static final String MAIL_READER_PROXY_NAME = "gmail_passwordAuthentication";
 
     public static final String LABEL_ADDER_PROXY_NAME = "gmail_label_adder";
+    public static final String MAIL_SENDER_PROXY_NAME = "gmail_mail_sender";
 
     public static final String MAIL_READER_PROXY_PATH = "/config/insequence.xml";
     public static final String LABEL_ADDER_PROXY_PATH = "/config/labelAdderProxyInsequence.xml";
+    public static final String MAIL_SENDER_PROXY_PATH = "/config/mailSenderProxyInsequence.xml";
+
     public static final String GMAIL_OUT_STREAM_CONFIGURATION_PATH = "/config/gmailoutstreamFormatter.xml";
     public static final String GMAIL_OUT_STREAM_FORMATTER_NAME = "gmailOutputStream_formatter";
     public static final String MAIL_SENDER_OUT_STREAM_CONFIGURATION_PATH = "/config/emailSenderStreamFormatter.xml";
@@ -58,5 +61,7 @@ public class EmailMonitorConstants {
     public static final String REGISTRY_COLLECTION_NAME = "emailMonitorCollection";
     public static final String REGISTRY_QUERY_COLLECTION_PATH = "emailMonitorCollection/queryCollection";
     public static final String REGISTRY_QUERYCOUNT_RESOURCE_PATH = "emailMonitorCollection/queryCount";
+
+
 
 }
