@@ -8,10 +8,7 @@ import org.wso2.siddhi.core.event.Event;
 import org.wso2.siddhi.core.query.output.callback.QueryCallback;
 import org.wso2.siddhi.core.stream.input.InputHandler;
 import org.wso2.siddhi.core.util.EventPrinter;
-import org.wso2.siddhi.extension.StringConcatAggregatorFactory;
-import org.wso2.siddhi.extension.StringConcatAggregatorString;
-import org.wso2.siddhi.extension.UniqueCountAggregatorFactory;
-import org.wso2.siddhi.extension.UniqueCountAggregatorLong;
+import org.wso2.siddhi.extension.*;
 import org.wso2.siddhi.query.api.QueryFactory;
 import org.wso2.siddhi.query.api.definition.Attribute;
 import org.wso2.siddhi.query.api.expression.Expression;
@@ -95,6 +92,7 @@ public class UniqueCountTestCase {
         List<Class> classList = new ArrayList<Class>();
         classList.add(UniqueCountAggregatorFactory.class);
         classList.add(UniqueCountAggregatorLong.class);
+        classList.add(ExternalTimeBatchWindow.class);
         conf.setSiddhiExtensions(classList);
 
         SiddhiManager siddhiManager = new SiddhiManager();
