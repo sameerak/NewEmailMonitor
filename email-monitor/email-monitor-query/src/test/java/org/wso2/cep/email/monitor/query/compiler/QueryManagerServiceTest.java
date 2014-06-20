@@ -63,9 +63,9 @@ public class QueryManagerServiceTest {
     @Test
     public  void testfilterQuerywithfilteringandlabelfrequnecy() throws EmailMonitorCompilerException {
         queryManagerService = new QueryManagerService();
-        String[] result = queryManagerService.getSiddhiQuery("to:(abc@wso2.com and def@wso2.com or ghi@wso2.com) and label :(marketing) or from:(ijk@wso2.com) and thread frequency >3/d send mail" );
+        String[] result = queryManagerService.getSiddhiQuery("to:(abc@wso2.com and def@wso2.com or ghi@wso2.com) and label :(marketing) or from:(ijk@wso2.com) and thread frequency >3/d send mail (to : isurur@wso2.com subject : important body : importantBody)" );
         Assert.assertEquals(2,result.length);
-        Assert.assertEquals("from gmailInputStream[(labels contains \"marketing\")]#window.externalTime(sentDate,1 days) select   \"marketing\" as label, email:getUniqueCount(threadID) as threadCount insert into labelDetails;",result[0]);
+        Assert.assertEquals("from gmailInputStream[(labels contains \"marketing\")]#window.externalTime(sentDate,1 days) select   email:getUniqueCount(threadID) as threadCount, \"isurur@wso2.com\"  as to, \"important\"  as subject, \"importantBody\"  as content, \"marketing\"  as label insert into labelDetails;",result[0]);
         Assert.assertEquals("from labelDetails [(threadCount == 4 )]select  * insert into emailSenderOutputStream;",result[1]);
 
     }
@@ -83,9 +83,9 @@ public class QueryManagerServiceTest {
     @Test
     public  void testfilterQuerywithfilteringandlabelfrequnecywithExternalTimeBatch() throws EmailMonitorCompilerException {
         queryManagerService = new QueryManagerService();
-        String[] result = queryManagerService.getSiddhiQuery("to:(abc@wso2.com and def@wso2.com or ghi@wso2.com) and label :(marketing) or from:(ijk@wso2.com) and thread frequency < 3/d send mail" );
+        String[] result = queryManagerService.getSiddhiQuery("to:(abc@wso2.com and def@wso2.com or ghi@wso2.com) and label :(marketing) or from:(ijk@wso2.com) and thread frequency < 3/d send mail (to : isurur@wso2.com subject : important body : importantBody)" );
         Assert.assertEquals(2,result.length);
-        Assert.assertEquals("from gmailInputStream[(labels contains \"marketing\")]#window.custom:externalTimeBatch(sentDate,1 days) select   \"marketing\" as label, email:getUniqueCount(threadID) as threadCount insert into labelDetails;",result[0]);
+        Assert.assertEquals("from gmailInputStream[(labels contains \"marketing\")]#window.custom:externalTimeBatch(sentDate,1 days) select   email:getUniqueCount(threadID) as threadCount, \"isurur@wso2.com\"  as to, \"important\"  as subject, \"importantBody\"  as content, \"marketing\"  as label insert into labelDetails;",result[0]);
         Assert.assertEquals("from labelDetails [(threadCount < 3 )]select  * insert into emailSenderOutputStream;",result[1]);
 
     }

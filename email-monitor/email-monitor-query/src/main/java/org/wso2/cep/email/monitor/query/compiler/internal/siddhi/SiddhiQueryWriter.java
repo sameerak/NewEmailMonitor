@@ -314,10 +314,17 @@ public class SiddhiQueryWriter {
         stringBuffer1.append(siddhiTemplate.getTimeExpr());
         stringBuffer1.append(")");
         stringBuffer1.append(" select  ");
-        String re = siddhiTemplate.getLabelMails();
+        stringBuffer1.append(" email:getUniqueCount(threadID) as threadCount,");
+        stringBuffer1.append(" " + '"'+siddhiTemplate.getTo()+'"' + " ");
+        stringBuffer1.append(" as to,");
+        stringBuffer1.append(" " + '"'+siddhiTemplate.getSubject()+'"' + " ");
+        stringBuffer1.append(" as subject,");
+        stringBuffer1.append(" " + '"'+siddhiTemplate.getBody()+'"' + " ");
+        stringBuffer1.append(" as content,");
+                String re = siddhiTemplate.getLabelMails();
         re = re.substring(re.indexOf('"') + 1, re.length() - 1);
         stringBuffer1.append(" " + '"' + re + '"' + " ");
-        stringBuffer1.append("as label, email:getUniqueCount(threadID) as threadCount insert into ");
+        stringBuffer1.append(" as label insert into ");
         stringBuffer1.append(ConstantsUtils.LABELSTREAM);
         stringBuffer1.append(";");
 

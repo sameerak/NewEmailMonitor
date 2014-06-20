@@ -66,10 +66,12 @@ labelToCondition
     
 action 
     :   'add' 'label' stringVal -> ^(LBL stringVal)
-    | 'send' 'mail'
+    | 'send' 'mail' '(' 'to' ':' emailAddr 'subject' ':' stringVal ('body' ':' stringValBody)?  ')'
     ;
 
-
+stringValBody
+     :stringVal
+     ;
     
 toCondition 
     :   'to'  ':'	'('emailAddrSet ')';

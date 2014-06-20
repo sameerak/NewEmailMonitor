@@ -155,11 +155,14 @@ labelFromToCondition returns [ConditionAttribute labelFromTo]
     
 action returns [Action act]
     : ^(LBL stringVal{$act = new AddLabel($stringVal.val);})
-    | 'send' 'mail' {$act = new SendMail();}
+    | 'send' 'mail' {$act = new SendMail();} '(' 'to' ':' emailAddr{$act.setEmailAddress($emailAddr.email);} 'subject' ':' stringVal{$act.setSubject($stringVal.val);} ('body' ':' stringValBody{$act.setBody($stringValBody.body);})?  ')'
     ;
 
 
+stringValBody returns[String body]
 
+     :stringVal{$body = $stringVal.val;}
+     ;
 
 
 toCondition returns [ConditionAttribute to]
