@@ -220,10 +220,10 @@ public class EmailMonitorService implements EmailMonitorServiceInterface {
     }
 
     @Override
-    public boolean createEmailSenderOutputStreamFormatter(String mailAddress, AxisConfiguration axisConfiguration) throws EmailMonitorServiceException {
+    public boolean createEmailSenderOutputStreamFormatter(String ESBServerIP, String ESBServerPort, String ESBServerUsername, String ESBServerPassword, AxisConfiguration axisConfiguration) throws EmailMonitorServiceException {
         try {
             EventFormatterDeployer eventFormatterDeployer = new EventFormatterDeployer();
-            eventFormatterDeployer.createEmailSenderOutputStreamFormatter(mailAddress,axisConfiguration);
+            eventFormatterDeployer.createEmailSenderOutputStreamFormatter(ESBServerIP,ESBServerPort,ESBServerUsername,ESBServerPassword, axisConfiguration);
             return true;
         } catch (EmailMonitorServiceException e) {
             logger.error(e.getMessage());
