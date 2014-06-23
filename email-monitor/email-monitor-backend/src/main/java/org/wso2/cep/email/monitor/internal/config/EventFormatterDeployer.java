@@ -35,7 +35,7 @@ public class EventFormatterDeployer {
             content = content.replace(EmailMonitorConstants.ESB_SERVER_IP, ESBServerIP);
 
             int offset = Integer.parseInt(ESBServerPort) - 9443;
-            content = content.replace(EmailMonitorConstants.ESB_SERVER_ENDPOINT_PORT, String.valueOf(8243 + offset));
+            content = content.replace(EmailMonitorConstants.ESB_SERVER_ENDPOINT_PORT, String.valueOf(9763 + offset));
 
             try {
                 eventFormatterService.deployEventFormatterConfiguration(content, axisConfiguration);
@@ -86,7 +86,7 @@ public class EventFormatterDeployer {
             content = content.replace(EmailMonitorConstants.ESB_SERVER_IP, ESBServerIP);
 
             int offset = Integer.parseInt(ESBServerPort) - 9443;
-            content = content.replace(EmailMonitorConstants.ESB_SERVER_ENDPOINT_PORT, String.valueOf(8243 + offset));
+            content = content.replace(EmailMonitorConstants.ESB_SERVER_ENDPOINT_PORT, String.valueOf(9763 + offset));
 
             try {
                 eventFormatterService.deployEventFormatterConfiguration(content, axisConfiguration);
