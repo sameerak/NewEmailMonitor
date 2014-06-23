@@ -8,7 +8,9 @@
             <toRecipients>{{to}}</toRecipients>
             <textContent>
                 <content>{{content}}</content>
+                <labelCaption>label:</labelCaption>
                 <label>{{label}}</label>
+                <threadCountCaption>frequency:</threadCountCaption>
                 <threadCount>{{threadCount}}</threadCount>
             </textContent>
         </root>
