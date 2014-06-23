@@ -1,4 +1,4 @@
-<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns1="http://org.apache.axis2/xsd" xmlns:ns="http://wso2.org/cep/email/monitor/admin/xsd" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:tns="http://wso2.org/cep/email/monitor/admin" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ax2583="http://exception.admin.monitor.email.cep.wso2.org/xsd" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://wso2.org/cep/email/monitor/admin">
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns1="http://org.apache.axis2/xsd" xmlns:ns="http://wso2.org/cep/email/monitor/admin/xsd" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:ax2721="http://exception.admin.monitor.email.cep.wso2.org/xsd" xmlns:tns="http://wso2.org/cep/email/monitor/admin" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://wso2.org/cep/email/monitor/admin">
     <wsdl:documentation>EmailMonitorAdminService</wsdl:documentation>
     <wsdl:types>
         <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://exception.admin.monitor.email.cep.wso2.org/xsd">
@@ -6,7 +6,7 @@
                 <xs:sequence></xs:sequence>
             </xs:complexType>
         </xs:schema>
-        <xs:schema xmlns:ax2584="http://exception.admin.monitor.email.cep.wso2.org/xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://wso2.org/cep/email/monitor/admin/xsd">
+        <xs:schema xmlns:ax2722="http://exception.admin.monitor.email.cep.wso2.org/xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://wso2.org/cep/email/monitor/admin/xsd">
             <xs:import namespace="http://exception.admin.monitor.email.cep.wso2.org/xsd"></xs:import>
             <xs:element name="saveResourceString">
                 <xs:complexType>
@@ -54,7 +54,34 @@
             <xs:element name="EmailMonitorAdminServiceEmailMonitorAdminException">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element minOccurs="0" name="EmailMonitorAdminException" nillable="true" type="ax2584:EmailMonitorAdminException"></xs:element>
+                        <xs:element minOccurs="0" name="EmailMonitorAdminException" nillable="true" type="ax2722:EmailMonitorAdminException"></xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="removeESBConfigurations">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="ip" nillable="true" type="xs:string"></xs:element>
+                        <xs:element minOccurs="0" name="port" nillable="true" type="xs:string"></xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="removeESBConfigurationsResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" type="xs:boolean"></xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="removeCEPConfigurations">
+                <xs:complexType>
+                    <xs:sequence></xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="removeCEPConfigurationsResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" type="xs:boolean"></xs:element>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
@@ -207,7 +234,11 @@
             <xs:element name="createEmailSenderOutputStreamFormatter">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element minOccurs="0" name="mailAddress" nillable="true" type="xs:string"></xs:element>
+                        <xs:element minOccurs="0" name="ESBServerIP" nillable="true" type="xs:string"></xs:element>
+                        <xs:element minOccurs="0" name="ESBServerPort" nillable="true" type="xs:string"></xs:element>
+                        <xs:element minOccurs="0" name="ESBServerUsername" nillable="true" type="xs:string"></xs:element>
+                        <xs:element minOccurs="0" name="ESBServerPassword" nillable="true" type="xs:string"></xs:element>
+                        <xs:element minOccurs="0" name="eventFormatterConfigurationXML" nillable="true" type="xs:string"></xs:element>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
@@ -461,17 +492,23 @@
     <wsdl:message name="addMailProxyResponse">
         <wsdl:part name="parameters" element="ns:addMailProxyResponse"></wsdl:part>
     </wsdl:message>
-    <wsdl:message name="createEmailSenderOutputStreamFormatterRequest">
-        <wsdl:part name="parameters" element="ns:createEmailSenderOutputStreamFormatter"></wsdl:part>
+    <wsdl:message name="removeCEPConfigurationsRequest">
+        <wsdl:part name="parameters" element="ns:removeCEPConfigurations"></wsdl:part>
     </wsdl:message>
-    <wsdl:message name="createEmailSenderOutputStreamFormatterResponse">
-        <wsdl:part name="parameters" element="ns:createEmailSenderOutputStreamFormatterResponse"></wsdl:part>
+    <wsdl:message name="removeCEPConfigurationsResponse">
+        <wsdl:part name="parameters" element="ns:removeCEPConfigurationsResponse"></wsdl:part>
     </wsdl:message>
     <wsdl:message name="getResourceStringRequest">
         <wsdl:part name="parameters" element="ns:getResourceString"></wsdl:part>
     </wsdl:message>
     <wsdl:message name="getResourceStringResponse">
         <wsdl:part name="parameters" element="ns:getResourceStringResponse"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="createEmailSenderOutputStreamFormatterRequest">
+        <wsdl:part name="parameters" element="ns:createEmailSenderOutputStreamFormatter"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="createEmailSenderOutputStreamFormatterResponse">
+        <wsdl:part name="parameters" element="ns:createEmailSenderOutputStreamFormatterResponse"></wsdl:part>
     </wsdl:message>
     <wsdl:message name="createEmailSenderOutputStreamRequest">
         <wsdl:part name="parameters" element="ns:createEmailSenderOutputStream"></wsdl:part>
@@ -496,6 +533,12 @@
     </wsdl:message>
     <wsdl:message name="createFilteredEmailDetailsStreamResponse">
         <wsdl:part name="parameters" element="ns:createFilteredEmailDetailsStreamResponse"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="removeESBConfigurationsRequest">
+        <wsdl:part name="parameters" element="ns:removeESBConfigurations"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="removeESBConfigurationsResponse">
+        <wsdl:part name="parameters" element="ns:removeESBConfigurationsResponse"></wsdl:part>
     </wsdl:message>
     <wsdl:portType name="EmailMonitorAdminServicePortType">
         <wsdl:operation name="addScheduledTask">
@@ -579,14 +622,19 @@
             <wsdl:output message="tns:addMailProxyResponse" wsaw:Action="urn:addMailProxyResponse"></wsdl:output>
             <wsdl:fault message="tns:EmailMonitorAdminServiceEmailMonitorAdminException" name="EmailMonitorAdminServiceEmailMonitorAdminException" wsaw:Action="urn:addMailProxyEmailMonitorAdminServiceEmailMonitorAdminException"></wsdl:fault>
         </wsdl:operation>
-        <wsdl:operation name="createEmailSenderOutputStreamFormatter">
-            <wsdl:input message="tns:createEmailSenderOutputStreamFormatterRequest" wsaw:Action="urn:createEmailSenderOutputStreamFormatter"></wsdl:input>
-            <wsdl:output message="tns:createEmailSenderOutputStreamFormatterResponse" wsaw:Action="urn:createEmailSenderOutputStreamFormatterResponse"></wsdl:output>
-            <wsdl:fault message="tns:EmailMonitorAdminServiceEmailMonitorAdminException" name="EmailMonitorAdminServiceEmailMonitorAdminException" wsaw:Action="urn:createEmailSenderOutputStreamFormatterEmailMonitorAdminServiceEmailMonitorAdminException"></wsdl:fault>
+        <wsdl:operation name="removeCEPConfigurations">
+            <wsdl:input message="tns:removeCEPConfigurationsRequest" wsaw:Action="urn:removeCEPConfigurations"></wsdl:input>
+            <wsdl:output message="tns:removeCEPConfigurationsResponse" wsaw:Action="urn:removeCEPConfigurationsResponse"></wsdl:output>
+            <wsdl:fault message="tns:EmailMonitorAdminServiceEmailMonitorAdminException" name="EmailMonitorAdminServiceEmailMonitorAdminException" wsaw:Action="urn:removeCEPConfigurationsEmailMonitorAdminServiceEmailMonitorAdminException"></wsdl:fault>
         </wsdl:operation>
         <wsdl:operation name="getResourceString">
             <wsdl:input message="tns:getResourceStringRequest" wsaw:Action="urn:getResourceString"></wsdl:input>
             <wsdl:output message="tns:getResourceStringResponse" wsaw:Action="urn:getResourceStringResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="createEmailSenderOutputStreamFormatter">
+            <wsdl:input message="tns:createEmailSenderOutputStreamFormatterRequest" wsaw:Action="urn:createEmailSenderOutputStreamFormatter"></wsdl:input>
+            <wsdl:output message="tns:createEmailSenderOutputStreamFormatterResponse" wsaw:Action="urn:createEmailSenderOutputStreamFormatterResponse"></wsdl:output>
+            <wsdl:fault message="tns:EmailMonitorAdminServiceEmailMonitorAdminException" name="EmailMonitorAdminServiceEmailMonitorAdminException" wsaw:Action="urn:createEmailSenderOutputStreamFormatterEmailMonitorAdminServiceEmailMonitorAdminException"></wsdl:fault>
         </wsdl:operation>
         <wsdl:operation name="createEmailSenderOutputStream">
             <wsdl:input message="tns:createEmailSenderOutputStreamRequest" wsaw:Action="urn:createEmailSenderOutputStream"></wsdl:input>
@@ -606,6 +654,11 @@
             <wsdl:input message="tns:createFilteredEmailDetailsStreamRequest" wsaw:Action="urn:createFilteredEmailDetailsStream"></wsdl:input>
             <wsdl:output message="tns:createFilteredEmailDetailsStreamResponse" wsaw:Action="urn:createFilteredEmailDetailsStreamResponse"></wsdl:output>
             <wsdl:fault message="tns:EmailMonitorAdminServiceEmailMonitorAdminException" name="EmailMonitorAdminServiceEmailMonitorAdminException" wsaw:Action="urn:createFilteredEmailDetailsStreamEmailMonitorAdminServiceEmailMonitorAdminException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="removeESBConfigurations">
+            <wsdl:input message="tns:removeESBConfigurationsRequest" wsaw:Action="urn:removeESBConfigurations"></wsdl:input>
+            <wsdl:output message="tns:removeESBConfigurationsResponse" wsaw:Action="urn:removeESBConfigurationsResponse"></wsdl:output>
+            <wsdl:fault message="tns:EmailMonitorAdminServiceEmailMonitorAdminException" name="EmailMonitorAdminServiceEmailMonitorAdminException" wsaw:Action="urn:removeESBConfigurationsEmailMonitorAdminServiceEmailMonitorAdminException"></wsdl:fault>
         </wsdl:operation>
     </wsdl:portType>
     <wsdl:binding name="EmailMonitorAdminServiceSoap11Binding" type="tns:EmailMonitorAdminServicePortType">
@@ -790,6 +843,18 @@
                 <soap:fault use="literal" name="EmailMonitorAdminServiceEmailMonitorAdminException"></soap:fault>
             </wsdl:fault>
         </wsdl:operation>
+        <wsdl:operation name="removeCEPConfigurations">
+            <soap:operation soapAction="urn:removeCEPConfigurations" style="document"></soap:operation>
+            <wsdl:input>
+                <soap:body use="literal"></soap:body>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"></soap:body>
+            </wsdl:output>
+            <wsdl:fault name="EmailMonitorAdminServiceEmailMonitorAdminException">
+                <soap:fault use="literal" name="EmailMonitorAdminServiceEmailMonitorAdminException"></soap:fault>
+            </wsdl:fault>
+        </wsdl:operation>
         <wsdl:operation name="addMailProxy">
             <soap:operation soapAction="urn:addMailProxy" style="document"></soap:operation>
             <wsdl:input>
@@ -858,6 +923,18 @@
         </wsdl:operation>
         <wsdl:operation name="createFilteredEmailDetailsStream">
             <soap:operation soapAction="urn:createFilteredEmailDetailsStream" style="document"></soap:operation>
+            <wsdl:input>
+                <soap:body use="literal"></soap:body>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"></soap:body>
+            </wsdl:output>
+            <wsdl:fault name="EmailMonitorAdminServiceEmailMonitorAdminException">
+                <soap:fault use="literal" name="EmailMonitorAdminServiceEmailMonitorAdminException"></soap:fault>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="removeESBConfigurations">
+            <soap:operation soapAction="urn:removeESBConfigurations" style="document"></soap:operation>
             <wsdl:input>
                 <soap:body use="literal"></soap:body>
             </wsdl:input>
@@ -1051,6 +1128,18 @@
                 <soap12:fault use="literal" name="EmailMonitorAdminServiceEmailMonitorAdminException"></soap12:fault>
             </wsdl:fault>
         </wsdl:operation>
+        <wsdl:operation name="removeCEPConfigurations">
+            <soap12:operation soapAction="urn:removeCEPConfigurations" style="document"></soap12:operation>
+            <wsdl:input>
+                <soap12:body use="literal"></soap12:body>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"></soap12:body>
+            </wsdl:output>
+            <wsdl:fault name="EmailMonitorAdminServiceEmailMonitorAdminException">
+                <soap12:fault use="literal" name="EmailMonitorAdminServiceEmailMonitorAdminException"></soap12:fault>
+            </wsdl:fault>
+        </wsdl:operation>
         <wsdl:operation name="addMailProxy">
             <soap12:operation soapAction="urn:addMailProxy" style="document"></soap12:operation>
             <wsdl:input>
@@ -1119,6 +1208,18 @@
         </wsdl:operation>
         <wsdl:operation name="createFilteredEmailDetailsStream">
             <soap12:operation soapAction="urn:createFilteredEmailDetailsStream" style="document"></soap12:operation>
+            <wsdl:input>
+                <soap12:body use="literal"></soap12:body>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"></soap12:body>
+            </wsdl:output>
+            <wsdl:fault name="EmailMonitorAdminServiceEmailMonitorAdminException">
+                <soap12:fault use="literal" name="EmailMonitorAdminServiceEmailMonitorAdminException"></soap12:fault>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="removeESBConfigurations">
+            <soap12:operation soapAction="urn:removeESBConfigurations" style="document"></soap12:operation>
             <wsdl:input>
                 <soap12:body use="literal"></soap12:body>
             </wsdl:input>
@@ -1276,6 +1377,15 @@
                 <mime:content type="text/xml" part="parameters"></mime:content>
             </wsdl:output>
         </wsdl:operation>
+        <wsdl:operation name="removeCEPConfigurations">
+            <http:operation location="removeCEPConfigurations"></http:operation>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"></mime:content>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"></mime:content>
+            </wsdl:output>
+        </wsdl:operation>
         <wsdl:operation name="addMailProxy">
             <http:operation location="addMailProxy"></http:operation>
             <wsdl:input>
@@ -1339,16 +1449,25 @@
                 <mime:content type="text/xml" part="parameters"></mime:content>
             </wsdl:output>
         </wsdl:operation>
+        <wsdl:operation name="removeESBConfigurations">
+            <http:operation location="removeESBConfigurations"></http:operation>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"></mime:content>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"></mime:content>
+            </wsdl:output>
+        </wsdl:operation>
     </wsdl:binding>
     <wsdl:service name="EmailMonitorAdminService">
         <wsdl:port name="EmailMonitorAdminServiceHttpsSoap11Endpoint" binding="tns:EmailMonitorAdminServiceSoap11Binding">
-            <soap:address location="https://10.100.5.89:9443/services/EmailMonitorAdminService.EmailMonitorAdminServiceHttpsSoap11Endpoint/"></soap:address>
+            <soap:address location="https://127.0.0.1:9443/services/EmailMonitorAdminService.EmailMonitorAdminServiceHttpsSoap11Endpoint/"></soap:address>
         </wsdl:port>
         <wsdl:port name="EmailMonitorAdminServiceHttpsSoap12Endpoint" binding="tns:EmailMonitorAdminServiceSoap12Binding">
-            <soap12:address location="https://10.100.5.89:9443/services/EmailMonitorAdminService.EmailMonitorAdminServiceHttpsSoap12Endpoint/"></soap12:address>
+            <soap12:address location="https://127.0.0.1:9443/services/EmailMonitorAdminService.EmailMonitorAdminServiceHttpsSoap12Endpoint/"></soap12:address>
         </wsdl:port>
         <wsdl:port name="EmailMonitorAdminServiceHttpsEndpoint" binding="tns:EmailMonitorAdminServiceHttpBinding">
-            <http:address location="https://10.100.5.89:9443/services/EmailMonitorAdminService.EmailMonitorAdminServiceHttpsEndpoint/"></http:address>
+            <http:address location="https://127.0.0.1:9443/services/EmailMonitorAdminService.EmailMonitorAdminServiceHttpsEndpoint/"></http:address>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>

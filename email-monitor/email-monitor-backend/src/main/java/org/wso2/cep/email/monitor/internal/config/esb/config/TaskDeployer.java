@@ -37,7 +37,6 @@ public class TaskDeployer {
 
     public void addScheduledTask(String userName, String password, String mailUserName, String mailPassword) throws EmailMonitorServiceException {
         CarbonUtils.setBasicAccessSecurityHeaders(userName, password, stub._getServiceClient());
-
         boolean isTaskExist = false;
         try {
             isTaskExist = stub.isContains(EmailMonitorConstants.TASK_NAME, EmailMonitorConstants.TASK_GROUP);
@@ -71,12 +70,41 @@ public class TaskDeployer {
                 stub.addTaskDescription(omElementTask);
             } catch (RemoteException e) {
                 logger.error(e.getMessage());
-                throw new EmailMonitorServiceException("Error when adding Tasks to Stub", e);
+                throw new EmailMonitorServiceException("Error when adding Tasks ", e);
             } catch (TaskManagementException e) {
                 logger.error(e.getMessage());
-                throw new EmailMonitorServiceException("Error when adding Tasks to Stub", e);
+                throw new EmailMonitorServiceException("Error when adding Tasks ", e);
             }
 
         }
+    }
+
+
+    public void removeTask() throws EmailMonitorServiceException {
+        boolean isTaskExist = false;
+        try {
+            isTaskExist = stub.isContains(EmailMonitorConstants.TASK_NAME, EmailMonitorConstants.TASK_GROUP);
+        } catch (RemoteException e) {
+            logger.error(e.getMessage());
+            throw new EmailMonitorServiceException("Error when searching for task 'getmail' ", e);
+        } catch (TaskManagementException e) {
+            logger.error(e.getMessage());
+            throw new EmailMonitorServiceException("Error when searching for task 'getmail' ", e);
+        }
+
+        if(isTaskExist){
+            try {
+                stub.deleteTaskDescription(EmailMonitorConstants.TASK_NAME,EmailMonitorConstants.TASK_GROUP);
+            } catch (RemoteException e) {
+                logger.error(e.getMessage());
+                throw new EmailMonitorServiceException("Error when deleting Tasks ", e);
+            } catch (TaskManagementException e) {
+                logger.error(e.getMessage());
+                throw new EmailMonitorServiceException("Error when deleting Tasks ", e);
+            }
+
+        }
+
+
     }
 }

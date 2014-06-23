@@ -41,7 +41,7 @@ public class CEPConfigurationHelper {
         outputAdapterDeployer.createSoapOutputAdapter(axisConfiguration);
 
         eventFormatterDeployer.createGmailOutStreamEventFormatter(ESBServerIP, ESBServerPort, ESBServerUsername, ESBServerPassword, axisConfiguration);
-        eventFormatterDeployer.createEmailSenderOutputStreamFormatter(mailAddress ,axisConfiguration);
+        eventFormatterDeployer.createEmailSenderOutputStreamFormatter(ESBServerIP, ESBServerPort, ESBServerUsername, ESBServerPassword, axisConfiguration);
 
         registryManager.addCollection(EmailMonitorConstants.REGISTRY_COLLECTION_NAME);
         registryManager.addCollection(EmailMonitorConstants.REGISTRY_QUERY_COLLECTION_PATH);
@@ -53,6 +53,9 @@ public class CEPConfigurationHelper {
         logger.info("Successfully completed adding CEP configurations");
 
 
-
     }
+
+    public void removeCEPConfigurations(AxisConfiguration axisConfiguration){
+        eventFormatterDeployer.remove(axisConfiguration);
+     }
 }

@@ -243,6 +243,8 @@ public class StreamDeployer {
 
     }
 
+
+
     public void createLabelDetailsStream(int tenantID) throws EmailMonitorServiceException {
         StreamDefinition streamDefinition;
         try {
@@ -262,12 +264,20 @@ public class StreamDeployer {
 
             List<Attribute> payloadData = new ArrayList<Attribute>();
 
-            Attribute payloadLabel = new Attribute("label", AttributeType.STRING);
-            payloadData.add(payloadLabel);
-
-
             Attribute payloadThreadCount = new Attribute("threadCount", AttributeType.LONG);
             payloadData.add(payloadThreadCount);
+
+            Attribute payloadTo = new Attribute("to", AttributeType.STRING);
+            payloadData.add(payloadTo);
+
+            Attribute payloadSubject = new Attribute("subject", AttributeType.STRING);
+            payloadData.add(payloadSubject);
+
+            Attribute payloadContent = new Attribute("content", AttributeType.STRING);
+            payloadData.add(payloadContent);
+
+            Attribute payloadLabel = new Attribute("label", AttributeType.STRING);
+            payloadData.add(payloadLabel);
 
 
             streamDefinition.setPayloadData(payloadData);
@@ -304,12 +314,20 @@ public class StreamDeployer {
 
             List<Attribute> payloadData = new ArrayList<Attribute>();
 
-            Attribute payloadLabel = new Attribute("label", AttributeType.STRING);
-            payloadData.add(payloadLabel);
-
             Attribute payloadThreadCount = new Attribute("threadCount", AttributeType.LONG);
             payloadData.add(payloadThreadCount);
 
+            Attribute payloadTo = new Attribute("to", AttributeType.STRING);
+            payloadData.add(payloadTo);
+
+            Attribute payloadSubject = new Attribute("subject", AttributeType.STRING);
+            payloadData.add(payloadSubject);
+
+            Attribute payloadContent = new Attribute("content", AttributeType.STRING);
+            payloadData.add(payloadContent);
+
+            Attribute payloadLabel = new Attribute("label", AttributeType.STRING);
+            payloadData.add(payloadLabel);
 
             streamDefinition.setPayloadData(payloadData);
             streamDefinition.setDescription("email sender");

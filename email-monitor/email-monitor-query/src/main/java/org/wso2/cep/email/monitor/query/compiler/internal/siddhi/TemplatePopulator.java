@@ -41,6 +41,9 @@ public class TemplatePopulator {
             SendMail sendMail = (SendMail) action;
             siddhiTemplate.setSendMailEnabled(true);
             siddhiTemplate.setCmpAction(Constants.SEND_MAIL);
+            siddhiTemplate.setTo(sendMail.getEmailAddress().toString());
+            siddhiTemplate.setSubject(sendMail.getSubject());
+            siddhiTemplate.setBody(sendMail.getBody());
         } else {
         }
         return siddhiTemplate;

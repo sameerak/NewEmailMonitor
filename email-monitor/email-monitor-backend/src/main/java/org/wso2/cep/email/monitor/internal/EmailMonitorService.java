@@ -17,7 +17,6 @@ public class EmailMonitorService implements EmailMonitorServiceInterface {
 
     private static Logger logger = Logger.getLogger(EmailMonitorService.class);
 
-
     @Override
     public boolean addBAMServerProfile(String ip, String port, String userName, String password, String CEPServerUserName, String CEPServerPassword, String CEPServerIP, String CEPServerPort) throws EmailMonitorServiceException {
 
@@ -220,10 +219,10 @@ public class EmailMonitorService implements EmailMonitorServiceInterface {
     }
 
     @Override
-    public boolean createEmailSenderOutputStreamFormatter(String mailAddress, AxisConfiguration axisConfiguration) throws EmailMonitorServiceException {
+    public boolean createEmailSenderOutputStreamFormatter(String ESBServerIP, String ESBServerPort, String ESBServerUsername, String ESBServerPassword, AxisConfiguration axisConfiguration) throws EmailMonitorServiceException {
         try {
             EventFormatterDeployer eventFormatterDeployer = new EventFormatterDeployer();
-            eventFormatterDeployer.createEmailSenderOutputStreamFormatter(mailAddress,axisConfiguration);
+            eventFormatterDeployer.createEmailSenderOutputStreamFormatter(ESBServerIP,ESBServerPort,ESBServerUsername,ESBServerPassword, axisConfiguration);
             return true;
         } catch (EmailMonitorServiceException e) {
             logger.error(e.getMessage());
@@ -270,6 +269,34 @@ public class EmailMonitorService implements EmailMonitorServiceInterface {
     public String[] getEmailMonitorResources(String emailMonitorCollectionLocation) {
         RegistryManager registryManager = new RegistryManager();
         return registryManager.getEmailMonitorResources(emailMonitorCollectionLocation);
+    }
+
+    @Override
+    public boolean removeESBConfigurations(String ip, String port) throws EmailMonitorServiceException {
+        try {
+            ESBConfigurationHelper esbConfigurationHelper = new ESBConfigurationHelper(ip, port);
+            esbConfigurationHelper.removeESBConfigurations();
+            return true;
+        } catch (EmailMonitorServiceException e) {
+            logger.error(e.getMessage());
+            throw new EmailMonitorServiceException(e);
+
+        }
+    }
+
+    @Override
+    public boolean removeCEPConfigurations(AxisConfiguration axisConfiguration) throws EmailMonitorServiceException {
+
+        CEPConfigurationHelper cepConfigurationHelper = null;
+        try {
+            cepConfigurationHelper = new CEPConfigurationHelper();
+        } catch (EmailMonitorServiceException e) {
+            logger.error(e.getMessage());
+            throw new EmailMonitorServiceException(e);
+        }
+        cepConfigurationHelper.removeCEPConfigurations( axisConfiguration);
+        return true;
+
     }
 
 
