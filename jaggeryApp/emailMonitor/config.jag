@@ -12,16 +12,7 @@ var esbPassword = request.getParameter("esbPassword");
 var verb = request.getMethod();
 response.contentType = 'text/plain';
 
-
-if(verb == "DELETE" || verb == "PUT" || verb == "GET") {
-	response.status = 400;
-	print("Only method allowed on this resource is HTTP POST");
-} else if(verb == "POST") {
 		var util = require("util/utility.jag");
-	
-            if(util.isNotNullOrEmpty(emailAddress) && util.isNotNullOrEmpty(emailPassword) &&
-                 util.isNotNullOrEmpty(esbUserName) && util.isNotNullOrEmpty(esbPassword)){
-					try{
 						
 						var log = new Log();
 						var serverUrl = util.getServiceUrl();
@@ -34,6 +25,15 @@ if(verb == "DELETE" || verb == "PUT" || verb == "GET") {
 						
 						var esbIP = carbon.server.ip;
 						var esbPort = carbon.server.httpsPort;
+
+if(verb == "PUT" || verb == "GET") {
+	response.status = 400;
+	print("Only method allowed on this resource is HTTP POST");
+} else if(verb == "POST") {
+	
+            if(util.isNotNullOrEmpty(emailAddress) && util.isNotNullOrEmpty(emailPassword) &&
+                 util.isNotNullOrEmpty(esbUserName) && util.isNotNullOrEmpty(esbPassword)){
+					try{
 						
 						var offset = carbon.server.ip - 9443;
 						
@@ -59,5 +59,19 @@ if(verb == "DELETE" || verb == "PUT" || verb == "GET") {
             	response.status = 400;
             	print("Please fill details to all the parameters asked");
             }
+}else if(verb == "DELETE") {
+	try{
+		myEmailMonitorAdminServiceStub.removeCEPConfigurations();
+		myEmailMonitorAdminServiceStub.removeESBConfigurations(esbIP, esbPort);
+						
+		response.status = 200;
+		print("Configurations deleted successfully.");
+	}
+	catch(error){
+		response.status = 500;
+		print("Something went wrong!");
+		log.debug(error);
+		print(error);
+	}
 }
 %>
