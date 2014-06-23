@@ -53,6 +53,9 @@ public class CEPConfigurationHelper {
         logger.info("Successfully completed adding CEP configurations");
 
 
-
     }
+
+    public void removeCEPConfigurations(AxisConfiguration axisConfiguration){
+        eventFormatterDeployer.remove(axisConfiguration);
+     }
 }

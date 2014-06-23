@@ -43,9 +43,9 @@ public class BAMMediatorDeployer {
         boolean isServerProfileCreated = false;
 
         try {
-            stub.bamServerConfigExists(EmailMonitorConstants.BAM_SERVER_PROFILE_NAME);
+            isServerProfileCreated = stub.bamServerConfigExists(EmailMonitorConstants.BAM_SERVER_PROFILE_NAME);
         } catch (RemoteException e) {
-            throw new EmailMonitorServiceException("Error when adding BAM Server Profiles and adding to  Stub", e);
+            throw new EmailMonitorServiceException("Error when getting BAM Server Profiles", e);
         }
 
         if (!isServerProfileCreated) {
@@ -78,9 +78,29 @@ public class BAMMediatorDeployer {
                 stub.saveResourceString(content, EmailMonitorConstants.BAM_SERVER_PROFILE_NAME);
             } catch (RemoteException e) {
                 logger.error(e.getMessage());
-                throw new EmailMonitorServiceException("Error when adding BAM Server Profiles and adding to  Stub", e);
+                throw new EmailMonitorServiceException("Error when adding BAM Server Profiles", e);
             }
 
+
+        }
+    }
+    
+    public void removeServerProfile() throws EmailMonitorServiceException {
+        boolean isServerProfileCreated = false;
+
+        try {
+            isServerProfileCreated = stub.bamServerConfigExists(EmailMonitorConstants.BAM_SERVER_PROFILE_NAME);
+        } catch (RemoteException e) {
+            throw new EmailMonitorServiceException("Error when getting BAM Server Profiles", e);
+        }
+
+        if (isServerProfileCreated) {
+            try {
+                stub.removeResource(EmailMonitorConstants.BAM_SERVER_PROFILE_NAME);
+            } catch (RemoteException e) {
+                logger.error(e.getMessage());
+                throw new EmailMonitorServiceException("Error when deleting BAM Server Profiles", e);
+            }
 
         }
     }

@@ -57,10 +57,10 @@ public class ProxyDeployer {
             stub.addProxy(data);
         } catch (RemoteException e) {
             logger.error(e.getMessage());
-            throw new EmailMonitorServiceException("Error when adding proxy to Stub", e);
+            throw new EmailMonitorServiceException("Error when adding proxy", e);
         } catch (ProxyServiceAdminProxyAdminException e) {
             logger.error(e.getMessage());
-            throw new EmailMonitorServiceException("Error when adding proxy to stub", e);
+            throw new EmailMonitorServiceException("Error when adding proxy", e);
         }
 
     }
@@ -86,10 +86,10 @@ public class ProxyDeployer {
             stub.addProxy(data);
         } catch (RemoteException e) {
             logger.error(e.getMessage());
-            throw new EmailMonitorServiceException("Error when adding proxy to Stub", e);
+            throw new EmailMonitorServiceException("Error when adding proxy", e);
         } catch (ProxyServiceAdminProxyAdminException e) {
             logger.error(e.getMessage());
-            throw new EmailMonitorServiceException("Error when adding proxy to stub", e);
+            throw new EmailMonitorServiceException("Error when adding proxy", e);
         }
     }
 
@@ -115,14 +115,29 @@ public class ProxyDeployer {
             stub.addProxy(data);
         } catch (RemoteException e) {
             logger.error(e.getMessage());
-            throw new EmailMonitorServiceException("Error when adding proxy to Stub", e);
+            throw new EmailMonitorServiceException("Error when adding proxy", e);
         } catch (ProxyServiceAdminProxyAdminException e) {
             logger.error(e.getMessage());
-            throw new EmailMonitorServiceException("Error when adding proxy to stub", e);
+            throw new EmailMonitorServiceException("Error when adding proxy", e);
         }
     }
 
+    public void removeProxy() throws EmailMonitorServiceException {
 
+        try {
+                   stub.deleteProxyService(EmailMonitorConstants.MAIL_SENDER_PROXY_NAME);
+                   stub.deleteProxyService(EmailMonitorConstants.LABEL_ADDER_PROXY_NAME);
+                   stub.deleteProxyService(EmailMonitorConstants.MAIL_READER_PROXY_NAME);
+        } catch (RemoteException e) {
+            logger.error(e.getMessage());
+            throw new EmailMonitorServiceException("Error when removing proxy", e);
+        } catch (ProxyServiceAdminProxyAdminException e) {
+            logger.error(e.getMessage());
+            throw new EmailMonitorServiceException("Error when removing proxy", e);
+        }
+
+
+    }
 }
 
 

@@ -65,4 +65,35 @@ public class LocalEntryDeployer {
     }
 
 
+    public void removeEntries(){
+
+        boolean isEmailEntryExist = false;
+        boolean isPasswordEntryExist = false;
+        try {
+            String entrySet = stub.getEntryNamesString();
+            isEmailEntryExist = entrySet.contains("[Entry]-email");
+            isPasswordEntryExist = entrySet.contains("[Entry]-password");
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (LocalEntryAdminException e) {
+            e.printStackTrace();
+        }
+
+         try {
+
+            if(isEmailEntryExist) {
+                stub.deleteEntry("email");
+            }
+            if(isPasswordEntryExist) {
+                stub.deleteEntry("password");
+            }
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (LocalEntryAdminException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
     }

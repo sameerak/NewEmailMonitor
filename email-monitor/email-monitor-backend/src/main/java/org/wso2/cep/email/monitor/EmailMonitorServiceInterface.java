@@ -219,7 +219,19 @@ public interface EmailMonitorServiceInterface {
     public String[] getEmailMonitorResources(String emailMonitorCollectionLocation);
 
 
-    }
+    public boolean removeESBConfigurations(String ip, String port) throws EmailMonitorServiceException;
+
+    /**
+     *
+     * @param axisConfiguration
+     * @return
+     * @throws EmailMonitorServiceException
+     */
+    public boolean removeCEPConfigurations(AxisConfiguration axisConfiguration) throws EmailMonitorServiceException;
+
+
+}
+
 
 
 
