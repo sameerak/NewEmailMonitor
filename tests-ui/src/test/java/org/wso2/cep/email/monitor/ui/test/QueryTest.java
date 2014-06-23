@@ -77,13 +77,13 @@ public class QueryTest {
         WebDriverWait wait = new WebDriverWait(driver, 5);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='bootbox-body']")));
 
-        assertTrue(driver.findElement(By.xpath("//div[@class='bootbox-body']")).getText().contains("Are you sure you want to delete execution plans"));
+        assertTrue(driver.findElement(By.xpath("//div[@class='bootbox-body']")).getText().contains("Are you sure you want to delete Query :"));
         driver.findElement(By.xpath("//button[@data-bb-handler='confirm']")).click();
 
         wait = new WebDriverWait(driver, 5);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='bootbox-body']")));
 
-        assertTrue(driver.findElement(By.xpath("//div[@class='bootbox-body']")).getText().contains("Execution plans removed successfully"));
+        assertTrue(driver.findElement(By.xpath("//div[@class='bootbox-body']")).getText().contains("Email query removed successfully."));
         driver.findElement(By.xpath("//button[@data-bb-handler='ok']")).click();
 
         wait = new WebDriverWait(driver, 5);
