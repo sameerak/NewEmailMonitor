@@ -3,6 +3,7 @@ package org.wso2.cep.email.monitor.internal.config;
 
 import org.apache.axis2.engine.AxisConfiguration;
 import org.apache.log4j.Logger;
+import org.apache.log4j.Priority;
 import org.wso2.carbon.event.formatter.core.EventFormatterService;
 import org.wso2.carbon.event.formatter.core.exception.EventFormatterConfigurationException;
 import org.wso2.cep.email.monitor.exception.EmailMonitorServiceException;
@@ -99,6 +100,19 @@ public class EventFormatterDeployer {
 
 
 
+
+    }
+
+
+    public void remove(AxisConfiguration axisConfiguration){
+        try {
+            eventFormatterService.getActiveEventFormatterConfigurationContent(EmailMonitorConstants.MAIL_SENDER_OUT_STREAM_FORMATTER_NAME,axisConfiguration);
+            eventFormatterService.undeployActiveEventFormatterConfiguration(EmailMonitorConstants.MAIL_SENDER_OUT_STREAM_FORMATTER_NAME,axisConfiguration);
+            eventFormatterService.getActiveEventFormatterConfigurationContent(EmailMonitorConstants.GMAIL_OUT_STREAM_FORMATTER_NAME,axisConfiguration);
+            eventFormatterService.undeployActiveEventFormatterConfiguration(EmailMonitorConstants.GMAIL_OUT_STREAM_FORMATTER_NAME,axisConfiguration);
+        } catch (EventFormatterConfigurationException e) {
+            logger.log(Priority.INFO,"no eventformatter to be removed ");
+        }
 
     }
 }

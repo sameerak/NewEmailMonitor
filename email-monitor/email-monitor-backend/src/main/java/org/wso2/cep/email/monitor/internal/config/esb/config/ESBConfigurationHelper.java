@@ -45,4 +45,13 @@ public class ESBConfigurationHelper {
 
     }
 
+
+    public void removeESBConfigurations() throws EmailMonitorServiceException {
+        taskDeployer.removeTask();
+        proxyDeployer.removeProxy();
+        localEntryDeployer.removeEntries();
+        bamMediatorDeployer.removeServerProfile();
+
+    }
+
 }
