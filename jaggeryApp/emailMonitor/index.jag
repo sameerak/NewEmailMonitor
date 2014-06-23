@@ -145,46 +145,15 @@ if (!user) {
                         <table class="table table-no-border" style="width:100%">
                             <thead>
                                     <tr>
-                                        <th colspan="2"><h4>ESB Details</h4></th>
+                                        <th colspan="2"><h4>Email Monitoring Server Details</h4></th>
                                     </tr>
                             </thead>
                             <tbody>
                                     <tr>
-                                        <td style="width:18%">ESB Username:<span class="required">*</span></td> <td><input type="text" name="esbUserName"></td>
+                                        <td style="width:18%">Username:<span class="required">*</span></td> <td><input type="text" name="esbUserName"></td>
                                     </tr>
                                     <tr>
-                                        <td style="width:18%">ESB Password:<span class="required">*</span></td> <td><input type="password" name="esbPassword"></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width:18%">ESB IP:<span class="required">*</span></td> <td><input type="text" name="esbIP"></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width:18%">ESB HTTPS Port:<span class="required">*</span></td> <td><input type="text" name="esbPort"></td>
-                                    </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <table class="table table-no-border" style="width:100%">
-                            <thead>
-                                    <tr>
-                                        <th colspan="2"><h4>CEP Details</h4></th>
-                                    </tr>
-                            </thead>
-                            <tbody>
-                                    <tr>
-                                        <td style="width:18%">CEP Username:<span class="required">*</span></td> <td><input type="text" name="cepUserName"></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width:18%">CEP Password:<span class="required">*</span></td> <td><input type="password" name="cepPassword"></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width:18%">CEP IP:<span class="required">*</span></td> <td><input type="text" name="cepIP"></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width:18%">CEP Thrift SSL Port:<span class="required">*</span></td> <td><input type="text" name="cepPort"></td>
+                                        <td style="width:18%">Password:<span class="required">*</span></td> <td><input type="password" name="esbPassword"></td>
                                     </tr>
                             </tbody>
                         </table>

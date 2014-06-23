@@ -7,14 +7,8 @@ if (!user) {
 <%
 var emailAddress = request.getParameter("emailAddress");
 var emailPassword = request.getParameter("emailPassword");
-var esbIP = request.getParameter("esbIP");
-var esbPort = request.getParameter("esbPort");
 var esbUserName = request.getParameter("esbUserName");
 var esbPassword = request.getParameter("esbPassword");
-var cepIP = request.getParameter("cepIP");
-var cepPort = request.getParameter("cepPort");
-var cepUserName = request.getParameter("cepUserName");
-var cepPassword = request.getParameter("cepPassword");
 var verb = request.getMethod();
 response.contentType = 'text/plain';
 
@@ -26,10 +20,7 @@ if(verb == "DELETE" || verb == "PUT" || verb == "GET") {
 		var util = require("util/utility.jag");
 	
             if(util.isNotNullOrEmpty(emailAddress) && util.isNotNullOrEmpty(emailPassword) &&
-                 util.isNotNullOrEmpty(esbIP) && util.isNotNullOrEmpty(esbPort) &&
-                 util.isNotNullOrEmpty(esbUserName) && util.isNotNullOrEmpty(esbPassword) &&
-                 util.isNotNullOrEmpty(cepIP) && util.isNotNullOrEmpty(cepPort) &&
-                 util.isNotNullOrEmpty(cepUserName) && util.isNotNullOrEmpty(cepPassword)){
+                 util.isNotNullOrEmpty(esbUserName) && util.isNotNullOrEmpty(esbPassword)){
 					try{
 						
 						var log = new Log();
@@ -39,9 +30,18 @@ if(verb == "DELETE" || verb == "PUT" || verb == "GET") {
 						var emailMonitorAdminServiceStub = Packages.org.wso2.cep.email.monitor.stub.admin.EmailMonitorAdminServiceStub;
 						var myEmailMonitorAdminServiceStub = new emailMonitorAdminServiceStub(serverUrl);
 						
+						var carbon = require('carbon');
+						
+						var esbIP = carbon.server.ip;
+						var esbPort = carbon.server.httpsPort;
+						
+						var offset = carbon.server.ip - 9443;
+						
+						var cepPort = 7711 + offset;
+						
 						myEmailMonitorAdminServiceStub.addCEPConfigurations(esbIP, esbPort, esbUserName, esbPassword, emailAddress);
 						myEmailMonitorAdminServiceStub.addESBConfigurations(esbIP, esbPort, esbUserName, esbPassword, 
-							cepUserName, cepPassword, emailAddress, emailPassword, cepIP, cepPort);
+							esbUserName, esbPassword, emailAddress, emailPassword, esbIP, cepPort);
 						
 						application.put('emailMon_isConfigured', true);
 						
