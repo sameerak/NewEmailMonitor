@@ -56,7 +56,7 @@ public interface EmailMonitorServiceInterface {
      * @param query
      * @return
      */
-    public String createExecutionPlan( String query,AxisConfiguration axisConfiguration) throws EmailMonitorServiceException;
+    public String createExecutionPlan( String[] query,AxisConfiguration axisConfiguration) throws EmailMonitorServiceException;
 
     /**
      * Create MailInputStream and stores it in the CEP

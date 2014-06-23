@@ -27,8 +27,8 @@ public class ExecutionPlanDeployer {
     }
 
 
-    public String createExecutionPlan(String query, AxisConfiguration axisConfiguration) throws EmailMonitorServiceException {
-        String executionPlanXmlConfiguration = this.getExecutionPlanConfiguration(query);
+    public String createExecutionPlan(String queries[] , AxisConfiguration axisConfiguration) throws EmailMonitorServiceException {
+        String executionPlanXmlConfiguration = this.getExecutionPlanConfiguration(queries);
         String executionPlanName = this.getExecutionPlanName();
         executionPlanXmlConfiguration = executionPlanXmlConfiguration.replace(EmailMonitorConstants.EXECUTION_PLAN_NAME,executionPlanName);
 
@@ -46,20 +46,25 @@ public class ExecutionPlanDeployer {
     }
 
 
-    private String getExecutionPlanConfiguration(String query) throws EmailMonitorServiceException {
-        String[] queryInfo = query.split("\\s+|\\[|#|;");
-        String inputStream = queryInfo[1];
+    private String getExecutionPlanConfiguration(String[] queries) throws EmailMonitorServiceException {
+        String  content = xmlReader.readXML(EmailMonitorConstants.EXECUTION_PLAN_TEMPLATE);
+        for (int i = 0; i < queries.length; i++) {
+            String[] queryInfo = queries[i].split("\\s+|\\[|#|;");
+            String inputStream = queryInfo[1];
 
 
+            String queryOutputPart = queries[i].substring(queries[i].indexOf("insert into"));
+            String[] arry = queryOutputPart.split("\\s+|\\[|#|;");
+            String outputStream = arry[2];
 
-        String queryOutputPart =  query.substring(query.indexOf("insert into"));
-        String[] arry = queryOutputPart.split("\\s+|\\[|#|;");
-        String outputStream = arry[2];
+            content = content.replaceFirst(EmailMonitorConstants.ADD_QUERY, queries[i]);
 
-        String content = xmlReader.readXML(EmailMonitorConstants.EXECUTION_PLAN_TEMPLATE);
-        content = content.replace(EmailMonitorConstants.ADD_QUERY, query);
-        content = content.replaceAll(EmailMonitorConstants.INPUT_STREAM_NAME, inputStream);
-        content = content.replaceAll(EmailMonitorConstants.OUTPUT_STREAM_NAME, outputStream);
+            if (i == 0) {
+                content = content.replaceAll(EmailMonitorConstants.INPUT_STREAM_NAME, inputStream);
+            }
+            content = content.replaceAll(EmailMonitorConstants.OUTPUT_STREAM_NAME + i, outputStream);
+
+        }
         return content;
     }
 
@@ -72,6 +77,9 @@ public class ExecutionPlanDeployer {
         return EmailMonitorConstants.ADD_EXECUTION_PLAN_NAME+ queryCount;
 
     }
+
+
+
 
 
 }

@@ -61,7 +61,7 @@ public class EmailMonitorService implements EmailMonitorServiceInterface {
     }
 
     @Override
-    public String createExecutionPlan( String query,AxisConfiguration axisConfiguration) throws EmailMonitorServiceException {
+    public String createExecutionPlan( String[] query,AxisConfiguration axisConfiguration) throws EmailMonitorServiceException {
 
         try {
             ExecutionPlanDeployer executionPlanDeployer = new ExecutionPlanDeployer();

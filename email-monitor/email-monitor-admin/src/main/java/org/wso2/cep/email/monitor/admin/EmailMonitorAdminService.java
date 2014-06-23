@@ -65,7 +65,7 @@ public class EmailMonitorAdminService extends AbstractAdmin {
 
 
 
-    public String createExecutionPlan(String query) throws EmailMonitorAdminException {
+    public String createExecutionPlan(String[] query) throws EmailMonitorAdminException {
         EmailMonitorServiceInterface emailMonitorServiceInterface = EmailMonitorAdminValueHolder.getInstance().getEmailMonitorService();
         try {
             return emailMonitorServiceInterface.createExecutionPlan(query, getAxisConfig());
