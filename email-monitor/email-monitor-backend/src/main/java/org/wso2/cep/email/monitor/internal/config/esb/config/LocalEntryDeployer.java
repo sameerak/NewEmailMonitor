@@ -51,12 +51,15 @@ public class LocalEntryDeployer {
 
         try {
 
-            if(!isEmailEntryExist) {
-                stub.addEntry("<localEntry key=\"email\"><email>" + mailUserNAme + "</email><description/></localEntry>");
+            if(isEmailEntryExist) {
+                stub.deleteEntry("email");
             }
-            if(!isPasswordEntryExist) {
-                stub.addEntry("<localEntry key=\"password\"><password>" + cryptographyManager.encryptAndBase64Encode(mailPassword) + "</password><description/></localEntry>");
+            if(isPasswordEntryExist) {
+                stub.deleteEntry("password");
             }
+            stub.addEntry("<localEntry key=\"email\"><email>" + mailUserNAme + "</email><description/></localEntry>");
+            stub.addEntry("<localEntry key=\"password\"><password>" + cryptographyManager.encryptAndBase64Encode(mailPassword) + "</password><description/></localEntry>");
+
         } catch (RemoteException e) {
             e.printStackTrace();
         } catch (LocalEntryAdminException e) {

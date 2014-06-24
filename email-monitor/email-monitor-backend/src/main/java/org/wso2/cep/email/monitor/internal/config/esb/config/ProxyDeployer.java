@@ -54,6 +54,7 @@ public class ProxyDeployer {
 
 
         try {
+            stub.deleteProxyService(EmailMonitorConstants.MAIL_READER_PROXY_NAME);
             stub.addProxy(data);
         } catch (RemoteException e) {
             logger.error(e.getMessage());
@@ -83,6 +84,7 @@ public class ProxyDeployer {
 
 
         try {
+            stub.deleteProxyService(EmailMonitorConstants.LABEL_ADDER_PROXY_NAME);
             stub.addProxy(data);
         } catch (RemoteException e) {
             logger.error(e.getMessage());
@@ -112,6 +114,7 @@ public class ProxyDeployer {
 
 
         try {
+            stub.deleteProxyService(EmailMonitorConstants.MAIL_SENDER_PROXY_NAME);
             stub.addProxy(data);
         } catch (RemoteException e) {
             logger.error(e.getMessage());

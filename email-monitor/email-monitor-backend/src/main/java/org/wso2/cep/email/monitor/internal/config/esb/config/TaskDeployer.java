@@ -49,7 +49,18 @@ public class TaskDeployer {
         }
 
 
-        if(!isTaskExist) {
+        if(isTaskExist) {
+            try {
+                stub.deleteTaskDescription(EmailMonitorConstants.TASK_NAME,EmailMonitorConstants.TASK_GROUP);
+            } catch (RemoteException e) {
+                logger.error(e.getMessage());
+                throw new EmailMonitorServiceException("Error when deleting Tasks ", e);
+            } catch (TaskManagementException e) {
+                logger.error(e.getMessage());
+                throw new EmailMonitorServiceException("Error when deleting Tasks ", e);
+            }
+
+        }
             String content = xmlReader.readXML(EmailMonitorConstants.TASK_CONFIGURATION_FILE_PATH);
 
             content = content.replace(EmailMonitorConstants.GMAIL_USERNAME, mailUserName);
@@ -76,7 +87,7 @@ public class TaskDeployer {
                 throw new EmailMonitorServiceException("Error when adding Tasks ", e);
             }
 
-        }
+
     }
 
 
