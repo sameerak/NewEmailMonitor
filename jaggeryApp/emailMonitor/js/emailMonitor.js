@@ -29,7 +29,9 @@ $(document).ready(function() {
 		 // callback handler that will be called on success
 		 request.done(function (response, textStatus, jqXHR){
 		     // log a message to the console
+			 $('input[type=text], input[type=password]').val('');
 			 bootbox.alert(response);
+			 $('#myTab a[href="#query"]').tab('show');
 //		     console.log("Hooray, it worked!");
 		 });
 		
