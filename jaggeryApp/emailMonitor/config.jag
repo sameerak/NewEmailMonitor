@@ -35,7 +35,7 @@ if(verb == "PUT" || verb == "GET") {
                  util.isNotNullOrEmpty(esbUserName) && util.isNotNullOrEmpty(esbPassword)){
 					try{
 						
-						var offset = carbon.server.ip - 9443;
+						var offset = carbon.server.httpsPort - 9443;
 						
 						var cepPort = 7711 + offset;
 						
