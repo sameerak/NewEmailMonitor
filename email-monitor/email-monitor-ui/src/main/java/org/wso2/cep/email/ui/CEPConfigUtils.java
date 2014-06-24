@@ -24,9 +24,9 @@ public class CEPConfigUtils {
            emailMonitorAdminServiceStub.addCEPConfigurations(esbIP, esbPort, esbUserName, esbPassword, mailUserName);
 
             String[] siddhiQueries = emailMonitorAdminServiceStub.getSiddhiQuery(mailquery);
-            for (String siddhiquery: siddhiQueries){
-                String planName = emailMonitorAdminServiceStub.createExecutionPlan(siddhiquery);
-            }
+                String planName = emailMonitorAdminServiceStub.createExecutionPlan(siddhiQueries);
+            emailMonitorAdminServiceStub.removeCEPConfigurations();
+            emailMonitorAdminServiceStub.removeESBConfigurations(esbIP, esbPort);
 
         } catch (AxisFault axisFault) {
             axisFault.printStackTrace();
