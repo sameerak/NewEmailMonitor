@@ -7,8 +7,9 @@
     <importedStreams>
         <stream as="INPUTSTREAMNAME" name="INPUTSTREAMNAME" version="1.0.0"/>
     </importedStreams>
-    <queryExpressions><![CDATA[ADDQUERYHERE]]></queryExpressions>
+    <queryExpressions><![CDATA[ADDQUERYHERE ADDQUERYHERE]]></queryExpressions>
     <exportedStreams>
-        <stream name="OUTPUTSTREAMNAME" valueOf="OUTPUTSTREAMNAME" version="1.0.0"/>
+        <stream name="OUTPUTSTREAMNAME0" valueOf="OUTPUTSTREAMNAME0" version="1.0.0"/>
+        <stream name="OUTPUTSTREAMNAME1" valueOf="OUTPUTSTREAMNAME1" version="1.0.0"/>
     </exportedStreams>
 </executionPlan>
