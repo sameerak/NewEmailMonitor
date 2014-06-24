@@ -26,7 +26,7 @@ response.contentType = 'text/plain';
 						var esbIP = carbon.server.ip;
 						var esbPort = carbon.server.httpsPort;
 
-if(verb == "PUT" || verb == "GET") {
+if(verb == "DELETE" || verb == "PUT" || verb == "GET") {
 	response.status = 400;
 	print("Only method allowed on this resource is HTTP POST");
 } else if(verb == "POST") {
@@ -59,19 +59,20 @@ if(verb == "PUT" || verb == "GET") {
             	response.status = 400;
             	print("Please fill details to all the parameters asked");
             }
-}else if(verb == "DELETE") {
-	try{
-		myEmailMonitorAdminServiceStub.removeCEPConfigurations();
-		myEmailMonitorAdminServiceStub.removeESBConfigurations(esbIP, esbPort);
-						
-		response.status = 200;
-		print("Configurations deleted successfully.");
-	}
-	catch(error){
-		response.status = 500;
-		print("Something went wrong!");
-		log.debug(error);
-		print(error);
-	}
 }
+// else if(verb == "DELETE") {
+// 	try{
+// 		myEmailMonitorAdminServiceStub.removeCEPConfigurations();
+// 		myEmailMonitorAdminServiceStub.removeESBConfigurations(esbIP, esbPort);
+						
+// 		response.status = 200;
+// 		print("Configurations deleted successfully.");
+// 	}
+// 	catch(error){
+// 		response.status = 500;
+// 		print("Something went wrong!");
+// 		log.debug(error);
+// 		print(error);
+// 	}
+// }
 %>

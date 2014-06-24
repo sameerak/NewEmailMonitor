@@ -162,9 +162,6 @@ if (!user) {
                 <tr>
                     <td class="row"><input class="col-md-offset-2" type="submit" value="Configure"></td>
                 </tr>
-                <tr>
-                    <td class="row"><button type="button" class="btn btn-danger col-md-offset-2" id="deleteConfig">Delete Configurations</button></td>
-                </tr>
             </tbody>
         </table>
 </form>
