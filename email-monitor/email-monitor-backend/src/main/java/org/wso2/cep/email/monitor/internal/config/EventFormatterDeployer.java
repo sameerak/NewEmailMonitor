@@ -27,6 +27,8 @@ public class EventFormatterDeployer {
 
     public void createGmailOutStreamEventFormatter(String ESBServerIP, String ESBServerPort, String ESBServerUsername, String ESBServerPassword, AxisConfiguration axisConfiguration) throws EmailMonitorServiceException {
         try {
+            eventFormatterService.undeployActiveEventFormatterConfiguration(EmailMonitorConstants.GMAIL_OUT_STREAM_FORMATTER_NAME,axisConfiguration);
+
             eventFormatterService.getActiveEventFormatterConfigurationContent(EmailMonitorConstants.GMAIL_OUT_STREAM_FORMATTER_NAME,axisConfiguration);
 
         } catch (EventFormatterConfigurationException e) {
@@ -77,7 +79,10 @@ public class EventFormatterDeployer {
 
 
     public void createEmailSenderOutputStreamFormatter(String ESBServerIP, String ESBServerPort, String ESBServerUsername, String ESBServerPassword, AxisConfiguration axisConfiguration) throws EmailMonitorServiceException {
+
         try {
+            eventFormatterService.undeployActiveEventFormatterConfiguration(EmailMonitorConstants.MAIL_SENDER_OUT_STREAM_FORMATTER_NAME,axisConfiguration);
+
             eventFormatterService.getActiveEventFormatterConfigurationContent(EmailMonitorConstants.MAIL_SENDER_OUT_STREAM_FORMATTER_NAME,axisConfiguration);
 
         } catch (EventFormatterConfigurationException e) {
