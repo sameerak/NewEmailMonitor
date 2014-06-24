@@ -129,35 +129,6 @@ $(document).ready(function() {
 		 event.preventDefault();
 	});
 	
-	$( "#deleteConfig" ).click(function() {
-		bootbox.confirm("Are you sure you want to delete email monitor configurations?", function(result) {
-			if (result){			  
-				request = $.ajax({
-				     url: "config",
-				     type: "delete",
-				     data: ""
-				 });
-				
-				 // callback handler that will be called on success
-				 request.done(function (response, textStatus, jqXHR){
-				     // log a message to the console
-					 bootbox.alert(response);
-		//		     console.log("Hooray, it worked!");
-				 });
-				
-				 // callback handler that will be called on failure
-				 request.fail(function (jqXHR, textStatus, errorThrown){
-				     // log the error to the console
-				     console.error(
-				         "The following error occured: "+
-				         textStatus, errorThrown
-				     );
-				     bootbox.alert("Please check email monitoring system configured properly!");
-				 });
-			 }
-		});
-	});
-	
 	$('#storedQueries tbody').on('click', 'button', function() {
 		var row = $(this).parent().parent().parent().parent();
 		var executionPlans = row.find( "#executionPlans a span");
