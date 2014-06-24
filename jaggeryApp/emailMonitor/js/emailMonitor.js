@@ -88,11 +88,11 @@ $(document).ready(function() {
 				 $('#storedQueries tbody tr:first-child').remove();
 			 }
 			 
-			 var linkString = '<a href = "..//carbon/eventprocessor/execution_plan_details.jsp?ordinal=1&execPlan=' + jsonresponse.planNames[0] + '"><span>' + jsonresponse.planNames[0] + '</span></a>';
+			 var linkString = '<a href = "..//carbon/eventprocessor/execution_plan_details.jsp?ordinal=1&execPlan=' + jsonresponse.planName + '"><span>' + jsonresponse.planName + '</span></a>';
 			 
-			 for (var i = 1; i < jsonresponse.planNames.length; i++){
-				 linkString = linkString + ',<a href = "..//carbon/eventprocessor/execution_plan_details.jsp?ordinal=1&execPlan=' + jsonresponse.planNames[i] + '"><span>' + jsonresponse.planNames[i] + '</span></a>';
-			 }
+//			 for (var i = 1; i < jsonresponse.planNames.length; i++){
+//				 linkString = linkString + ',<a href = "..//carbon/eventprocessor/execution_plan_details.jsp?ordinal=1&execPlan=' + jsonresponse.planNames[i] + '"><span>' + jsonresponse.planNames[i] + '</span></a>';
+//			 }
 			 
 			 $('#storedQueries tbody').append('<tr>'+
 						'<td class="text-left row">'+

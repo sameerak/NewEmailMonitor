@@ -88,11 +88,11 @@ if (!user) {
 					var storedString = myEmailMonitorAdminServiceStub.getResourceString(storedQueries[i]);
 					var content = parse(String(storedString));
 					
-					var linkString = '<a href = "..//carbon/eventprocessor/execution_plan_details.jsp?ordinal=1&execPlan=' + content.planNames[0] + '"><span>' + content.planNames[0] + '</span></a>';
+					var linkString = '<a href = "..//carbon/eventprocessor/execution_plan_details.jsp?ordinal=1&execPlan=' + content.planName + '"><span>' + content.planName + '</span></a>';
 								 
-					 for (var j = 1; j < content.planNames.length; j++){
-						 linkString = linkString + ',<a href = "..//carbon/eventprocessor/execution_plan_details.jsp?ordinal=1&execPlan=' + content.planNames[j] + '"><span>' + content.planNames[j] + '</span></a>';
-					 }
+// 					 for (var j = 1; j < content.planNames.length; j++){
+// 						 linkString = linkString + ',<a href = "..//carbon/eventprocessor/execution_plan_details.jsp?ordinal=1&execPlan=' + content.planNames[j] + '"><span>' + content.planNames[j] + '</span></a>';
+// 					 }
         		%>
 					<tr>
 					<td class="text-left row">
