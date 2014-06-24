@@ -48,7 +48,15 @@ public class BAMMediatorDeployer {
             throw new EmailMonitorServiceException("Error when getting BAM Server Profiles", e);
         }
 
-        if (!isServerProfileCreated) {
+        if (isServerProfileCreated) {
+
+            try {
+                stub.removeResource(EmailMonitorConstants.BAM_SERVER_PROFILE_NAME);
+            } catch (RemoteException e) {
+                logger.error(e.getMessage());
+                throw new EmailMonitorServiceException("Error when deleting BAM Server Profiles", e);
+            }
+        }
 
             String content = xmlReader.readXML(EmailMonitorConstants.BAM_SERVER_PROFILE_CONFIGURATION_PATH);
 
@@ -82,7 +90,7 @@ public class BAMMediatorDeployer {
             }
 
 
-        }
+
     }
     
     public void removeServerProfile() throws EmailMonitorServiceException {
